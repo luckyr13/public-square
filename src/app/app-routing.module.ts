@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PreloadAllModules } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { InitPlatformGuard } from './core/route-guards/init-platform.guard';
 
 const routes: Routes = [
 	{
@@ -11,7 +12,7 @@ const routes: Routes = [
 		path: '', loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
 	},
 	{ 
-		path: '**', component: PageNotFoundComponent
+		path: '**', component: PageNotFoundComponent, canActivate: [InitPlatformGuard]
 	}
 ];
 
@@ -19,8 +20,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(
   	routes,
 	  {
-	    preloadingStrategy: PreloadAllModules
-	  }
+	    preloadingStrategy: PreloadAllModules,
+	    useHash: true
+	  },
 	)],
   exports: [RouterModule]
 })

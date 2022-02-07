@@ -1,2 +1,16 @@
-<app-main-toolbar></app-main-toolbar>
-<router-outlet></router-outlet>
+<mat-progress-bar 
+  *ngIf="platformLoading$ | async"
+  class="main-loader" 
+  mode="indeterminate"></mat-progress-bar>
+<app-main-toolbar *ngIf="opened"></app-main-toolbar>
+<mat-sidenav-container [ngClass]="{'container-top-m': !opened}">
+  <mat-sidenav
+  	mode="side" 
+    autoFocus="false"
+    [(opened)]="opened">
+    MENU
+  </mat-sidenav>
+  <mat-sidenav-content>
+  	<router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
