@@ -10,6 +10,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     MatListModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatDividerModule
   ]
 })
 export class SharedModule { }

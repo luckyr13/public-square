@@ -1,1 +1,45 @@
-<p>main-menu works!</p>
+<mat-nav-list>
+  <a 
+    mat-list-item 
+    [routerLink]="['dashboard']" 
+    routerLinkActive="active">
+    <mat-icon mat-list-icon>dashboard</mat-icon>
+    <div mat-line>Dashboard</div>
+  </a>
+  <a mat-list-item 
+    [routerLink]="['explore']" 
+    routerLinkActive="active">
+    <mat-icon mat-list-icon>travel_explore</mat-icon>
+    <div mat-line>Explore</div>
+  </a>
+  <a mat-list-item 
+    [routerLink]="['notifications']" 
+    routerLinkActive="active">
+    <mat-icon mat-list-icon>notifications</mat-icon>
+    <div mat-line>Notifications</div>
+  </a>
+  <a mat-list-item 
+    [routerLink]="['profile']" 
+    routerLinkActive="active">
+    <mat-icon mat-list-icon>person</mat-icon>
+    <div mat-line>Profile</div>
+  </a>
+  <a mat-list-item 
+    [routerLink]="['votes']" 
+    routerLinkActive="active">
+    <mat-icon mat-list-icon>how_to_vote</mat-icon>
+    <div mat-line>Votes</div>
+  </a>
+  <a mat-list-item 
+    [routerLink]="['settings']" 
+    routerLinkActive="active">
+    <mat-icon mat-list-icon>settings</mat-icon>
+    <div mat-line>Settings</div>
+  </a>
+  <a mat-list-item 
+    [routerLink]="['logout']" 
+    routerLinkActive="active">
+    <mat-icon mat-list-icon>logout</mat-icon>
+    <div mat-line>Log Out</div>
+  </a>
+</mat-nav-list>
