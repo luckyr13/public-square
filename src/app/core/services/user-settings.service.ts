@@ -13,7 +13,7 @@ export class UserSettingsService {
   public loadingPlatform$ = this._loadingPlatform.asObservable();
   private _showMainToolbar: Subject<boolean> = new Subject<boolean>();
   public showMainToolbar$ = this._showMainToolbar.asObservable();
-  private _storage = window.sessionStorage;
+  private _storage = window.localStorage;
 
   constructor() {
   	const dtheme = this._storage.getItem('defaultTheme');
@@ -53,6 +53,7 @@ export class UserSettingsService {
   	if (_theme) {
     	this._defaultTheme = _theme;
     	this._storage.setItem('defaultTheme', this._defaultTheme);
+      this.updateBodyClass(_theme);
   	}
   }
 
@@ -80,13 +81,20 @@ export class UserSettingsService {
         this.setDefaultTheme(theme);
       break;
       case 'dark-theme':
-       
+        this.setDefaultTheme(theme);
+      break;
+      case 'teal-theme':
         this.setDefaultTheme(theme);
       break;
       default:
       	throw Error('Theme not found!');
       break;
     }
+  }
 
+  updateBodyClass(className: string) {
+    if (document.body) {
+      document.body.className = className;
+    }
   }
 }

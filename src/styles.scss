@@ -9,13 +9,16 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
+// Default app font
 $public-square-font-family: 'Libre Baskerville';
 
+/*
+* THEME: Teal
+*/
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$public-square-primary: mat.define-palette(mat.$grey-palette, A100);
-$public-square-accent: mat.define-palette(mat.$teal-palette);
+$public-square-primary: mat.define-palette(mat.$teal-palette);
 
 // The warn palette is optional (defaults to red).
 $public-square-warn: mat.define-palette(mat.$red-palette);
@@ -28,35 +31,76 @@ $public-square-typography: mat.define-typography-config(
 $public-square-theme: mat.define-light-theme((
   color: (
     primary: $public-square-primary,
-    accent: $public-square-accent,
+    accent: $public-square-primary,
     warn: $public-square-warn,
   ),
   typography: $public-square-typography
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($public-square-theme);
+/*
+* THEME: Light
+*/
+// Define the palettes for your theme
+$public-square-light-primary: mat.define-palette(mat.$grey-palette, A100);
+$public-square-light-accent: mat.define-palette(mat.$grey-palette, 900);
 
-.border-color-theme {
-  border-color: mat.get-color-from-palette($public-square-accent, 'default') !important;
-}
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$public-square-light-theme: mat.define-light-theme((
+  color: (
+    primary: $public-square-light-primary,
+    accent: $public-square-light-accent,
+    warn: $public-square-warn,
+  ),
+  typography: $public-square-typography
+));
 
 /*
-// Remove background color from drawer bg
-.mat-drawer-container {
-  background-color: inherit;
-}
+* THEME: Dark
 */
+// Define the palettes for your theme
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$public-square-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $public-square-light-accent,
+    accent: $public-square-light-primary,
+    warn: $public-square-warn,
+  ),
+  typography: $public-square-typography
+));
 
 
-/* You can add global styles to this file, and also import other style files */
+// Set default theme
+@include mat.all-component-themes($public-square-theme);
 
+// Define all themes
+.light-theme {
+  @include mat.all-component-colors($public-square-light-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($public-square-light-accent, 'default') !important;
+  }
+}
+.dark-theme {
+  @include mat.all-component-colors($public-square-dark-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($public-square-light-primary, 'default') !important;
+  }
+}
+.teal-theme {
+  @include mat.all-component-colors($public-square-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($public-square-primary, 'default') !important;
+  }
+}
+
+
+/* Global styles */
 html, body { height: 100%; }
 body {
-	font-family: $public-square-font-family, 'serif';
-	padding-top: 60px;
+  font-family: $public-square-font-family, 'serif';
+  padding-top: 60px;
 }
 * {
   box-sizing: border-box;
@@ -65,7 +109,7 @@ body {
 }
 
 .spacer {
-	flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 .text-center {
   text-align: center;
@@ -131,3 +175,11 @@ body {
   background-color: #69f0ae;
   color: rgba(0,0,0,.87);
 }
+
+/*
+// Remove background color from drawer bg
+.mat-drawer-container {
+  background-color: inherit;
+}
+*/
+

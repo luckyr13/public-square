@@ -1,5 +1,5 @@
 <p>
-  <mat-toolbar class="mat-elevation-z1" color="accent">
+  <mat-toolbar class="mat-elevation-z1" color="primary">
     <span class="logo" routerLink="./dashboard">Public Square</span>
     <span class="spacer"></span>
 
@@ -7,15 +7,18 @@
       <mat-icon>format_color_fill</mat-icon>
     </button>
     <mat-menu #themeMenu="matMenu">
-      <mat-radio-group aria-label="Select an option" [formControl]="theme">
+      <mat-radio-group aria-label="Select an option" [formControl]="theme" (change)="updateTheme(theme.value)">
         <div mat-menu-item>
-          <mat-radio-button value="teal-blue">Teal Blue</mat-radio-button>
+          <mat-radio-button value="light-theme">Light Square</mat-radio-button>
         </div>
         <div mat-menu-item>
-          <mat-radio-button value="black-white">Black & White</mat-radio-button>
+          <mat-radio-button value="dark-theme">Dark Square</mat-radio-button>
         </div>
         <div mat-menu-item>
-          <mat-radio-button value="blue-bird">Blue Bird</mat-radio-button>
+          <mat-radio-button value="teal-theme">Teal Blue</mat-radio-button>
+        </div>
+        <div mat-menu-item>
+          <mat-radio-button value="blue-bird-theme">Blue Bird</mat-radio-button>
         </div>
       </mat-radio-group>
 
