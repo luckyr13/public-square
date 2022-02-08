@@ -86,6 +86,9 @@ export class UserSettingsService {
       case 'teal-theme':
         this.setDefaultTheme(theme);
       break;
+      case 'dark-indigo-theme':
+        this.setDefaultTheme(theme);
+      break;
       default:
       	throw Error('Theme not found!');
       break;

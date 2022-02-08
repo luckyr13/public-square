@@ -72,8 +72,26 @@ $public-square-dark-theme: mat.define-dark-theme((
 ));
 
 
-// Set default theme
-@include mat.all-component-themes($public-square-theme);
+
+/*
+* THEME: Dark Indigo
+*/
+// Define the palettes for your theme
+$public-square-dark-indigo-primary: mat.define-palette(mat.$indigo-palette, 900);
+$public-square-dark-indigo-accent: mat.define-palette(mat.$amber-palette, A400);
+
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$public-square-dark-indigo-theme: mat.define-dark-theme((
+  color: (
+    primary: $public-square-dark-indigo-primary,
+    accent: $public-square-dark-indigo-accent,
+    warn: $public-square-warn,
+  ),
+  typography: $public-square-typography
+));
+
 
 // Define all themes
 .light-theme {
@@ -92,6 +110,12 @@ $public-square-dark-theme: mat.define-dark-theme((
   @include mat.all-component-colors($public-square-theme);
   .border-color-theme {
     border-color: mat.get-color-from-palette($public-square-primary, 'default') !important;
+  }
+}
+.dark-indigo-theme {
+  @include mat.all-component-colors($public-square-dark-indigo-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($public-square-dark-indigo-accent, 'default') !important;
   }
 }
 

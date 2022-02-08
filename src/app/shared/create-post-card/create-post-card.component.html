@@ -8,13 +8,27 @@
 			Share something amazing with the world!
 		</mat-card-subtitle>	
 	</mat-card-header>
-	<mat-card-content>
+	<mat-card-content  style="margin-bottom: -40px;">
 		<mat-form-field appearance="standard" color="accent">
 		  <mat-label>Your cool post text ...</mat-label>
 		  <textarea class="message" matInput [formControl]="message"></textarea>
 		</mat-form-field>
+		<div>
+			<button class="post-icon" mat-icon-button color="accent" aria-label="Image">
+	      <mat-icon class="material-icons-outlined" inline="true">image</mat-icon>
+	    </button>
+	    <button class="post-icon" mat-icon-button color="accent" aria-label="Poll">
+	      <mat-icon class="material-icons-outlined" inline="true">poll</mat-icon>
+	    </button>
+	    <button class="post-icon"  mat-icon-button color="accent" aria-label="Emojis">
+	      <mat-icon class="material-icons-outlined" inline="true">emoji_emotions</mat-icon>
+	    </button>
+		</div>
 	</mat-card-content>
-	<mat-card-actions>
-		Actions
+	<mat-card-actions align="end">
+		<button class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
 	</mat-card-actions>
+	<mat-card-footer>
+    <mat-progress-bar color="accent" mode="determinate" value="0" ></mat-progress-bar>
+  </mat-card-footer>
 </mat-card>

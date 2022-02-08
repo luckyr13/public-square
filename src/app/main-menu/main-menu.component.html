@@ -5,7 +5,10 @@
     [routerLink]="['dashboard']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaDashboard="routerLinkActive">
-    <mat-icon mat-list-icon [color]="rlaDashboard.isActive ? 'accent' : 'default'">dashboard</mat-icon>
+    <mat-icon 
+      mat-list-icon 
+      [class]="{ 'material-icons-outlined': !rlaDashboard.isActive }" 
+      [color]="rlaDashboard.isActive ? 'accent' : 'default'">dashboard</mat-icon>
     <div mat-line>Dashboard</div>
   </a>
   <a mat-list-item
@@ -13,7 +16,10 @@
     [routerLink]="['explore']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaExplore="routerLinkActive">
-    <mat-icon mat-list-icon [color]="rlaExplore.isActive ? 'accent' : 'default'">travel_explore</mat-icon>
+    <mat-icon 
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaExplore.isActive }" 
+      [color]="rlaExplore.isActive ? 'accent' : 'default'">travel_explore</mat-icon>
     <div mat-line>Explore</div>
   </a>
   <a mat-list-item
@@ -21,7 +27,10 @@
     [routerLink]="['notifications']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaNotifications="routerLinkActive">
-    <mat-icon mat-list-icon [color]="rlaNotifications.isActive ? 'accent' : 'default'">notifications</mat-icon>
+    <mat-icon
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaNotifications.isActive }" 
+      [color]="rlaNotifications.isActive ? 'accent' : 'default'">notifications</mat-icon>
     <div mat-line>Notifications</div>
   </a>
   <a mat-list-item
@@ -29,7 +38,10 @@
     [routerLink]="['profile']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaProfile="routerLinkActive">
-    <mat-icon mat-list-icon [color]="rlaProfile.isActive ? 'accent' : 'default'">person</mat-icon>
+    <mat-icon
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaProfile.isActive }" 
+      [color]="rlaProfile.isActive ? 'accent' : 'default'">person</mat-icon>
     <div mat-line>Profile</div>
   </a>
   <a mat-list-item
@@ -37,7 +49,10 @@
     [routerLink]="['votes']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaVotes="routerLinkActive">
-    <mat-icon mat-list-icon [color]="rlaVotes.isActive ? 'accent' : 'default'">how_to_vote</mat-icon>
+    <mat-icon
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaVotes.isActive }" 
+      [color]="rlaVotes.isActive ? 'accent' : 'default'">how_to_vote</mat-icon>
     <div mat-line>Votes</div>
   </a>
   <a mat-list-item
@@ -45,7 +60,10 @@
     [routerLink]="['sq']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaSquares="routerLinkActive">
-    <mat-icon mat-list-icon [color]="rlaSquares.isActive ? 'accent' : 'default'">groups</mat-icon>
+    <mat-icon
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaSquares.isActive }" 
+      [color]="rlaSquares.isActive ? 'accent' : 'default'">groups</mat-icon>
     <div mat-line>Squares</div>
   </a>
   <a mat-list-item
@@ -53,7 +71,10 @@
     [routerLink]="['settings']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaSettings="routerLinkActive">
-    <mat-icon mat-list-icon [color]="rlaSettings.isActive ? 'accent' : 'default'">settings</mat-icon>
+    <mat-icon
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaSettings.isActive }" 
+      [color]="rlaSettings.isActive ? 'accent' : 'default'">settings</mat-icon>
     <div mat-line>Settings</div>
   </a>
 </mat-nav-list>

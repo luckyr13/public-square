@@ -41,7 +41,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatCardModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule,
   ],
   exports: [
   	MatToolbarModule,

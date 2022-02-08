@@ -18,7 +18,7 @@
           <mat-radio-button value="teal-theme">Teal Blue</mat-radio-button>
         </div>
         <div mat-menu-item>
-          <mat-radio-button value="blue-bird-theme">Blue Bird</mat-radio-button>
+          <mat-radio-button value="dark-indigo-theme">Blue Bird</mat-radio-button>
         </div>
       </mat-radio-group>
 
@@ -28,7 +28,7 @@
       <mat-icon>person</mat-icon>
     </button>
     <mat-menu #userMenu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item [routerLink]="['logout']">
         <mat-icon>logout</mat-icon>
         <span>Log Out</span>
       </button>
