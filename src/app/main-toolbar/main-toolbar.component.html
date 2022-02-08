@@ -1,12 +1,34 @@
 <p>
-  <mat-toolbar class="mat-elevation-z1" color="primary">
+  <mat-toolbar class="mat-elevation-z1" color="accent">
     <span class="logo" routerLink="./dashboard">Public Square</span>
     <span class="spacer"></span>
-    <button mat-icon-button aria-label="Themes">
+
+    <button mat-icon-button aria-label="Theme" [matMenuTriggerFor]="themeMenu">
       <mat-icon>format_color_fill</mat-icon>
     </button>
-    <button mat-icon-button aria-label="Account Info">
+    <mat-menu #themeMenu="matMenu">
+      <mat-radio-group aria-label="Select an option" [formControl]="theme">
+        <div mat-menu-item>
+          <mat-radio-button value="teal-blue">Teal Blue</mat-radio-button>
+        </div>
+        <div mat-menu-item>
+          <mat-radio-button value="black-white">Black & White</mat-radio-button>
+        </div>
+        <div mat-menu-item>
+          <mat-radio-button value="blue-bird">Blue Bird</mat-radio-button>
+        </div>
+      </mat-radio-group>
+
+    </mat-menu>
+
+    <button mat-icon-button aria-label="Account Info" [matMenuTriggerFor]="userMenu">
       <mat-icon>person</mat-icon>
     </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>logout</mat-icon>
+        <span>Log Out</span>
+      </button>
+    </mat-menu>
   </mat-toolbar>
 </p>

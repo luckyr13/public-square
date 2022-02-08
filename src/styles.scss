@@ -39,9 +39,16 @@ $public-square-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($public-square-theme);
 
+.border-color-theme {
+  border-color: mat.get-color-from-palette($public-square-accent, 'default') !important;
+}
+
+/*
+// Remove background color from drawer bg
 .mat-drawer-container {
   background-color: inherit;
 }
+*/
 
 
 /* You can add global styles to this file, and also import other style files */

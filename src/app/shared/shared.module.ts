@@ -11,11 +11,25 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatDividerModule} from '@angular/material/divider';
+import { CreatePostCardComponent } from './create-post-card/create-post-card.component';
+import { PostCardComponent } from './post-card/post-card.component';
+import {MatCardModule} from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { VerificationProgressCardComponent } from './verification-progress-card/verification-progress-card.component';
+import { ArBalanceCardComponent } from './ar-balance-card/ar-balance-card.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
   declarations: [
-    BottomSheetLoginComponent
+    BottomSheetLoginComponent,
+    CreatePostCardComponent,
+    PostCardComponent,
+    VerificationProgressCardComponent,
+    ArBalanceCardComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +38,10 @@ import {MatDividerModule} from '@angular/material/divider';
     MatProgressBarModule,
     MatSnackBarModule,
     MatIconModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
   	MatToolbarModule,
@@ -35,7 +53,15 @@ import {MatDividerModule} from '@angular/material/divider';
     MatCheckboxModule,
     MatSnackBarModule,
     MatBottomSheetModule,
-    MatDividerModule
+    MatDividerModule,
+    CreatePostCardComponent,
+    PostCardComponent,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatRadioModule
   ]
 })
 export class SharedModule { }

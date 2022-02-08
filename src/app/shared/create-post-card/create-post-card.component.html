@@ -1,0 +1,20 @@
+<mat-card class="post-card">
+	<mat-card-header>
+		<img mat-card-avatar src="assets/img/blank-profile.png">
+		<mat-card-title>
+			Create a Post
+		</mat-card-title>
+		<mat-card-subtitle>
+			Share something amazing with the world!
+		</mat-card-subtitle>	
+	</mat-card-header>
+	<mat-card-content>
+		<mat-form-field appearance="standard" color="accent">
+		  <mat-label>Your cool post text ...</mat-label>
+		  <textarea class="message" matInput [formControl]="message"></textarea>
+		</mat-form-field>
+	</mat-card-content>
+	<mat-card-actions>
+		Actions
+	</mat-card-actions>
+</mat-card>
