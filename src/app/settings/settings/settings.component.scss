@@ -1,0 +1,35 @@
+.col-body {
+  width: 100%;
+  float: left;
+  border-right: solid 1px rgba(0, 0, 0, 0.12);
+  height: 100%;
+  padding: 20px;
+}
+
+.col-side-features {
+  display: none;
+  padding: 20px;
+}
+
+.dashboard-container {
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .col-body {
+    width: 66%;
+  }
+
+  .col-side-features {
+    width: 34%;
+    float: left;
+    height: 100%;
+    display: block;
+  }
+
+}
+
+.col-side-features mat-card {
+  margin-bottom: 20px;
+}
