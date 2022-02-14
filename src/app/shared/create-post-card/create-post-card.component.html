@@ -1,34 +1,35 @@
 <mat-card class="post-card">
-	<mat-card-header>
-		<img mat-card-avatar src="assets/img/blank-profile.png">
-		<mat-card-title>
-			Create Post
-		</mat-card-title>
-		<mat-card-subtitle>
-			Share something amazing with the world!
-		</mat-card-subtitle>	
-	</mat-card-header>
-	<mat-card-content  style="margin-bottom: -40px;">
-		<mat-form-field appearance="standard" color="accent">
-		  <mat-label>Your message</mat-label>
-		  <textarea class="message" matInput [formControl]="message"></textarea>
-		</mat-form-field>
-		<div>
-			<button class="post-icon" mat-icon-button color="accent" aria-label="Image">
-	      <mat-icon class="material-icons-outlined" inline="true">image</mat-icon>
-	    </button>
-	    <button class="post-icon" mat-icon-button color="accent" aria-label="Poll">
-	      <mat-icon class="material-icons-outlined" inline="true">poll</mat-icon>
-	    </button>
-	    <button class="post-icon"  mat-icon-button color="accent" aria-label="Emojis">
-	      <mat-icon class="material-icons-outlined" inline="true">emoji_emotions</mat-icon>
-	    </button>
-		</div>
-	</mat-card-content>
-	<mat-card-actions align="end">
-		<button class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
-	</mat-card-actions>
+	<div class="fadeIn" *ngIf="loading">
+		<ngx-skeleton-loader appearance="circle" class="loading-avatar" [theme]="{ 'height.px': 42, 'width.px': 42 }"></ngx-skeleton-loader>
+		<ngx-skeleton-loader appearance="line" class="loading-title" [theme]="{ 'height.px': 24, 'marginBottom.px': 2 }"></ngx-skeleton-loader>
+		<ngx-skeleton-loader appearance="line" class="loading-subtitle" [theme]="{ 'height.px': 14 }"></ngx-skeleton-loader>
+
+		<ngx-skeleton-loader appearance="line" class="loading-body" [theme]="{ 'height.px': 142, 'marginBottom.px': 32 }"></ngx-skeleton-loader>
+		<ngx-skeleton-loader appearance="line" class="loading-footer" [theme]="{ 'height.px': 34 }"></ngx-skeleton-loader>
+	</div>
+
+
+	<div class="fadeIn" [ngClass]="{ 'hide': loading }">
+		<mat-card-header>
+			<img mat-card-avatar src="assets/img/blank-profile.png">
+			<mat-card-title>
+				Create Post
+			</mat-card-title>
+			<mat-card-subtitle>
+				Publish locally to IPFS or permanently to the Arweave network.
+			</mat-card-subtitle>	
+		</mat-card-header>
+		<mat-card-content class="card-content">
+			<div>
+			  <textarea class="message fadeIn" [formControl]="message"></textarea>
+			</div>
+		</mat-card-content>
+		<mat-card-actions align="end">
+			<button class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
+		</mat-card-actions>
+	</div>
+	
 	<mat-card-footer>
-    <mat-progress-bar color="accent" mode="determinate" value="0" ></mat-progress-bar>
+    <mat-progress-bar color="accent" [mode]="loading ? 'indeterminate' : 'determinate'" value="0" ></mat-progress-bar>
   </mat-card-footer>
 </mat-card>

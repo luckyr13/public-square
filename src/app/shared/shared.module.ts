@@ -21,6 +21,8 @@ import { VerificationProgressCardComponent } from './verification-progress-card/
 import { ArBalanceCardComponent } from './ar-balance-card/ar-balance-card.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 
 
 @NgModule({
@@ -43,6 +45,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    NgxSkeletonLoaderModule
   ],
   exports: [
   	MatToolbarModule,
@@ -62,7 +65,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatFormFieldModule,
     MatInputModule,
     MatMenuModule,
-    MatRadioModule
+    MatRadioModule,
+    NgxSkeletonLoaderModule
   ]
 })
 export class SharedModule { }

@@ -1,9 +1,9 @@
 .post-card {
-	margin: 20px;
 }
 
-mat-form-field {
+mat-card-header {
 	width: 100%;
+	margin-bottom: 20px;
 }
 
 .mat-focused mat-label {
@@ -16,4 +16,37 @@ mat-form-field {
 
 .post-icon {
 	font-size: 20px;
+}
+
+.card-content {
+	margin-top: 10px;
+}
+
+.loading-avatar {
+	float: left;
+}
+
+.loading-title {
+	float: left;
+	width: 40%;
+	padding-top: 4px;
+	margin-left: 12px;
+}
+
+.loading-subtitle {
+	float: left;
+	width: 60%;
+	padding-top: 2px;
+	margin-left: 12px;
+	margin-bottom: 20px;
+}
+
+.loading-body {
+	margin-bottom: 20px;
+}
+
+.loading-footer {
+	float: right;
+	width: 100px;
+
 }

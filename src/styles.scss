@@ -119,6 +119,33 @@ $public-square-dark-indigo-theme: mat.define-dark-theme((
   }
 }
 
+/* CodeMirror START */
+.dark-indigo-theme, .dark-theme {
+  .CodeMirror, .editor-preview, .editor-preview-side, .editor-toolbar.fullscreen
+  { 
+    background-color:#303030!important;
+    color:#fff!important;
+  }
+  .editor-toolbar a, .editor-toolbar a.fa
+  { 
+    color:#fff!important
+  }
+  .editor-toolbar a.active, .editor-toolbar a:hover
+  {
+    color:#fff!important; background-color:#303030!important
+  }
+  .editor-toolbar.disabled-for-preview a:not(.no-disable){
+    background-color:#303030!important;color:#ccc!important
+  }
+  .CodeMirror-cursor {
+    border-color: inherit;
+  }
+
+}
+/* CodeMirror END */
+
+
+
 
 /* Global styles */
 html, body { height: 100%; }
@@ -127,6 +154,7 @@ body {
   padding-top: 60px;
 }
 * {
+  font-family: $public-square-font-family, 'serif';
   box-sizing: border-box;
   margin: 0;
   padding:0;
@@ -207,3 +235,22 @@ body {
 }
 */
 
+.secondary-toolbar {
+  height: 80px;
+}
+
+/*
+* simplemde height fix
+*/
+.CodeMirror, .CodeMirror-scroll {
+  min-height: 100px !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+
+.clear-both {
+  clear: both;
+}
