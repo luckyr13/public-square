@@ -1,8 +1,29 @@
 <div class="dashboard-container fadeIn">
+	<p>
+	  <mat-toolbar class="secondary-toolbar" color="primary">
+	    <button mat-icon-button>
+    		<mat-icon>dashboard</mat-icon>
+  		</button>
+  		<span>Dashboard</span>
+	  </mat-toolbar>
+	</p>
 	<div class="col-body">
 		<app-create-post-card></app-create-post-card>
 	</div>
 	<div class="col-side-features">
-		
+		<mat-card>
+		  <mat-card-title>Validation Progress</mat-card-title>
+		  <mat-card-content>
+		    <p>90%</p>
+		  </mat-card-content>
+		</mat-card>
+
+		<mat-card>
+		  <mat-card-subtitle>#Trends</mat-card-subtitle>
+		  <mat-card-title>Trending Topics</mat-card-title>
+		  <mat-card-content>
+		    <p>This card has divider and indeterminate progress as footer</p>
+		  </mat-card-content>
+		</mat-card>
 	</div>
 </div>
