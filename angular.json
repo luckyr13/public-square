@@ -31,12 +31,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "simplemde/dist/simplemde.min.css",
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
               "arweave",
-              "typescript-is"
+              "typescript-is",
+              "simplemde"
             ]
           },
           "configurations": {
