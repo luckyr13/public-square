@@ -14,6 +14,24 @@ export class UserSettingsService {
   private _showMainToolbar: Subject<boolean> = new Subject<boolean>();
   public showMainToolbar$ = this._showMainToolbar.asObservable();
   private _storage = window.localStorage;
+  public themes: Record<string, any> = {
+    'light-theme': {
+      id: 'light-theme',
+      dark: false
+    },
+    'dark-theme': {
+      id: 'dark-theme',
+      dark: true
+    },
+    'teal-theme': {
+      id: 'teal-theme',
+      dark: false
+    },
+    'dark-indigo-theme': {
+      id: 'dark-indigo-theme',
+      dark: true
+    },
+  };
 
   constructor() {
   	const dtheme = this._storage.getItem('defaultTheme');
@@ -100,4 +118,9 @@ export class UserSettingsService {
       document.body.className = className;
     }
   }
+
+  isDarkTheme(theme: string) {
+    return this.themes[theme].dark;
+  }
+  
 }
