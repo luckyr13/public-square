@@ -22,6 +22,9 @@ import { ArBalanceCardComponent } from './ar-balance-card/ar-balance-card.compon
 import {MatMenuModule} from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import {OverlayModule} from '@angular/cdk/overlay';
+import { EmojisComponent } from './emojis/emojis.component';
+import {PortalModule} from '@angular/cdk/portal';
 
 
 
@@ -31,7 +34,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     CreatePostCardComponent,
     PostCardComponent,
     VerificationProgressCardComponent,
-    ArBalanceCardComponent
+    ArBalanceCardComponent,
+    EmojisComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +49,10 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    MatMenuModule,
+    OverlayModule,
+    PortalModule,
   ],
   exports: [
   	MatToolbarModule,
@@ -66,7 +73,10 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     MatInputModule,
     MatMenuModule,
     MatRadioModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    OverlayModule,
+    EmojisComponent,
+    PortalModule
   ]
 })
 export class SharedModule { }

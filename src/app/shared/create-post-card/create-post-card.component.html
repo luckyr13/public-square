@@ -16,13 +16,16 @@
 				Create Post
 			</mat-card-title>
 			<mat-card-subtitle>
-				Publish locally to IPFS or permanently to the Arweave network.
+				<p>
+					Publish locally to IPFS or permanently to the Arweave network.
+				</p>
 			</mat-card-subtitle>	
 		</mat-card-header>
 		<mat-card-content class="card-content">
 			<div>
 			  <textarea class="message fadeIn" [formControl]="message"></textarea>
 			</div>
+			
 		</mat-card-content>
 		<mat-card-actions align="end">
 			<button class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>

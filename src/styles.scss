@@ -254,3 +254,17 @@ body {
 .clear-both {
   clear: both;
 }
+
+
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+}
+
+.word-break {
+  word-break: break-word;
+}
