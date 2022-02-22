@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./emojis.component.scss']
 })
 export class EmojisComponent implements OnInit {
+	emojis: string[] = [
+		'😀', '😃'
+	];
 
   constructor() { }
 

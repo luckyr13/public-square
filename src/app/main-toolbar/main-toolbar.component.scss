@@ -6,9 +6,28 @@ mat-toolbar {
   left: 0;
   z-index: 10;
 }
+.logo-sm {
+	display: block;
+}
 .logo {
+	display: none;
+}
+.logo, .logo-sm {
 	font-weight: bold;
 	letter-spacing: 4px;
 	cursor: pointer;
 	font-size: 26px;
+}
+.logo span, .logo-sm span {
+	font-size: 32px;
+	margin-right: 4px;
+}
+
+@media (min-width: 800px) {
+	.logo-sm {
+		display: none;
+	}
+	.logo {
+		display: block;
+	}
 }

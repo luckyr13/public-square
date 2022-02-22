@@ -3,16 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { PreloadAllModules } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { InitPlatformGuard } from './core/route-guards/init-platform.guard';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
 	{
-		path: 'sq', loadChildren: () => import('./squares/squares.module').then(m => m.SquaresModule)
+		path: '',
+		component: HomeComponent,
+		pathMatch: 'full',
+		canActivate: [InitPlatformGuard]
 	},
-	{ 
-		path: '', loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
-	},
-	{ path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
-	{ 
+	{ path: '', loadChildren: () => import('./panel/panel.module').then(m => m.PanelModule) },
+	{
 		path: '**', component: PageNotFoundComponent, canActivate: [InitPlatformGuard]
 	}
 ];

@@ -1,4 +1,4 @@
-<mat-nav-list>
+<mat-nav-list *ngIf="account | async">
   <a 
     mat-list-item
     matRipple
@@ -13,14 +13,14 @@
   </a>
   <a mat-list-item
     matRipple
-    [routerLink]="['search']" 
+    [routerLink]="['browse']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaSearch="routerLinkActive">
     <mat-icon 
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSearch.isActive }" 
-      [color]="rlaSearch.isActive ? 'accent' : 'default'">travel_explore</mat-icon>
-    <div mat-line>Search</div>
+      [color]="rlaSearch.isActive ? 'accent' : 'default'">tag</mat-icon>
+    <div mat-line>Browse</div>
   </a>
   <a mat-list-item
     matRipple
@@ -68,7 +68,7 @@
   </a>
   <a mat-list-item
     matRipple
-    [routerLink]="['sq']" 
+    [routerLink]="['squares']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaSquares="routerLinkActive">
     <mat-icon
@@ -87,5 +87,21 @@
       [class]="{ 'material-icons-outlined': !rlaSettings.isActive }" 
       [color]="rlaSettings.isActive ? 'accent' : 'default'">settings</mat-icon>
     <div mat-line>Settings</div>
+  </a>
+</mat-nav-list>
+
+<mat-nav-list *ngIf="!(account | async)">
+  <a 
+    mat-list-item
+    matRipple
+    [routerLink]="['']" 
+    [routerLinkActiveOptions]="{exact:true}"
+    [routerLinkActive]="['active', 'border-color-theme']"
+    #rlaHome="routerLinkActive">
+    <mat-icon 
+      mat-list-icon 
+      [class]="{ 'material-icons-outlined': !rlaHome.isActive }" 
+      [color]="rlaHome.isActive ? 'accent' : 'default'">home</mat-icon>
+    <div mat-line>Home</div>
   </a>
 </mat-nav-list>
