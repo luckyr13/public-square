@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post-card.component.scss']
 })
 export class PostCardComponent implements OnInit {
-
+	loading = false;
+	
   constructor() { }
 
   ngOnInit(): void {

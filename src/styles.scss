@@ -236,8 +236,15 @@ body {
 */
 
 .secondary-toolbar {
-  height: 80px;
+  height: 52px;
+  font-size: 16px;
+  line-height: 52px;
 }
+
+.secondary-toolbar mat-icon {
+  font-size: 25px;
+}
+
 
 /*
 * simplemde height fix

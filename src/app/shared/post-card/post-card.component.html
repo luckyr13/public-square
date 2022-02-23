@@ -1,1 +1,14 @@
-<p>post-card works!</p>
+<mat-card class="post-card">
+	<div class="fadeIn">
+		<mat-card-content class="card-content">
+			hi
+		</mat-card-content>
+		<mat-card-actions align="end">
+			<button class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
+		</mat-card-actions>
+	</div>
+	
+	<mat-card-footer *ngIf="loading" class="fadeIn">
+    <mat-progress-bar color="accent" [mode]="loading ? 'indeterminate' : 'determinate'" value="0" ></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>

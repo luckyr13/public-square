@@ -1,0 +1,59 @@
+import { Observable, from } from 'rxjs';
+import ArdbBlock from 'ardb/lib/models/block';
+import ArdbTransaction from 'ardb/lib/models/transaction';
+import ArDB from 'ardb';
+import Arweave from 'arweave';
+
+export class ArdbWrapper {
+	public readonly ardb: ArDB;
+
+  constructor(private _arweave: Arweave) {
+  	this.ardb = new ArDB(_arweave);
+  }
+
+  /*
+  * @dev Search transactions
+  */
+  searchTransactions(
+    from: string[] | string,
+    limit: number = 100,
+    maxHeight: number = 0,
+    tags: Array<{name: string, values: string|string[]}> ): Observable<ArdbTransaction[]> {
+
+    const obs = new Observable<ArdbTransaction[]>((subscriber) => {
+      if (from.length) {
+        this.ardb.search('transactions')
+          .limit(limit)
+          .from(from)
+          .max(maxHeight)
+          .tags(tags).find().then((res: ArdbTransaction[]|ArdbBlock[]) => {
+            subscriber.next(<ArdbTransaction[]>res);
+            subscriber.complete();
+          })
+          .catch((error) => {
+            subscriber.error(error);
+          });
+      } else {
+        this.ardb.search('transactions')
+          .limit(limit)
+          .max(maxHeight)
+          .tags(tags).find().then((res: ArdbTransaction[]|ArdbBlock[]) => {
+            subscriber.next(<ArdbTransaction[]>res);
+            subscriber.complete();
+          })
+          .catch((error) => {
+            subscriber.error(error);
+          });
+      }
+      
+    });
+    return obs;
+  }
+
+  /*
+  * @dev Get next results from query
+  */
+  next(): Observable<ArdbTransaction[]> {
+    return from(<Promise<ArdbTransaction[]>>this.ardb.next());
+  }
+}

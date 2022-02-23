@@ -3,7 +3,6 @@
   float: left;
   border-right: solid 1px rgba(0, 0, 0, 0.12);
   height: 100%;
-  padding: 20px;
 }
 
 .col-side-features {
@@ -32,4 +31,18 @@
 
 .col-side-features mat-card {
   margin-bottom: 20px;
+}
+
+mat-divider {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.post-card-container {
+  margin: 20px;
+}
+
+.post-list-container {
+  margin: 20px;
+
 }

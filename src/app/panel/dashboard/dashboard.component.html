@@ -8,7 +8,16 @@
 	  </mat-toolbar>
 	</p>
 	<div class="col-body">
-		<app-create-post-card></app-create-post-card>
+		<div class="post-card-container">	
+			<app-create-post-card></app-create-post-card>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="post-list-container">
+			<app-post-card *ngFor="let post of posts"></app-post-card>
+		</div>
+		<div class="more-results" (click)="moreResults()">
+			More results
+		</div>
 	</div>
 	<div class="col-side-features">
 		<mat-card>
