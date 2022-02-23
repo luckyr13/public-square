@@ -1,11 +1,10 @@
 import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import * as SimpleMDE from 'simplemde';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { EmojisComponent } from '../emojis/emojis.component';
-import * as codemirror from 'codemirror';
 import { Observable, Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CodeMirrorWrapper } from '../../core/classes/codemirror-wrapper';
 
 @Component({
   selector: 'app-create-post-card',
@@ -13,25 +12,25 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./create-post-card.component.scss']
 })
 export class CreatePostCardComponent implements OnInit, OnDestroy, AfterViewInit {
-  message = new FormControl('');
-  simplemde: SimpleMDE|null = null;
-  loading = true;
+  @ViewChild('postMessage', {static: true}) postMessage!: ElementRef;
+  loading: boolean = true;
   emojisPortal: ComponentPortal<EmojisComponent>|null = null;
   overlayRef: OverlayRef|null = null;
   loadEditorSubscription: Subscription = Subscription.EMPTY;
+  codemirrorWrapper: CodeMirrorWrapper;
 
-
-  constructor(private _overlay: Overlay) {
-    
+  constructor(
+    private _overlay: Overlay,
+    private _snackBar: MatSnackBar) {
+    this.codemirrorWrapper = new CodeMirrorWrapper();
   }
 
   ngOnInit(): void {
-    
 
   }
 
 
-  openEmojiMenu(editor: SimpleMDE) {
+  openEmojiMenu() {
     const emojiMenu = document.getElementsByClassName('fa fa-smile-o')[0];
     if (!emojiMenu) {
       throw Error('EmojiMenu not available');
@@ -57,10 +56,9 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterViewInit
     this.overlayRef!.attach(this.emojisPortal);
 
     this.overlayRef.overlayElement.addEventListener('click', (event) => {
-      const target = <HTMLElement>event.target;
-      const emoji = target && target.classList.contains('emoji') ? target.innerHTML.trim() : '';
-      const currentEditorValue = editor.codemirror.getValue();
-      editor.codemirror.setValue(`${currentEditorValue}${emoji}`);
+      // Set editors value 
+
+      // Close menu
       this.closeEmojiMenu();
     });
 
@@ -75,49 +73,36 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit() {
-    const obs = new Observable((subscriber) => {
-      this.loading = true;
-      window.setTimeout(() => {
-        try {
-          this.simplemde = new SimpleMDE({
-            element: (<any> this.message).nativeElement,
-            toolbar: [
-              "bold", "italic", "heading", "strikethrough", "|",
-              "quote", "link", "image", "code", "|",
-              {
-                name: "emojis",
-                action: (editor) => {
-                  
-                  this.openEmojiMenu(editor);
-                },
-                className: "fa fa-smile-o",
-                title: "Add emoji",
-              },
-              "preview" ],
-          });
-          subscriber.next(true);
-          subscriber.complete();
-        } catch (error) {
-          this.loading = false;
-          console.log('Error loading editor: ', error);
-          subscriber.error(error);
-        }
-        this.loading = false;
-      }, 500)
-    })
+    this.loading = true;
+    
+    this.loadEditorSubscription = this.codemirrorWrapper.init(this.postMessage.nativeElement).subscribe({
+      next: (res) => {
+        // Done
+      this.loading = false;
 
-    this.loadEditorSubscription = obs.subscribe((res) => {
-      // Done
+      },
+      error: (error) => {
+        this.loading = false;
+        this.message(error, 'error');
+      }
     });
     
   }
 
   ngOnDestroy() {
-    if (this.simplemde) {
-      this.simplemde.toTextArea();
-      this.simplemde = null;
-    }
     this.loadEditorSubscription.unsubscribe();
+  }
+
+  /*
+  *  Custom snackbar message
+  */
+  message(msg: string, panelClass: string = '', verticalPosition: any = undefined) {
+    this._snackBar.open(msg, 'X', {
+      duration: 8000,
+      horizontalPosition: 'center',
+      verticalPosition: verticalPosition,
+      panelClass: panelClass
+    });
   }
 
 }

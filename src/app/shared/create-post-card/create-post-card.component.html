@@ -1,29 +1,27 @@
 <mat-card class="post-card">
 	<div class="fadeIn" *ngIf="loading">
-		<ngx-skeleton-loader appearance="circle" class="loading-avatar" [theme]="{ 'height.px': 42, 'width.px': 42 }"></ngx-skeleton-loader>
-		<ngx-skeleton-loader appearance="line" class="loading-title" [theme]="{ 'height.px': 24, 'marginBottom.px': 2 }"></ngx-skeleton-loader>
-		<ngx-skeleton-loader appearance="line" class="loading-subtitle" [theme]="{ 'height.px': 14 }"></ngx-skeleton-loader>
-
-		<ngx-skeleton-loader appearance="line" class="loading-body" [theme]="{ 'height.px': 142, 'marginBottom.px': 32 }"></ngx-skeleton-loader>
-		<ngx-skeleton-loader appearance="line" class="loading-footer" [theme]="{ 'height.px': 34 }"></ngx-skeleton-loader>
+			<div class="avatar-container">
+			  <ngx-skeleton-loader appearance="circle" [theme]="{ 'height.px': 42, 'width.px': 42, 'marginTop.px': 20 }"></ngx-skeleton-loader>
+			</div>
+			<div class="message-container">
+			  <ngx-skeleton-loader
+			  	appearance="line" 
+			  	[theme]="{ 'height.px': 142, 'marginBottom.px': 32, 'marginTop.px': 20 }"></ngx-skeleton-loader>
+				<ngx-skeleton-loader
+					appearance="line" 
+					[theme]="{ 'height.px': 34, 'width.px': 100, 'float': 'right' }"></ngx-skeleton-loader>
+			</div>
 	</div>
 
 
 	<div class="fadeIn" [ngClass]="{ 'hide': loading }">
-		<mat-card-header>
-			<img mat-card-avatar src="assets/img/blank-profile.png">
-			<mat-card-title>
-				Create Post
-			</mat-card-title>
-			<mat-card-subtitle>
-				<p>
-					Create a permanent message.
-				</p>
-			</mat-card-subtitle>	
-		</mat-card-header>
 		<mat-card-content class="card-content">
-			<div>
-			  <textarea class="message fadeIn" [formControl]="message"></textarea>
+			<div class="avatar-container">
+			  <img class="avatar" mat-card-avatar src="assets/img/blank-profile.png">
+			</div>
+			
+			<div class="message-container">
+			  <div class="message fadeIn" #postMessage></div>
 			</div>
 			
 		</mat-card-content>
@@ -32,7 +30,7 @@
 		</mat-card-actions>
 	</div>
 	
-	<mat-card-footer>
+	<mat-card-footer *ngIf="loading" class="fadeIn">
     <mat-progress-bar color="accent" [mode]="loading ? 'indeterminate' : 'determinate'" value="0" ></mat-progress-bar>
   </mat-card-footer>
 </mat-card>

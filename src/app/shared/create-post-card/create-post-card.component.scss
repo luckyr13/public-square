@@ -26,27 +26,19 @@ mat-card-header {
 	float: left;
 }
 
-.loading-title {
+
+.avatar-container {
 	float: left;
-	width: 40%;
-	padding-top: 4px;
-	margin-left: 12px;
+	width: 60px;
+	text-align: left;
 }
 
-.loading-subtitle {
+.avatar {
+	width: 48px;
+	height: 48px;
+}
+
+.message-container {
 	float: left;
-	width: 60%;
-	padding-top: 2px;
-	margin-left: 12px;
-	margin-bottom: 20px;
-}
-
-.loading-body {
-	margin-bottom: 20px;
-}
-
-.loading-footer {
-	float: right;
-	width: 100px;
-
+	width: calc(100% - 60px);
 }

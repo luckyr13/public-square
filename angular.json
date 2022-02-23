@@ -32,13 +32,12 @@
             ],
             "styles": [
               "src/styles.scss",
-              "simplemde/dist/simplemde.min.css",
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
               "arweave",
               "typescript-is",
-              "simplemde"
+              "ardb"
             ]
           },
           "configurations": {
