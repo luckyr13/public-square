@@ -27,6 +27,7 @@
     "@codemirror/lang-markdown": "^0.19.6",
     "@codemirror/state": "^0.19.9",
     "@codemirror/view": "^0.19.45",
+    "@types/validator": "^13.7.1",
     "@verto/js": "^1.0.0-beta-1",
     "ardb": "^1.1.10",
     "arweave": "^1.10.23",
