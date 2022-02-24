@@ -1,36 +1,32 @@
-<mat-card class="post-card">
-	<div class="fadeIn" *ngIf="loading">
-			<div class="avatar-container">
-			  <ngx-skeleton-loader appearance="circle" [theme]="{ 'height.px': 42, 'width.px': 42, 'marginTop.px': 20 }"></ngx-skeleton-loader>
-			</div>
-			<div class="message-container">
-			  <ngx-skeleton-loader
-			  	appearance="line" 
-			  	[theme]="{ 'height.px': 142, 'marginBottom.px': 32, 'marginTop.px': 20 }"></ngx-skeleton-loader>
-				<ngx-skeleton-loader
-					appearance="line" 
-					[theme]="{ 'height.px': 34, 'width.px': 100, 'float': 'right' }"></ngx-skeleton-loader>
-			</div>
-	</div>
+<mat-card class="post-card fadeIn">
 
+	<mat-card-content class="card-content">
+		<div class="avatar-container" *ngIf="loading">
+			<ngx-skeleton-loader appearance="circle" [theme]="{ 'height.px': 42, 'width.px': 42, 'marginTop.px': 0 }"></ngx-skeleton-loader>
+		</div>
+		<div class="message-container" *ngIf="loading">
+		  <ngx-skeleton-loader
+		  	appearance="line" 
+		  	[theme]="{ 'height.px': 66, 'marginBottom.px': 0, 'marginTop.px': 0 }"></ngx-skeleton-loader>
+		</div>
 
-	<div class="fadeIn" [ngClass]="{ 'hide': loading }">
-		<mat-card-content class="card-content">
-			<div class="avatar-container">
-			  <img class="avatar" mat-card-avatar src="assets/img/blank-profile.png">
-			</div>
-			
-			<div class="message-container">
-			  <div class="message fadeIn" #postMessage></div>
-			</div>
-			
-		</mat-card-content>
-		<mat-card-actions align="end">
-			<button class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
-		</mat-card-actions>
-	</div>
+		<div class="avatar-container" *ngIf="!loading">
+		  <img class="avatar" mat-card-avatar src="assets/img/blank-profile.png">
+		</div>
+		<div class="message-container" [ngClass]="{ 'hide': loading }">
+		  <div class="message fadeIn" #postMessage></div>
+		</div>
+		
+	</mat-card-content>
+	<mat-card-actions align="end">
+		<ngx-skeleton-loader
+			 *ngIf="loading"
+				appearance="line" 
+				[theme]="{ 'height.px': 36, 'width.px': 100, 'marginBottom.px': 0 }"></ngx-skeleton-loader>
+		<button *ngIf="!loading" class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
+	</mat-card-actions>
 	
-	<mat-card-footer *ngIf="loading" class="fadeIn">
-    <mat-progress-bar color="accent" [mode]="loading ? 'indeterminate' : 'determinate'" value="0" ></mat-progress-bar>
+	<mat-card-footer *ngIf="loadingData" class="fadeIn">
+    <mat-progress-bar color="accent" [mode]="loadingData ? 'indeterminate' : 'determinate'" value="0" ></mat-progress-bar>
   </mat-card-footer>
 </mat-card>

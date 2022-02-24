@@ -121,26 +121,9 @@ $public-square-dark-indigo-theme: mat.define-dark-theme((
 
 /* CodeMirror START */
 .dark-indigo-theme, .dark-theme {
-  .CodeMirror, .editor-preview, .editor-preview-side, .editor-toolbar.fullscreen
-  { 
-    background-color:#303030!important;
-    color:#fff!important;
+  .cm-link {
+    color: #7dcbff;
   }
-  .editor-toolbar a, .editor-toolbar a.fa
-  { 
-    color:#fff!important
-  }
-  .editor-toolbar a.active, .editor-toolbar a:hover
-  {
-    color:#fff!important; background-color:#303030!important
-  }
-  .editor-toolbar.disabled-for-preview a:not(.no-disable){
-    background-color:#303030!important;color:#ccc!important
-  }
-  .CodeMirror-cursor {
-    border-color: inherit;
-  }
-
 }
 /* CodeMirror END */
 
@@ -247,11 +230,24 @@ body {
 
 
 /*
-* simplemde height fix
+* codemirror
 */
-.CodeMirror, .CodeMirror-scroll {
-  min-height: 100px !important;
+.message .cm-scroller {
+  min-height: 60px !important;
+  max-height: 220px !important;
+  overflow: auto !important;
 }
+
+.message .cm-editor.cm-focused {
+  outline-color: transparent;
+}
+.message .cm-content {
+  caret-color: inherit;
+}
+
+/*
+* /codemirror
+*/
 
 .hide {
   display: none !important;
@@ -275,3 +271,4 @@ body {
 .word-break {
   word-break: break-word;
 }
+

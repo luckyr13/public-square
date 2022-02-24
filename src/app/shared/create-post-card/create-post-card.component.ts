@@ -18,6 +18,7 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterViewInit
   overlayRef: OverlayRef|null = null;
   loadEditorSubscription: Subscription = Subscription.EMPTY;
   codemirrorWrapper: CodeMirrorWrapper;
+  loadingData = false;
 
   constructor(
     private _overlay: Overlay,

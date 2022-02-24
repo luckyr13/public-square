@@ -1,15 +1,17 @@
-import { EditorState } from '@codemirror/state';
-import { EditorView, keymap, placeholder } from '@codemirror/view';
+import { EditorState, StateField, StateEffect} from '@codemirror/state';
+import { EditorView, keymap, placeholder, highlightSpecialChars } from '@codemirror/view';
 import { defaultKeymap } from '@codemirror/commands';
 import { history, historyKeymap } from '@codemirror/history';
 import { Observable } from 'rxjs';
 import { defaultHighlightStyle } from "@codemirror/highlight";
 import { bracketMatching } from "@codemirror/matchbrackets";
-import { closeBrackets } from "@codemirror/closebrackets";
+import { closeBrackets, closeBracketsKeymap } from "@codemirror/closebrackets";
+import { linkExtension } from '../utils/codemirror/link-extension';
 
 export class CodeMirrorWrapper {
 	editorState: EditorState|null = null;
   editorView: EditorView|null = null;
+  
 
   init(container: any) {
 		const obs = new Observable((subscriber) => {
@@ -19,12 +21,14 @@ export class CodeMirrorWrapper {
 	          doc: '',
 	          extensions: [
 	          	history(),
+	          	highlightSpecialChars(),
 							bracketMatching(),
 							closeBrackets(),
-							placeholder('What\'s going on?'),
-	          	keymap.of(defaultKeymap),
-	          	keymap.of(historyKeymap),
+							placeholder('What\'s on your mind?'),
+	          	keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...historyKeymap]),
 	          	defaultHighlightStyle.fallback,
+	          	EditorView.lineWrapping,
+	          	linkExtension(),
 	          ]
 	        });
 
