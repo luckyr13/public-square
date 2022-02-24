@@ -25,6 +25,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { EmojisComponent } from './emojis/emojis.component';
 import {PortalModule} from '@angular/cdk/portal';
+import {MatRippleModule} from '@angular/material/core';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -53,6 +55,7 @@ import {PortalModule} from '@angular/cdk/portal';
     MatMenuModule,
     OverlayModule,
     PortalModule,
+    MatRippleModule,
   ],
   exports: [
   	MatToolbarModule,
@@ -76,7 +79,9 @@ import {PortalModule} from '@angular/cdk/portal';
     NgxSkeletonLoaderModule,
     OverlayModule,
     EmojisComponent,
-    PortalModule
+    PortalModule,
+    MatRippleModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule { }

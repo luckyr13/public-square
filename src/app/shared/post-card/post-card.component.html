@@ -1,10 +1,23 @@
 <mat-card class="post-card">
 	<div class="fadeIn">
 		<mat-card-content class="card-content">
-			hi
+			<div class="avatar-container" *ngIf="loading">
+				<ngx-skeleton-loader appearance="circle" [theme]="{ 'height.px': 42, 'width.px': 42, 'marginTop.px': 0 }"></ngx-skeleton-loader>
+			</div>
+			<div class="message-container" *ngIf="loading">
+			  <ngx-skeleton-loader
+			  	appearance="line" 
+			  	[theme]="{ 'height.px': 66, 'marginBottom.px': 0, 'marginTop.px': 0 }"></ngx-skeleton-loader>
+			</div>
+			<div class="avatar-container" *ngIf="!loading">
+			  <img class="avatar" mat-card-avatar src="assets/img/blank-profile.png">
+			</div>
+			<div class="message-container" [ngClass]="{ 'hide': loading }">
+			  <div class="message fadeIn" #postMessage></div>
+			</div>
 		</mat-card-content>
 		<mat-card-actions align="end">
-			<button class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
+			
 		</mat-card-actions>
 	</div>
 	

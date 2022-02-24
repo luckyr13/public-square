@@ -15,8 +15,13 @@
 		<div class="post-list-container">
 			<app-post-card *ngFor="let post of posts"></app-post-card>
 		</div>
-		<div class="more-results" (click)="moreResults()">
-			More results
+		<div class="more-results-container">
+			<mat-spinner *ngIf="loadingPosts" color="accent" diameter="32"></mat-spinner>
+			<mat-card class="more-results-card" matRipple *ngIf="!loadingPosts" (click)="moreResults()" >
+			  <mat-card-content class="more-results text-center">
+					Show older posts
+			  </mat-card-content>
+			</mat-card>
 		</div>
 	</div>
 	<div class="col-side-features">
