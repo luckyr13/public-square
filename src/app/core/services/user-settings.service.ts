@@ -34,6 +34,10 @@ export class UserSettingsService {
     'dark-indigo-theme': {
       id: 'dark-indigo-theme',
       dark: true
+    }, 
+    'dark-deep-purple-theme': {
+      id: 'dark-deep-purple-theme',
+      dark: true
     },
   };
 
@@ -112,6 +116,9 @@ export class UserSettingsService {
         this.setDefaultTheme(theme);
       break;
       case 'dark-indigo-theme':
+        this.setDefaultTheme(theme);
+      break;
+      case 'dark-deep-purple-theme':
         this.setDefaultTheme(theme);
       break;
       default:
