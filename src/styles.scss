@@ -92,12 +92,37 @@ $public-square-dark-indigo-theme: mat.define-dark-theme((
   typography: $public-square-typography
 ));
 
+/*
+* THEME: Light Pink
+*/
+// Define the palettes for your theme
+$public-square-light-pink-primary: mat.define-palette(mat.$pink-palette, A100);
+$public-square-light-pink-accent: mat.define-palette(mat.$cyan-palette, 200);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$public-square-light-pink-theme: mat.define-light-theme((
+  color: (
+    primary: $public-square-light-pink-primary,
+    accent: $public-square-light-pink-accent,
+    warn: $public-square-warn,
+  ),
+  typography: $public-square-typography
+));
+
+
 
 // Define all themes
 .light-theme {
   @include mat.all-component-colors($public-square-light-theme);
   .border-color-theme {
     border-color: mat.get-color-from-palette($public-square-light-accent, 'default') !important;
+  }
+}
+.light-pink-theme {
+  @include mat.all-component-colors($public-square-light-pink-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($public-square-light-pink-accent, 'default') !important;
   }
 }
 .dark-theme {
@@ -238,12 +263,20 @@ body {
   overflow: auto !important;
 }
 
+
+.message .cm-editor:hover {
+  border-bottom: 1px solid;
+}
+
 .message .cm-editor.cm-focused {
   outline-color: transparent;
+  border-bottom: 1px solid;
+  border-color: inherit;
 }
 .message .cm-content {
   caret-color: inherit;
 }
+
 
 /*
 * /codemirror

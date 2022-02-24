@@ -10,10 +10,13 @@
     <mat-menu #themeMenu="matMenu">
       <mat-radio-group aria-label="Select an option" [formControl]="theme" (change)="updateTheme(theme.value)">
         <div mat-menu-item>
+          <mat-radio-button value="dark-theme">Dark Square</mat-radio-button>
+        </div>
+        <div mat-menu-item>
           <mat-radio-button value="light-theme">Light Square</mat-radio-button>
         </div>
         <div mat-menu-item>
-          <mat-radio-button value="dark-theme">Dark Square</mat-radio-button>
+          <mat-radio-button value="light-pink-theme">Light Pink</mat-radio-button>
         </div>
         <div mat-menu-item>
           <mat-radio-button value="teal-theme">Teal Blue</mat-radio-button>

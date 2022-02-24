@@ -19,6 +19,10 @@ export class UserSettingsService {
       id: 'light-theme',
       dark: false
     },
+    'light-pink-theme': {
+      id: 'light-pink-theme',
+      dark: false
+    },
     'dark-theme': {
       id: 'dark-theme',
       dark: true
@@ -96,6 +100,9 @@ export class UserSettingsService {
   setTheme(theme: string) {
     switch (theme) {
       case 'light-theme':
+        this.setDefaultTheme(theme);
+      break;
+      case 'light-pink-theme':
         this.setDefaultTheme(theme);
       break;
       case 'dark-theme':
