@@ -39,8 +39,6 @@ private account: Subject<string>;
   constructor(private _arweave: ArweaveService) {
     this.account = new Subject<string>();
     this.account$ = this.account.asObservable();
-
-    this.loadAccount();
     
   }
 
@@ -60,6 +58,7 @@ private account: Subject<string>;
       if (this._method === 'webwallet') {
         this._arweave.arweaveWebWallet.connect().then((res: any) => {
           this._mainAddress = res;
+          this.account.next(this._mainAddress);
         }).catch((error: any) => {
           console.log('Error loading address');
         });

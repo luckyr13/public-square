@@ -8,6 +8,7 @@ import { InitPlatformAuthGuard } from '../core/route-guards/init-platform-auth.g
 const routes: Routes = [
 	{
 		path: '',
+		canActivate: [InitPlatformAuthGuard],
 		canActivateChild: [InitPlatformAuthGuard],
 		children: [
 			{

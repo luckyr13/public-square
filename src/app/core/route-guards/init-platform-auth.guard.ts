@@ -16,8 +16,7 @@ export class InitPlatformAuthGuard implements CanActivate, CanActivateChild {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // Display toolbar and main menu
-    this._userSettings.setShowMainToolbar(true);
+
     this._auth.loadAccount();
 
     return true;
@@ -25,7 +24,9 @@ export class InitPlatformAuthGuard implements CanActivate, CanActivateChild {
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.canActivate(childRoute, state);
+    // Display toolbar and main menu
+    this._userSettings.setShowMainToolbar(true);
+    return true;
   }
   
 }
