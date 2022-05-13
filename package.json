@@ -32,7 +32,7 @@
     "arverify": "^0.0.11",
     "arweave": "^1.10.23",
     "arweave-wallet-connector": "^0.0.29",
-    "dompurify": "^2.3.7",
+    "dompurify": "^2.3.8",
     "linkify-plugin-hashtag": "^3.0.4",
     "linkify-plugin-mention": "^3.0.4",
     "linkify-string": "^3.0.4",
@@ -50,11 +50,21 @@
     "@types/jasmine": "^4.0.3",
     "@types/node": "^17.0.32",
     "jasmine-core": "^4.1.1",
-    "karma": "~6.3.0",
+    "karma": "^6.3.20",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "^2.2.0",
-    "karma-jasmine": "^5.0.0",
+    "karma-jasmine": "^5.0.1",
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "^4.6.4"
+  },
+  "browser": {
+    "fs": false,
+    "crypto": false,
+    "stream": false,
+    "path": false,
+    "v8": false,
+    "undici": false,
+    "@three-em/node": false,
+    "@three-em/js": false
   }
 }
