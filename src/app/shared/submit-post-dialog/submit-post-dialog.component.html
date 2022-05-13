@@ -1,5 +1,5 @@
 <h2 mat-dialog-title class="title-text">
-	Post story
+	Create post
 </h2>
 <div class="title-buttons">
 	<button
@@ -14,7 +14,7 @@
 <mat-dialog-content
 	class="content border-right-special">
 	<div *ngIf="!loadingPostingSubstories && !loadingPostingMainStory">
-		<p>Do you want to post this Story?</p>
+		<p>Do you want to publish this post?</p>
 		<p class="text-center substories" *ngIf="data.substories && data.substories.length">
 			+ {{ data.substories.length }} substor{{ data.substories.length === 1 ? 'y' : 'ies'}} detected!
 		</p>
@@ -28,7 +28,7 @@
 		<p><span>Posting substories ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
 	</div>	
 	<div *ngIf="loadingPostingMainStory">
-		<p><span>Posting main story ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
+		<p><span>Publishing post ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
 		
 	</div>
 </mat-dialog-content>
@@ -44,6 +44,6 @@
   	(click)="submit()"
   	[disabled]="loadingPostingSubstories || loadingPostingMainStory"
   	color="accent">
-  	<span>Yes, post story now!</span> 
+  	<span>Yes, create post now!</span> 
   </button>
 </mat-dialog-actions>

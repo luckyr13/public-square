@@ -100,7 +100,7 @@ export class SubmitPostDialogComponent implements OnInit {
     this.postingSubstoriesSubscription = this._post.createPost(story, disableDispatch, tags, false, 'text').subscribe({
       next: (tx) => {
         this.loadingPostingMainStory = false;
-        this._utils.message('Story created!', 'success');
+        this._utils.message('Post created!', 'success');
         this.close(tx.id);
       },
       error: (err) => {

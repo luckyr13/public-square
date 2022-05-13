@@ -1,15 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
+
 import { UsersRoutingModule } from './users-routing.module';
-import { ViewProfileComponent } from './view-profile/view-profile.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { SharedModule } from '../shared/shared.module';
+import { ProfileComponent } from './profile/profile.component';
+import { LatestStoriesComponent } from './latest-stories/latest-stories.component';
+import { RepliesComponent } from './replies/replies.component';
+import { LikesComponent } from './likes/likes.component';
+import { PendingComponent } from './pending/pending.component';
+import { PostComponent } from './post/post.component';
 
 
 @NgModule({
   declarations: [
-    ViewProfileComponent,
-    EditProfileComponent
+    ProfileComponent,
+    LatestStoriesComponent,
+    RepliesComponent,
+    LikesComponent,
+    PendingComponent,
+    PostComponent
   ],
   imports: [
     CommonModule,

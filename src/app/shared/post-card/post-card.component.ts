@@ -96,6 +96,10 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
   extractTagsFromPost(post: TransactionMetadata) {
     const tags = post.tags!;
+    if (!tags) {
+      console.error('Tags not found', post);
+      return;
+    }
     for (const t of tags) {
       // Get substories
       if (t.name === 'Substory') {
@@ -298,8 +302,10 @@ export class PostCardComponent implements OnInit, OnDestroy {
     } else if (dataSize <= this.storyImageMaxSizeBytes && this.validateContentType(this.storyContentType, 'image')) {
       // Load content
       this._loadContentHelperLoadContent();
+    } else if (!dataSize) {
+      this.contentError = 'Couldn\'t fetch data size value. Tx is not mined yet.';
     } else {
-      this.contentError = `Story is too big to be displayed. Size limit for images: ${this.storyImageMaxSizeBytes}bytes. Size limit for text: ${this.storyMaxSizeBytes}bytes. Story size: ${this.post.dataSize} bytes.`;
+      this.contentError = `Story is too big to be displayed. Size limit for images: ${this.storyImageMaxSizeBytes}bytes. Size limit for text: ${this.storyMaxSizeBytes}bytes. Story size: ${dataSize} bytes.`;
     }
   }
 

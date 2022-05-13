@@ -75,40 +75,6 @@
 				</ng-template>
 			</mat-menu>
 			
-			<button
-				*ngIf="!isSubstory"
-				matTooltip="{{ 'GENERAL.CREATE_STORY.ADD_IMAGE_LABEL' | translate }}"
-				mat-icon-button color="accent"
-				[disabled]="loadingCreatePost"
-				#matButtonImage
-				[matMenuTriggerFor]="matMenuImage">
-				<mat-icon class="material-icons-outlined">image</mat-icon>
-			</button>
-			<mat-menu #matMenuImage="matMenu">
-			  <button mat-menu-item (click)="uploadFile('image')">
-			    <mat-icon>cloud_upload</mat-icon>
-			    <span>{{ 'GENERAL.CREATE_STORY.UPLOAD_FILE' | translate }}</span>
-			  </button>
-			  <button mat-menu-item (click)="fileManager('image')">
-			    <mat-icon>perm_media</mat-icon>
-			    <span>{{ 'GENERAL.CREATE_STORY.FILE_MANAGER' | translate }}</span>
-			  </button>
-			</mat-menu>
-			<button
-				*ngIf="!isSubstory"
-				matTooltip="{{ 'GENERAL.CREATE_STORY.ADD_VIDEO_LABEL' | translate }}"
-				(click)="comingSoon()"
-				mat-icon-button color="accent" [disabled]="loadingCreatePost">
-				<mat-icon class="material-icons-outlined">videocam</mat-icon>
-			</button>
-			<button
-				*ngIf="!isSubstory"
-				matTooltip="{{ 'GENERAL.CREATE_STORY.ADD_AUDIO_LABEL' | translate }}"
-				(click)="comingSoon()"
-				mat-icon-button color="accent" [disabled]="loadingCreatePost">
-				<mat-icon class="material-icons-outlined">mic</mat-icon>
-			</button>
-			
 		</div>
 		<span class="spacer"></span>
 		<ngx-skeleton-loader

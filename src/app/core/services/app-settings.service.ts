@@ -9,13 +9,13 @@ declare const document: any;
 export class AppSettingsService {
   appName = '🐘 Public Square';
 
-  appVersion = '0.1.0';
+  appVersion = '0.1.1';
 
   // Dev protocol
   // protocolVersion = '0.0-dev';
 
   // Prod protocol
-  protocolVersion = '1';
+  protocolVersion = '2';
   protocolName = 'PublicSquare';
 
   private _loadingPlatform: Subject<boolean> = new Subject<boolean>();

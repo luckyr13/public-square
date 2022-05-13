@@ -1,0 +1,64 @@
+<div class="fadeIn">
+	<div class="profile-header mat-elevation-z2 pacific-dream"></div>
+	<div class="profile-subheader">
+		<div class="profile-img ">
+			<img class="avatar border-same-as-background mat-elevation-z2" mat-card-avatar [src]="profileImage">
+		</div>
+		<div class="profile-info">
+			<h2 *ngIf="name">{{ name }}</h2>
+			<a [routerLink]="['/', username]" 
+          *ngIf="username" class="small-username user-link">@{{ username }}</a>
+			<app-arweave-address
+				*ngFor="let address of addressList"
+				[address]="address" class="small-username address"></app-arweave-address>
+		</div>
+		<div class="profile-actions" *ngIf="editProfileFlag">
+	    <button [routerLink]="['/', 'logout']" mat-stroked-button color="warn"><mat-icon>logout</mat-icon> Log out</button>
+	    <button mat-stroked-button color="accent"><mat-icon>edit</mat-icon> Edit Profile</button>
+		</div>
+		<div class="profile-actions" *ngIf="!editProfileFlag && isLoggedIn">
+	    <button mat-stroked-button color="accent">
+	    	<mat-icon>person_add_alt</mat-icon>
+	    	Follow
+	    </button>
+	    <button mat-stroked-button color="accent">
+	    	<mat-icon class="material-icons-outlined">monetization_on</mat-icon>
+	    	Donate
+	    </button>
+	    <button mat-flat-button color="accent"><mat-icon>people_alt</mat-icon> Add</button>
+		</div>
+	</div>
+	<div class="bio" *ngIf="bio">
+		{{ bio }}
+	</div>
+	<div class="col-body">
+		<nav 
+			mat-tab-nav-bar
+			class="mat-elevation-z1"
+			color="accent" [tabPanel]="tabPanel">
+		  <a mat-tab-link 
+		     [routerLink]="['/', addressRouteParam]"
+		     [routerLinkActiveOptions]="{exact: true}"
+		     routerLinkActive="active"
+		     #rlStories="routerLinkActive"
+		     [active]="rlStories.isActive"> Stories</a>
+		  <a mat-tab-link 
+		     #rlPending="routerLinkActive"
+		     routerLinkActive="active"
+		     [active]="rlPending.isActive"
+		     [routerLink]="['pending']"> Pending </a>
+		  <a mat-tab-link 
+		     #rlReply="routerLinkActive"
+		     routerLinkActive="active"
+		     [active]="rlReply.isActive"
+		     [routerLink]="['replies']"> Replies </a>
+		  <a mat-tab-link 
+		     #rlLike="routerLinkActive"
+		     routerLinkActive="active"
+		     [active]="rlLike.isActive"
+		     [routerLink]="['likes']"> Likes </a>
+		  
+		</nav>
+		<mat-tab-nav-panel #tabPanel><router-outlet></router-outlet></mat-tab-nav-panel>
+	</div>
+</div>

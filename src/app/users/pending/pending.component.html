@@ -1,0 +1,15 @@
+<div class="no-results" *ngIf="!posts"> No results.</div>
+<div class="post-list-container">
+	<app-post-card *ngFor="let post of posts" [post]="post"></app-post-card>
+</div>
+<div class="more-results-container">
+	<mat-spinner *ngIf="loadingPosts" color="accent" diameter="32"></mat-spinner>
+	<div class="no-results" *ngIf="!posts.length && !loadingPosts">
+		There are no pending Stories!
+	</div>
+	<mat-card class="more-results-card mat-elevation-z0" matRipple *ngIf="!loadingPosts && moreResultsAvailable" (click)="moreResults()" >
+	  <mat-card-content class="more-results text-center">
+			Show older posts
+	  </mat-card-content>
+	</mat-card>
+</div>

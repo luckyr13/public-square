@@ -1,0 +1,7 @@
+<div class="no-results" *ngIf="!loadingPost && !post"> No results.</div>
+<div class="post-list-container" *ngIf="post && !loadingPost">
+	<app-post-card [post]="post" [fullMode]="true"></app-post-card>
+</div>
+<div class="more-results-container">
+	<mat-spinner *ngIf="loadingPost" color="accent" diameter="32"></mat-spinner>
+</div>

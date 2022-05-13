@@ -17,12 +17,22 @@ mat-toolbar {
 	cursor: pointer;
 	font-size: 22px;
 	margin-left: 10px;
+	display: none;
 }
 
+.logo2{
+	cursor: pointer;
+	font-size: 36px;
+	margin-left: 10px;
+}
 @media (min-width: 800px) {
 	.logo {
 		font-size: 24px;
 		margin-right: 4px;
+		display: block;
+	}
+	.logo2{
+		display: none;
 	}
 }
 
