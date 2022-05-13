@@ -1,26 +1,27 @@
+<mat-progress-bar *ngIf="loadingLogin" color="accent" mode="indeterminate"></mat-progress-bar>
 <mat-nav-list>
   <mat-checkbox class="option" (change)="setStayLoggedIn($event)">Stay Logged In</mat-checkbox>
   <mat-list-item (click)="login('arconnect')">
-    <img matListAvatar src="./assets/img/login-methods/arconnect.jpg">
+    <img matListAvatar src="./assets/images/login-methods/arconnect.jpg">
     <span mat-line>ArConnect</span>
   </mat-list-item>
-  <mat-list-item (click)="login('webwallet')">
-    <img matListAvatar src="./assets/img/login-methods/arweaveViewSmall.svg">
+  <mat-list-item (click)="login('arweavewebwallet')">
+    <img matListAvatar src="./assets/images/login-methods/arweaveViewSmall.svg">
     <span mat-line>Arweave.app</span>
   </mat-list-item>
   <mat-list-item (click)="login('finnie')">
-    <img matListAvatar src="./assets/img/login-methods/koi.png">
+    <img matListAvatar src="./assets/images/login-methods/koi.png">
     <span mat-line>Finnie Wallet</span>
   </mat-list-item>
   <mat-list-item (click)="uploadFileListener(fileUploader)" >
   	<mat-icon matListIcon>upload</mat-icon>
     <span mat-line>Load your key file</span>
-    <span mat-line>*The key always stays in your browser</span>
+    <span mat-line>*The key is kept within your browser</span>
   </mat-list-item>
 </mat-nav-list>
 <div style="visibility: hidden">
   <input type="file" 
     #fileUploader 
     accept=".json,application/json" 
-    (change)="login('upload_file', $event)">
+    (change)="login('pkFile', $event)">
 </div>

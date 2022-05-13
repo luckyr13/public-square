@@ -1,0 +1,12 @@
+<h2>
+	<mat-icon class="header-icon material-icons-outlined">palette</mat-icon>
+	<span>{{ 'SETTINGS.APPEARANCE' | translate }}</span>
+</h2>
+<div class="info-container fadeIn">
+	<h3>Select Theme</h3>
+	<mat-radio-group aria-label="Select an option" [formControl]="theme" (change)="updateTheme(theme.value)">
+    <div mat-menu-item *ngFor="let th of getThemesList()">
+      <mat-radio-button [value]="th">{{ getThemeObj(th).label }}</mat-radio-button>
+    </div>
+  </mat-radio-group>
+</div>

@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserSettingsService } from '../../core/services/user-settings.service';
+import { AppSettingsService } from '../services/app-settings.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class InitPlatformGuard implements CanActivateChild {
-	
-	constructor(private _userSettings: UserSettingsService) {
+export class InitPlatformGuard implements CanActivate, CanActivateChild {
+  constructor(private _appSettings: AppSettingsService) {
 
-	}
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // Hide toolbar and main menu
-    this._userSettings.setShowMainToolbar(false);
+    // Scroll to top 
+    this._appSettings.scrollPageToTop();
     return true;
   }
   canActivateChild(

@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { LogoutComponent } from './logout/logout.component';
 import { InitPlatformGuard } from '../core/route-guards/init-platform.guard';
-import { InitPlatformAuthGuard } from '../core/route-guards/init-platform-auth.guard';
 
 const routes: Routes = [
 	{
+
+		path: 'settings',
+		loadChildren: () => import('../settings/settings.module').then(m => m.SettingsModule)
+	},
+	{
 		path: '',
-		canActivate: [InitPlatformAuthGuard],
-		canActivateChild: [InitPlatformAuthGuard],
 		children: [
-			{
-				path: 'dashboard', component: DashboardComponent
-			},
 			{
 				path: 'squares', loadChildren: () => import('../squares/squares.module').then(m => m.SquaresModule)
 			},
@@ -25,9 +23,9 @@ const routes: Routes = [
 			{
 				path: 'logout', component: LogoutComponent
 			},
-			{ path: ':address', loadChildren: () => import('../users/users.module').then(m => m.UsersModule) },
-		]
+		],
 	},
+	{ path: ':address', loadChildren: () => import('../users/users.module').then(m => m.UsersModule) },
 ];
 
 @NgModule({

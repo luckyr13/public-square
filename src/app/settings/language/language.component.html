@@ -1,0 +1,23 @@
+<div class="info-container fadeIn">
+	<h2>
+		<mat-icon class="header-icon material-icons-outlined">translate</mat-icon>
+		<span>{{ 'SETTINGS.LANGUAGE' | translate }}</span>
+	</h2>
+	<mat-list>
+		<mat-list-item>
+			<strong>Current language:</strong>
+			<span> {{ currentLang }}</span>
+		</mat-list-item>
+	</mat-list>
+	<div class="select-language">
+		<h3>Select language</h3>
+		<button 
+			mat-button
+			color="accent"
+			[ngClass]="{'active': currentLang === lang }"
+			*ngFor="let lang of langCodes"
+			(click)="setLanguage(lang)">
+			<span> {{ getLangObj(lang).native_name }}</span>
+		</button>
+	</div>
+</div>

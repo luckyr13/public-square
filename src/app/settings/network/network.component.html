@@ -1,0 +1,35 @@
+<div class="info-container fadeIn">
+	<h2>
+		<mat-icon class="header-icon material-icons-outlined">settings_input_antenna</mat-icon>
+		<span>{{ 'SETTINGS.NETWORK' | translate }}</span>
+	</h2>
+	<mat-list>
+		<mat-list-item>
+			<strong>Gateway:</strong>
+			<span>{{ protocol }}://{{ host }}:{{ port }}</span>
+		</mat-list-item>
+		<mat-list-item>
+			<strong>Base URL:</strong>
+			<span> {{ baseURL }}</span>
+		</mat-list-item>
+	</mat-list>
+	<mat-divider></mat-divider>
+	<h3>
+		Network Info
+	</h3>
+	<div class="text-center loader-net-info" *ngIf="loadingNetworkInfo">
+		<mat-spinner color="accent" diameter="32"></mat-spinner>
+	</div>
+	<mat-list>
+		<mat-list-item >
+			<strong>Network status:</strong>
+			<span *ngIf="networkInfo"><span class="point connected">·</span>  Connected</span>
+			<span *ngIf="!networkInfo"><span class="point disconnected">·</span> Disconnected</span>
+		</mat-list-item>
+		<mat-list-item *ngFor="let networkData of networkInfo | keyvalue">
+			<strong>{{ networkData.key }}</strong>
+			<span> {{ networkData.value }}</span>
+		</mat-list-item>
+	</mat-list>
+	<mat-divider></mat-divider>
+</div>

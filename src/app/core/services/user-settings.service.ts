@@ -2,129 +2,121 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 declare const window: any;
 declare const document: any;
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService, LanguageObj } from './language.service';
+import { ThemesService, ThemeObject } from './themes.service';
+
+interface SettingsObject {
+  theme: string,
+  lang: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserSettingsService {
-	private _defaultTheme: string = '';
-	private _defaultLang: string = '';
-  private _loadingPlatform: Subject<boolean> = new Subject<boolean>();
-  public loadingPlatform$ = this._loadingPlatform.asObservable();
-  private _showMainToolbar: Subject<boolean> = new Subject<boolean>();
-  public showMainToolbar$ = this._showMainToolbar.asObservable();
-  private _storage = window.localStorage;
-  public themes: Record<string, any> = {
-    'light-theme': {
-      id: 'light-theme',
-      dark: false
-    },
-    'light-pink-theme': {
-      id: 'light-pink-theme',
-      dark: false
-    },
-    'dark-theme': {
-      id: 'dark-theme',
-      dark: true
-    },
-    'teal-theme': {
-      id: 'teal-theme',
-      dark: false
-    },
-    'dark-indigo-theme': {
-      id: 'dark-indigo-theme',
-      dark: true
-    }, 
-    'dark-deep-purple-theme': {
-      id: 'dark-deep-purple-theme',
-      dark: true
-    },
+  private _settings: SettingsObject = {
+    theme: '',
+    lang: ''
   };
+  private _storage = window.localStorage;
+  private _currentThemeSource: Subject<string> = new Subject<string>();
+  public currentThemeStream = this._currentThemeSource.asObservable();
+  private _currentLangSource = new Subject<string>();
+  public currentLangStream = this._currentLangSource.asObservable();
+  public themes: Record<string, ThemeObject>;
+  public languages: Record<string, LanguageObj>;
 
-  constructor() {
-  	const dtheme = this._storage.getItem('defaultTheme');
-  	const dlang = this._storage.getItem('defaultLang');
-    this.setLoadingPlatform(false);
-    this.setShowMainToolbar(false);
-
-  	// Default settings
-  	if (dtheme) {
-  		this.setTheme(dtheme);
-  	} else {
-  		this.setTheme('light-theme');
-  	}
-  	if (dlang) {
-  		this.setDefaultLang(dlang);
-  	}
-
+  constructor(
+    private _translate: TranslateService,
+    private _langService: LanguageService,
+    private _themeService: ThemesService) {
+    this.themes = this._themeService.themes;
+    this.languages = this._langService.langs;
+    let settings: SettingsObject|null = null;
+    const tmpSettings = this._storage.getItem('settings');
+    let dtheme = '';
+    let dlang = '';
+    try {
+      settings = JSON.parse(tmpSettings); 
+    } catch (error) {
+      console.error('Error loading settings: ', error);
+    }
+    if (settings && Object.prototype.hasOwnProperty.call(settings, 'theme')) {
+      dtheme = settings.theme;
+      this.setTheme(dtheme);
+    } else {
+      this.setTheme('dark-blue-gray-theme');
+    }
+    if (settings && Object.prototype.hasOwnProperty.call(settings, 'lang')) {
+      dlang = settings.lang;
+      _translate.setDefaultLang(dlang.toLowerCase());
+      this.setDefaultLang(dlang);
+    } else {
+      _translate.setDefaultLang('en');
+      this.setDefaultLang('EN');
+    }
   }
 
-  setLoadingPlatform(_isLoading: boolean) {
-    this._loadingPlatform.next(_isLoading);
-  }
-
-  setShowMainToolbar(_show: boolean) {
-    this._showMainToolbar.next(_show);
+  get themeNamesList(): string[] {
+    return Object.keys(this.themes);
   }
 
   getDefaultTheme(): string {
-  	return this._defaultTheme;
+    return this._settings.theme;
+  }
+
+  getThemeObj(theme: string): ThemeObject {
+    return this.themes[theme];
   }
 
   getDefaultLang(): string {
-  	return this._defaultLang;
+    return this._settings.lang;
+  }
+
+  get langCodesList(): string[] {
+    return Object.keys(this.languages);
   }
 
   setDefaultTheme(_theme: string) {
-  	if (_theme) {
-    	this._defaultTheme = _theme;
-    	this._storage.setItem('defaultTheme', this._defaultTheme);
+    if (_theme) {
+      this._settings.theme = _theme;
+      this._storage.setItem('settings', JSON.stringify(this._settings));
       this.updateBodyClass(_theme);
-  	}
+      this._currentThemeSource.next(_theme);
+    }
   }
 
   setDefaultLang(_lang: string) {
-  	if (_lang) {
-  		this._defaultLang = _lang;
-    	this._storage.setItem('defaultLang', this._defaultLang);
-  	}
-  }
+    if (_lang) {
+      this._settings.lang = _lang;
+      this._storage.setItem('settings', JSON.stringify(this._settings));
+      this._translate.use(_lang.toLowerCase());
+      this._currentLangSource.next(_lang);
+      const langObj = this._langService.getLangObject(_lang)!;
 
-  resetUserSettings() {
-  	this._defaultLang = 'EN';
-  	this._defaultTheme = 'light-theme';
-  	this._storage.removeItem('defaultTheme');
-  	this._storage.removeItem('defaultLang');
-
+      // Update index.html
+      if (langObj) {
+        document.documentElement.lang = langObj.code;
+        if (langObj.writing_system) {
+          document.documentElement.dir = langObj.writing_system;
+        }
+      }
+    }
   }
 
   /*
   *  Set default theme (Updates the href property)
   */
   setTheme(theme: string) {
-    switch (theme) {
-      case 'light-theme':
+    const themes = this.themeNamesList;
+    for (const t of themes) {
+      if (theme === t) {
         this.setDefaultTheme(theme);
-      break;
-      case 'light-pink-theme':
-        this.setDefaultTheme(theme);
-      break;
-      case 'dark-theme':
-        this.setDefaultTheme(theme);
-      break;
-      case 'teal-theme':
-        this.setDefaultTheme(theme);
-      break;
-      case 'dark-indigo-theme':
-        this.setDefaultTheme(theme);
-      break;
-      case 'dark-deep-purple-theme':
-        this.setDefaultTheme(theme);
-      break;
-      default:
-      	throw Error('Theme not found!');
-      break;
+        return;
+      }
     }
+    console.error('UserSettings: Theme not found!');
   }
 
   updateBodyClass(className: string) {

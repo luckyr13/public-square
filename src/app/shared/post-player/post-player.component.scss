@@ -1,0 +1,59 @@
+$player-height: 320px;
+
+.player-container {
+	width: 100%;
+	margin: 0px 0px 20px 0px;
+	height: $player-height;
+	position: relative;
+	cursor: default;
+}
+
+.player-container .arrow-container {
+	float: left;
+	width: 4%;
+	height: 100%;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+	opacity: 0.2;
+}
+
+.player-container .arrow-container:hover {
+	opacity: 0.4;
+}
+
+.player-container .arrow-container.arrow-dark {
+	filter: invert(100%);
+}
+
+
+.vcenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.arrow {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.arrow img {
+	width: 100%;
+	height: 100%;
+}
+
+.arrow.left {
+	transform: rotate(180deg);
+
+}
+
+.arrow.right img {
+}
+
+.player-container .arrow-container.off {
+	opacity: 0.1;
+	cursor: default;
+}

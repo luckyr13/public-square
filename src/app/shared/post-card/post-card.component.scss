@@ -1,3 +1,279 @@
 .post-card {
+	width: 100%;
+	margin: 0 auto;
+	padding: 22px;
+	padding-bottom: 10px;
+	border-radius: 0px;
+}
+.post-card:hover {
+	cursor: pointer;
+	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+
+mat-card-header {
+	width: 100%;
 	margin-bottom: 20px;
+}
+
+.mat-card-content {
+}
+
+.card-content {
+	min-height: 100px;
+	position: relative;
+	clear: both;
+	display: inline-grid;
+	margin-bottom: 12px;
+	width: 100%;
+}
+
+.loading-avatar {
+	float: left;
+}
+
+
+.avatar-container {
+	min-height: 100%;
+	text-align: center;
+}
+
+.avatar {
+	width: 62px;
+	height: 62px;
+	cursor: pointer;
+}
+
+.avatar-fullmode {
+	width: 62px;
+	height: 62px;
+	cursor: pointer;
+	margin-right: 16px;
+	display: none;
+}
+
+.avatar-fullmode-main {
+	width: 62px;
+	height: 62px;
+	cursor: pointer;
+}
+
+.story-title {
+	display: flex;
+	margin-bottom: 12px;
+}
+
+.story-container {
+	width: 100%;
+	min-height: 100%;
+	padding-left: 14px;
+	word-break: normal;
+	overflow-wrap: anywhere;
+}
+
+.story-container .content {
+	min-height: 40px;
+	clear: both;
+	margin-bottom: 20px;
+}
+
+.story-container .content-error {
+	min-height: 40px;
+	clear: both;
+	margin-bottom: 6px;
+	font-style: italic;
+}
+
+.story-container .content-error p {
+	margin-bottom: 6px;
+}
+
+.story-container .content a {
+  word-break: break-all;
+  text-overflow: ellipsis;
+}
+
+.mat-card-actions {
+	padding-top: 12px;
+}
+
+
+@media (min-width: 800px) {
+	.post-card {
+		padding: 52px;
+		padding-bottom: 20px;
+		padding-left: 80px;
+		padding-right: 80px;
+	}
+	.profile-username {
+		margin-right: 12px;
+		margin-left: 6px;
+	}
+	.profile-name.fullmode, .profile-username.fullmode, .profile-story-date.fullmode {
+		line-height: 62px !important;
+	}
+	.profile-address.fullmode {
+		line-height: 50px !important;
+	}
+	.profile-address {
+		margin-top: 0px;
+	}
+	.profile-name-container {
+		flex-direction: row !important;
+	}
+	.profile-secondary-actions {
+		margin-top: -12px;
+	}
+
+
+	.card-content {
+		display: flex;
+	}
+
+	.avatar-container {
+		width: 82px;
+		text-align: left;
+		padding-right: 12px;
+	}
+
+	.avatar-fullmode {
+		display: block;
+	}
+
+	.avatar-fullmode-main {
+		display: none;
+	}
+
+}
+
+h2 span {
+	margin-right: 0px;
+}
+h2 small {
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+}
+
+h2 {
+}
+
+.profile-name-container {
+	cursor: pointer;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+}
+.profile-secondary-actions {
+	float: left;
+}
+.profile-name {
+}
+.profile-name:hover {
+	text-decoration: underline;
+}
+.profile-address, .profile-name, .profile-username {
+	display: block;
+}
+.profile-username {
+	opacity: 0.8;
+}
+.profile-address {
+	margin-top: 6px;
+	opacity: 0.8;
+}
+.profile-name, .profile-username, .profile-story-date {
+	line-height: 26px;
+}
+.profile-address {
+	line-height: 12px;
+}
+
+.tx {
+	font-size: 12px;
+}
+
+
+.story-actions {
+	display: flex;
+  flex-wrap: wrap;
+}
+
+.story-actions .mat-button {
+	width: 100%;
+	-webkit-transition: color 0.5s ease-out;
+  -moz-transition: color 0.5s ease-out;
+  -o-transition: color 0.5s ease-out;
+  transition: color 0.5s ease-out;
+}
+.story-actions .mat-icon {
+	font-size: 22px;
+}
+.story-actions .action-btn-wrapper {
+	flex-grow: 1;
+  flex-wrap: wrap;
+	text-align: center;
+
+}
+.story-actions .action-btn-wrapper div {
+	font-size: 10px;
+	margin-bottom: 10px;
+	font-weight: normal;
+	text-align: center;
+	line-height: 10px;
+}
+
+.pending {
+	padding: 10px;
+	font-size: 12px;
+	text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pending span {
+	line-height: 32px;
+}
+
+.pending .mat-spinner {
+	margin-left: 20px;
+}
+
+.tx-info-container h3 {
+	margin-bottom: 4px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.btn-open-anyway {
+	margin-left: 10px;
+	font-size: 12px !important;
+}
+
+.btn-see-more {
+	text-decoration: underline;
+}
+.tx-metadata-chips {
+	margin-top: 22px;
+}
+
+.tx-metadata-chips span {
+	font-size: 10px !important;
+	background-color: black;
+	color: white;
+	padding: 4px;
+	margin-left: 4px;
+}
+
+.story-image-container {
+	text-align: center;
+	padding: 20px;
+}
+.story-image-container img {
+	max-width: 100%;
+
+}
+
+.meta {
+	margin-top: 40px;
+	margin-bottom: 12px;
 }

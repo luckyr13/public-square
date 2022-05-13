@@ -1,32 +1,142 @@
-<mat-card class="post-card fadeIn">
-
+<mat-card 
+	class="create-post-card mat-elevation-z0 " 
+	[ngClass]="{ 'create-post-card-sub': isSubstory }"
+	[style.display]="!account ? 'none' : ''"
+	>
 	<mat-card-content class="card-content">
 		<div class="avatar-container" *ngIf="loading">
-			<ngx-skeleton-loader appearance="circle" [theme]="{ 'height.px': 52, 'width.px': 52, 'marginTop.px': 0 }"></ngx-skeleton-loader>
+			<ngx-skeleton-loader
+				[animation]="isDarkTheme ? 'progress-dark' : 'progress'"
+				appearance="circle"
+				[theme]="{ 'height.px': 62, 'width.px': 62, 'marginTop.px': 0 }"></ngx-skeleton-loader>
 		</div>
 		<div class="message-container" *ngIf="loading">
 		  <ngx-skeleton-loader
+		  	[animation]="isDarkTheme ? 'progress-dark' : 'progress'"
 		  	appearance="line" 
 		  	[theme]="{ 'height.px': 66, 'marginBottom.px': 0, 'marginTop.px': 0 }"></ngx-skeleton-loader>
 		</div>
-
-		<div class="avatar-container" *ngIf="!loading">
-		  <img class="avatar" mat-card-avatar src="assets/img/blank-profile.png">
+		<div class="avatar-container fadeIn" *ngIf="!loading">
+		  <img class="avatar" mat-card-avatar [src]="profileImage">
 		</div>
-		<div class="message-container" [ngClass]="{ 'hide': loading }">
-		  <div class="message fadeIn border-color-theme" #postMessage></div>
+		<div class="message-container fadeIn" [ngClass]="{ 'hide': loading }">
+		  <div class="message border-color-theme" #postMessage></div>
 		</div>
-		
+		<div class="substories clear-both" *ngIf="substories && substories.length">
+			<mat-list dense>
+				<mat-list-item
+					class="fadeIn substory-text"
+					*ngFor="let substory of getSubstoriesFiltered('text')">
+					<img matListAvatar [src]="profileImage">
+			    <p matLine *ngIf="substory.content">
+			      <span>{{substory.content}}</span>
+			    </p>
+			    <button
+			    	mat-icon-button
+			    	color="warn"
+			    	(click)="deleteSubstory(substory.arrId)"
+			    	aria-label="Delete substory">
+		        <mat-icon>clear</mat-icon>
+		      </button>
+			  </mat-list-item>
+			</mat-list>
+			<div class="substory-image-grid">
+				<div
+					class="substory-image-card"
+					*ngFor="let substory of getSubstoriesFiltered('image')">
+					<img
+						class="substory-image"
+						[src]="getImgUrlFromTx(substory.id)">
+					<button
+						class="substory-image-btn"
+			    	mat-icon-button
+			    	color="warn"
+			    	(click)="deleteSubstory(substory.arrId)"
+			    	aria-label="Delete substory">
+		        <mat-icon>clear</mat-icon>
+		       </button>
+				</div>
+			</div>
+		</div>
 	</mat-card-content>
 	<mat-card-actions align="end">
+		<div class="emotions-container" *ngIf="!loading">
+			<button
+				matTooltip="{{ 'GENERAL.CREATE_STORY.EMOJI_LABEL' | translate }}"
+				mat-icon-button
+				color="accent"
+				[matMenuTriggerFor]="matMenuEmojis"
+				[disabled]="loadingCreatePost">
+				<mat-icon class="material-icons-outlined">emoji_emotions</mat-icon>
+			</button>
+			<mat-menu #matMenuEmojis="matMenu">
+				<ng-template matMenuContent>
+					<app-emojis (emojiSelectedEvent)="emojiSelected($event)"></app-emojis>
+				</ng-template>
+			</mat-menu>
+			
+			<button
+				*ngIf="!isSubstory"
+				matTooltip="{{ 'GENERAL.CREATE_STORY.ADD_IMAGE_LABEL' | translate }}"
+				mat-icon-button color="accent"
+				[disabled]="loadingCreatePost"
+				#matButtonImage
+				[matMenuTriggerFor]="matMenuImage">
+				<mat-icon class="material-icons-outlined">image</mat-icon>
+			</button>
+			<mat-menu #matMenuImage="matMenu">
+			  <button mat-menu-item (click)="uploadFile('image')">
+			    <mat-icon>cloud_upload</mat-icon>
+			    <span>{{ 'GENERAL.CREATE_STORY.UPLOAD_FILE' | translate }}</span>
+			  </button>
+			  <button mat-menu-item (click)="fileManager('image')">
+			    <mat-icon>perm_media</mat-icon>
+			    <span>{{ 'GENERAL.CREATE_STORY.FILE_MANAGER' | translate }}</span>
+			  </button>
+			</mat-menu>
+			<button
+				*ngIf="!isSubstory"
+				matTooltip="{{ 'GENERAL.CREATE_STORY.ADD_VIDEO_LABEL' | translate }}"
+				(click)="comingSoon()"
+				mat-icon-button color="accent" [disabled]="loadingCreatePost">
+				<mat-icon class="material-icons-outlined">videocam</mat-icon>
+			</button>
+			<button
+				*ngIf="!isSubstory"
+				matTooltip="{{ 'GENERAL.CREATE_STORY.ADD_AUDIO_LABEL' | translate }}"
+				(click)="comingSoon()"
+				mat-icon-button color="accent" [disabled]="loadingCreatePost">
+				<mat-icon class="material-icons-outlined">mic</mat-icon>
+			</button>
+			
+		</div>
+		<span class="spacer"></span>
 		<ngx-skeleton-loader
+				[animation]="isDarkTheme ? 'progress-dark' : 'progress'"
 			 *ngIf="loading"
 				appearance="line" 
 				[theme]="{ 'height.px': 36, 'width.px': 100, 'marginBottom.px': 0 }"></ngx-skeleton-loader>
-		<button *ngIf="!loading" class="post-btn" mat-raised-button color="primary"><span>Post</span> <mat-icon>send</mat-icon></button>
+		<button 
+			*ngIf="!loading"
+			[disabled]="!messageContent || loadingCreatePost"
+			class="post-btn"
+			(click)="submit()"
+			mat-raised-button color="accent">
+			<span class="hide-sm" *ngIf="isSubstory">
+				{{ 'GENERAL.BUTTONS.ADD_SUBSTORY' | translate }}
+			</span>
+			<span class="hide-sm" *ngIf="!isSubstory">
+				{{ 'GENERAL.BUTTONS.POST' | translate }}
+			</span>
+			<mat-icon>send</mat-icon></button>
+
 	</mat-card-actions>
 	
-	<mat-card-footer *ngIf="loadingData" class="fadeIn">
-    <mat-progress-bar color="accent" [mode]="loadingData ? 'indeterminate' : 'determinate'" value="0" ></mat-progress-bar>
+	<mat-card-footer *ngIf="loadingData || loadingCreatePost" class="fadeIn">
+    <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
   </mat-card-footer>
 </mat-card>
+
+<div *ngIf="!account">
+	Error loading account.
+</div>

@@ -6,28 +6,90 @@ mat-toolbar {
   left: 0;
   z-index: 10;
 }
-.logo-sm {
-	display: block;
+
+.logo-img {
+	transform: rotate(-8deg);
+	-webkit-filter: drop-shadow(4px 4px 4px rgba(255,255,255,0.5));
 }
-.logo {
-	display: none;
-}
-.logo, .logo-sm {
+.logo{
 	font-weight: bold;
-	letter-spacing: 4px;
+	letter-spacing: 6px;
 	cursor: pointer;
-	font-size: 26px;
-}
-.logo span, .logo-sm span {
-	font-size: 32px;
-	margin-right: 4px;
+	font-size: 22px;
+	margin-left: 10px;
 }
 
 @media (min-width: 800px) {
-	.logo-sm {
-		display: none;
-	}
 	.logo {
-		display: block;
+		font-size: 24px;
+		margin-right: 4px;
 	}
+}
+
+.active {
+	background: rgba(0,0,0,.2);
+	font-weight: bold;
+}
+
+.mat-button span {
+	margin-left: 8px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.btn-connect {
+	border-radius: 50px;
+}
+
+
+.avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
+	vertical-align: middle;
+}
+
+.avatar.user {
+	margin-right: 4px;
+}
+
+.user-info-container {
+	width: 280px !important;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.big-username {
+	font-size: 18px !important;
+	margin-bottom: 20px;
+	font-weight: bold !important;
+}
+
+.user-link {
+	text-decoration: none;
+}
+
+.login-method-span {
+	margin-top: -6px;
+	font-size: 10px;
+}
+.mat-radio-button {
+	width: 100%;
+}
+.theme-info {
+	font-size: 10px;
+}
+.theme-menu-title {
+	font-size: 10px !important;
+	font-weight: bold !important;
+}
+.theme-menu-subtitle {
+	font-size: 10px !important;
+}
+
+.theme-menu-container .mat-list-item.mat-2-line,
+.theme-menu-container .mat-list-option.mat-2-line {
+	height: 42px !important;
 }

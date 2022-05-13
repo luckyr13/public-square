@@ -1,112 +1,76 @@
+
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+// Include the common styles for Angular Material. 
 @include mat.core();
 
+
 // Default app font
-$public-square-font-family: 'Libre Baskerville';
+$theme-font-family: 'Libre Baskerville';
 
-/*
-* THEME: Teal
-*/
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$public-square-primary: mat.define-palette(mat.$teal-palette);
-
-// The warn palette is optional (defaults to red).
-$public-square-warn: mat.define-palette(mat.$red-palette);
-$public-square-typography: mat.define-typography-config(
-  $font-family: $public-square-font-family,
+$theme-typography: mat.define-typography-config(
+  $font-family: $theme-font-family,
 );
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$public-square-theme: mat.define-light-theme((
-  color: (
-    primary: $public-square-primary,
-    accent: $public-square-primary,
-    warn: $public-square-warn,
-  ),
-  typography: $public-square-typography
-));
+// Light theme
+$light-theme-primary: mat.define-palette(mat.$grey-palette, A100);
+$light-theme-accent: mat.define-palette(mat.$grey-palette, 900);
 
-/*
-* THEME: Light
-*/
-// Define the palettes for your theme
-$public-square-light-primary: mat.define-palette(mat.$grey-palette, A100);
-$public-square-light-accent: mat.define-palette(mat.$grey-palette, 900);
+// The warn palette is optional (defaults to red).
+$theme-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$public-square-light-theme: mat.define-light-theme((
+$light-theme: mat.define-light-theme((
   color: (
-    primary: $public-square-light-primary,
-    accent: $public-square-light-accent,
-    warn: $public-square-warn,
+    primary: $light-theme-primary,
+    accent: $light-theme-accent,
+    warn: $theme-warn,
   ),
-  typography: $public-square-typography
+  typography: $theme-typography
 ));
 
-/*
-* THEME: Dark
-*/
-// Define the palettes for your theme
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$public-square-dark-theme: mat.define-dark-theme((
+// Dark theme
+$dark-theme-primary: mat.define-palette(mat.$grey-palette, 900);
+$dark-theme-accent: mat.define-palette(mat.$grey-palette, A100);
+$dark-theme: mat.define-dark-theme((
   color: (
-    primary: $public-square-light-accent,
-    accent: $public-square-light-primary,
-    warn: $public-square-warn,
+    primary: $dark-theme-primary,
+    accent: $dark-theme-accent,
+    warn: $theme-warn,
   ),
-  typography: $public-square-typography
+  typography: $theme-typography
 ));
 
-
-/*
-* THEME: Dark Indigo
-*/
-// Define the palettes for your theme
-$public-square-dark-indigo-primary: mat.define-palette(mat.$indigo-palette, 900);
-$public-square-dark-indigo-accent: mat.define-palette(mat.$amber-palette, A400);
-
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$public-square-dark-indigo-theme: mat.define-dark-theme((
-  color: (
-    primary: $public-square-dark-indigo-primary,
-    accent: $public-square-dark-indigo-accent,
-    warn: $public-square-warn,
-  ),
-  typography: $public-square-typography
-));
 
 /*
 * THEME: Light Pink
 */
-// Define the palettes for your theme
-$public-square-light-pink-primary: mat.define-palette(mat.$pink-palette, A100);
-$public-square-light-pink-accent: mat.define-palette(mat.$cyan-palette, 200);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$public-square-light-pink-theme: mat.define-light-theme((
+$light-pink-primary: mat.define-palette(mat.$grey-palette, A100);
+$light-pink-accent: mat.define-palette(mat.$pink-palette, A400);
+$light-pink-theme: mat.define-light-theme((
   color: (
-    primary: $public-square-light-pink-primary,
-    accent: $public-square-light-pink-accent,
-    warn: $public-square-warn,
+    primary: $light-pink-primary,
+    accent: $light-pink-accent,
+    warn: $theme-warn,
   ),
-  typography: $public-square-typography
+  typography: $theme-typography
+));
+/*
+* THEME: Dark Pink
+*/
+$dark-pink-primary: mat.define-palette(mat.$pink-palette, 600);
+$dark-pink-accent: mat.define-palette(mat.$green-palette, A200);
+$dark-pink-theme: mat.define-dark-theme((
+  color: (
+    primary: $dark-pink-primary,
+    accent: $dark-pink-accent,
+    warn: $theme-warn,
+  ),
+  typography: $theme-typography
 ));
 
 
@@ -114,78 +78,263 @@ $public-square-light-pink-theme: mat.define-light-theme((
 * THEME: Deep Purple
 */
 // Define the palettes for your theme
-$public-square-dark-deep-purple-primary: mat.define-palette(mat.$deep-purple-palette, A700);
-$public-square-dark-deep-purple-accent: mat.define-palette(mat.$light-green-palette, A400);
-
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$public-square-dark-deep-purple-theme: mat.define-dark-theme((
+$dark-deep-purple-primary: mat.define-palette(mat.$deep-purple-palette, A700);
+$dark-deep-purple-accent: mat.define-palette(mat.$light-green-palette, A400);
+$dark-deep-purple-theme: mat.define-dark-theme((
   color: (
-    primary: $public-square-dark-deep-purple-primary,
-    accent: $public-square-dark-deep-purple-accent,
-    warn: $public-square-warn,
+    primary: $dark-deep-purple-primary,
+    accent: $dark-deep-purple-accent,
+    warn: $theme-warn,
   ),
-  typography: $public-square-typography
+  typography: $theme-typography
 ));
+
+/*
+* THEME: Light Blue
+*/
+$light-blue-primary: mat.define-palette(mat.$grey-palette, A100);
+$light-blue-accent: mat.define-palette(mat.$light-blue-palette, 900);
+$light-blue-theme: mat.define-light-theme((
+  color: (
+    primary: $light-blue-primary,
+    accent: $light-blue-accent,
+    warn: $theme-warn,
+  ),
+  typography: $theme-typography
+));
+
+
+/*
+* THEME: Dark blue gray
+*/
+$dark-blue-gray-primary: mat.define-palette(mat.$blue-gray-palette, 900);
+$dark-blue-gray-accent: mat.define-palette(mat.$blue-gray-palette, A200);
+$dark-blue-gray-theme: mat.define-dark-theme((
+  color: (
+    primary: $dark-blue-gray-primary,
+    accent: $dark-blue-gray-accent,
+    warn: $theme-warn,
+  ),
+  typography: $theme-typography
+));
+
+
 
 // Define all themes
 .light-theme {
-  @include mat.all-component-colors($public-square-light-theme);
+  @include mat.all-component-colors($light-theme);
   .border-color-theme {
-    border-color: mat.get-color-from-palette($public-square-light-accent, 'default') !important;
+    border-color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
   }
-}
-.light-pink-theme {
-  @include mat.all-component-colors($public-square-light-pink-theme);
-  .border-color-theme {
-    border-color: mat.get-color-from-palette($public-square-light-pink-accent, 'default') !important;
+  .color-accent-theme {
+    color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
+  }
+
+  .mat-drawer-container {
+    background-color: #FFFFFF;
+  }
+
+  .border-right-special {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .border-same-as-background {
+    border-color: #FFFFFF !important;
+  }
+
+  .small-username {
+    color: rgb(20, 20, 20, 0.8);
+  }
+  .small-username-2 {
+    color: rgb(20, 20, 20, 0.8);
+  }
+  .substory-container {
+    background-color: #FFF;
   }
 }
 .dark-theme {
-  @include mat.all-component-colors($public-square-dark-theme);
+  @include mat.all-component-colors($dark-theme);
   .border-color-theme {
-    border-color: mat.get-color-from-palette($public-square-light-primary, 'default') !important;
+    border-color: mat.get-color-from-palette($light-theme-primary, 'default') !important;
+  }
+  .color-accent-theme {
+    color: mat.get-color-from-palette($light-theme-primary, 'default') !important;
+  }
+  .mat-drawer-container{
+    background-color: #0f0f0f;
+  }
+  .mat-dialog-container, .mat-dialog-container .mat-card, .mat-bottom-sheet-container {
+    background-color: #3F3F3F;
+  }
+  .mat-drawer, .mat-menu-panel {
+    background-color: #212121;
+  }
+
+  .mat-card, .substory-container {
+    background-color: #0f0f0f;
+  }
+  .border-same-as-background {
+    border-color: #0f0f0f !important;
+  }
+  .post-card:hover {
+    box-shadow: 0px 3px 3px -2px rgb(253 253 253 / 20%), 0px 3px 4px 0px rgb(253 253 253 / 14%), 0px 1px 8px 0px rgb(253 253 253 / 12%) !important;
   }
 }
-.teal-theme {
-  @include mat.all-component-colors($public-square-theme);
+.light-pink-theme {
+  @include mat.all-component-colors($light-pink-theme);
   .border-color-theme {
-    border-color: mat.get-color-from-palette($public-square-primary, 'default') !important;
+    border-color: mat.get-color-from-palette($light-pink-accent, 'default') !important;
   }
-}
-.dark-indigo-theme {
-  @include mat.all-component-colors($public-square-dark-indigo-theme);
-  .border-color-theme {
-    border-color: mat.get-color-from-palette($public-square-dark-indigo-accent, 'default') !important;
+  .color-accent-theme {
+    color: mat.get-color-from-palette($light-pink-accent, 'default') !important;
+  }
+  .mat-drawer-container {
+    background-color: #FFFFFF;
+  }
+  .border-right-special {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+  }
+  .border-same-as-background {
+    border-color: #FFFFFF !important;
+  }
+  .small-username {
+    color: rgb(20, 20, 20, 0.8);
+  }
+  .small-username-2 {
+    color: rgb(20, 20, 20, 0.8);
+  }
+  .substory-container {
+    background-color: #FFF;
   }
 }
 .dark-deep-purple-theme {
-  @include mat.all-component-colors($public-square-dark-deep-purple-theme);
+  @include mat.all-component-colors($dark-deep-purple-theme);
   .border-color-theme {
-    border-color: mat.get-color-from-palette($public-square-dark-deep-purple-accent, 'default') !important;
+    border-color: mat.get-color-from-palette($dark-deep-purple-accent, 'default') !important;
+  }
+  .color-accent-theme {
+    color: mat.get-color-from-palette($dark-deep-purple-accent, 'default') !important;
+  }
+  .mat-drawer-container {
+    background-color: #0f0f0f;
+  }
+  .mat-dialog-container, .mat-dialog-container .mat-card, .mat-bottom-sheet-container {
+    background-color: #3F3F3F;
+  }
+  .mat-drawer, .mat-menu-panel {
+    background-color: #212121;
+  }
+
+  .mat-card, .substory-container {
+    background-color: #0f0f0f;
+  }
+  .border-same-as-background {
+    border-color: #0f0f0f !important;
+  }
+  .post-card:hover {
+    box-shadow: 0px 3px 3px -2px rgb(253 253 253 / 20%), 0px 3px 4px 0px rgb(253 253 253 / 14%), 0px 1px 8px 0px rgb(253 253 253 / 12%) !important;
   }
 }
 
-/* CodeMirror START */
-.dark-indigo-theme, .dark-theme {
-  .cm-link {
-    color: #7dcbff;
+.dark-pink-theme {
+  @include mat.all-component-colors($dark-pink-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($dark-pink-accent, 'default') !important;
+  }
+  .color-accent-theme {
+    color: mat.get-color-from-palette($dark-pink-accent, 'default') !important;
+  }
+  .mat-drawer-container {
+    background-color: #0f0f0f;
+  }
+  .mat-dialog-container, .mat-dialog-container .mat-card, .mat-bottom-sheet-container {
+    background-color: #3F3F3F;
+  }
+  .mat-drawer, .mat-menu-panel {
+    background-color: #212121;
+  }
+
+  .mat-card, .substory-container {
+    background-color: #0f0f0f;
+  }
+  .border-same-as-background {
+    border-color: #0f0f0f !important;
+  }
+  .post-card:hover {
+    box-shadow: 0px 3px 3px -2px rgb(253 253 253 / 20%), 0px 3px 4px 0px rgb(253 253 253 / 14%), 0px 1px 8px 0px rgb(253 253 253 / 12%) !important;
   }
 }
-/* CodeMirror END */
+.light-blue-theme {
+  @include mat.all-component-colors($light-blue-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($light-blue-accent, 'default') !important;
+  }
+  .color-accent-theme {
+    color: mat.get-color-from-palette($light-blue-accent, 'default') !important;
+  }
+  .mat-drawer-container {
+    background-color: #FFFFFF;
+  }
+  .border-right-special {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+  }
+  .border-same-as-background {
+    border-color: #FFFFFF !important;
+  }
+  .small-username {
+    color: rgb(20, 20, 20, 0.8);
+  }
+  .small-username-2 {
+    color: rgb(20, 20, 20, 0.8);
+  }
+  .substory-container {
+    background-color: #FFF;
+  }
+}
 
+.dark-blue-gray-theme {
+  @include mat.all-component-colors($dark-blue-gray-theme);
+  .border-color-theme {
+    border-color: mat.get-color-from-palette($dark-blue-gray-accent, 'default') !important;
+  }
+  .color-accent-theme {
+    color: mat.get-color-from-palette($dark-blue-gray-accent, 'default') !important;
+  }
+  .mat-drawer-container {
+    /*
+    * #ece9e6
+    */
+    background-color: rgb(27, 39, 51);
 
+  }
+  .mat-dialog-container, .mat-dialog-container .mat-card, .mat-bottom-sheet-container, .mat-bottom-sheet-container {
+    background-color: rgb(27, 39, 51);
+  }
+  .mat-drawer, .mat-menu-panel, .mat-toolbar {
+    background-color: #161F29 !important;
+  }
 
+  .mat-card, .substory-container {
+    background-color: rgb(27, 39, 51);
+    color: #ece9e6 !important;
+  }
+  .border-same-as-background {
+    border-color: #0f0f0f !important;
+  }
+  .post-card:hover {
+    box-shadow: 0px 3px 3px -2px rgb(253 253 253 / 20%), 0px 3px 4px 0px rgb(253 253 253 / 14%), 0px 1px 8px 0px rgb(253 253 253 / 12%) !important;
+  }
+  
+}
 
 /* Global styles */
 html, body { height: 100%; }
 body {
-  font-family: $public-square-font-family, 'serif';
+  font-family: $theme-font-family, 'serif';
   padding-top: 60px;
 }
 * {
-  font-family: $public-square-font-family, 'serif';
+  font-family: $theme-font-family, 'serif';
   box-sizing: border-box;
   margin: 0;
   padding:0;
@@ -249,14 +398,14 @@ body {
 
 
 /* GLOBAL STYLES FOR MATERIAL COMPONENTS */
-.mat-snack-bar-container.error{
+.mat-snack-bar-container.error, .mat-snack-bar-container.error .mat-button{
   background-color: #f44336;
   color: #FFF;
 }
 
-.mat-snack-bar-container.success{
-  background-color: #69f0ae;
-  color: rgba(0,0,0,.87);
+.mat-snack-bar-container.success, .mat-snack-bar-container.success .mat-button{
+  background-color: #3BC661;
+  color: #FFF;
 }
 
 /*
@@ -267,13 +416,20 @@ body {
 */
 
 .secondary-toolbar {
-  height: 52px;
-  font-size: 16px;
-  line-height: 52px;
+  height: 42px;
+}
+
+
+.secondary-toolbar span {
+  font-size: 12px;
+  line-height: 42px;
+  padding-top: 6px;
+  font-style: italic;
 }
 
 .secondary-toolbar mat-icon {
-  font-size: 25px;
+  font-size: 20px;
+  line-height: 42px;
 }
 
 
@@ -281,7 +437,7 @@ body {
 * codemirror
 */
 .message .cm-scroller {
-  min-height: 60px !important;
+  min-height: 42px !important;
   max-height: 220px !important;
   overflow: auto !important;
 }
@@ -291,9 +447,9 @@ body {
   border-bottom: 1px solid;
 }
 
-.message .cm-editor.cm-focused {
+.message .cm-editor.cm-focused, .message .cm-editor:hover {
   outline-color: transparent;
-  border-bottom: 1px solid;
+  border-bottom: 0px solid;
   border-color: inherit;
 }
 .message .cm-content {
@@ -341,4 +497,84 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.hide-xs {
+  display: none !important;
+}
+.hide-sm {
+  display: none !important;
+}
+@media (min-width: 800px) {
+  .hide-sm {
+    display: inline !important;
+  }
+}
+
+@media (min-width: 400px) {
+  .hide-xs {
+    display: inline !important;
+  }
+}
+
+/*
+* FIX EMOJI TABS WIDTH
+*/
+.emoji-container .mat-tab-label {
+  min-width: 72px !important;
+}
+.emoji-container .mat-tab-body-content {
+  padding-top: 10px;
+}
+.mat-menu-content:not(:empty) {
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+}
+
+a {
+  color: #0091f2;
+}
+
+.pink-hover:hover {
+  color: rgb(255,1,93) !important;
+}
+.blue-hover:hover {
+  color: #00a6f2 !important;
+}
+.green {
+  color: rgb(80,203,130) !important;
+}
+.green-hover:hover {
+  color: rgb(80,203,130) !important;
+}
+.orange-hover:hover {
+  color: #ffa72b !important;
+}
+.small-username {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.small-username-2 {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+/*
+* Default colors
+*/
+.small-username {
+  color: rgb(220, 220, 220, 0.8);
+}
+.small-username-2 {
+  color: rgb(220, 220, 220, 0.8);
+}
+
+/*
+* Fix menu panel width
+*/
+@media (min-width: 600px) {
+  .mat-menu-panel {
+    max-width: 350px !important;
+  }
+
 }

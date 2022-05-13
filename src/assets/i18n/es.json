@@ -1,0 +1,71 @@
+{
+	"MAIN_MENU": {
+		"HOME": "Inicio",
+		"SEARCH": "Buscar",
+		"PROFILE": "Perfil",
+		"FRIENDS": "Amigos",
+		"SETTINGS": "Ajustes"
+	},
+	"GENERAL": {
+		"BUTTONS": {
+			"GO_BACK": "Regresar",
+			"OPEN_VIEWBLOCK": "Abrir en Viewblock",
+			"COPY_ADDRESS": "Copiar dirección",
+			"COPY_ID": "Copiar Id",
+			"TIP_AUTHOR": "Dar propina al autor",
+			"CONNECT": "Conectar",
+			"POST": "Publicar",
+			"ADD_SUBSTORY": "Agregar sub-historia"
+		},
+		"LABELS": {
+			"NO_RESULTS": "Sin resultados",
+			"MORE_RESULTS": "Más resultados",
+			"PROFILE": "Perfil",
+			"LOGOUT_COMPOSED": "Cerrar sesión de {{ value }}",
+			"LOGOUT": "Cerrar sesión",
+			"METHOD": "Método",
+			"SHOW_OLDER_RESULTS": "Mostrar resultados anteriores"
+		},
+		"CREATE_STORY": {
+			"TXTAREA_LABEL": "¿Qué tienes en mente {{value}}?",
+			"EMOJI_LABEL": "Insertar emoji",
+			"ADD_SUBSTORY_LABEL": "Agregar sub-historia",
+			"ADD_IMAGE_LABEL": "Agregar imágen",
+			"ADD_VIDEO_LABEL": "Agregar video",
+			"ADD_AUDIO_LABEL": "Agregar audio",
+			"CREATE_SUBSTORY": "Crear sub-historia",
+			"SEARCH_SUBSTORY": "Buscar sub-historia",
+			"UPLOAD_FILE": "Subir archivo",
+			"FILE_MANAGER": "Administrador de Archivos"
+		},
+		"STORY": {
+			"TX_INFO": "Información de TX",
+			"ID": "Id",
+			"COMMENT": "Comentar",
+			"REPOST": "Repostear",
+			"LIKE": "Me gusta",
+			"SHARE": "Compartir"
+		}
+	},
+	"SETTINGS": {
+		"APP_INFO": "Info de la App",
+		"NETWORK": "Red",
+		"WALLET": "Cartera",
+		"APPEARANCE": "Apariencia",
+		"LANGUAGE": "Idioma"
+	},
+	"DIALOGS": {
+		"SHARE": {
+			"TITLE": "Compartir en redes sociales",
+			"FACEBOOK": "Compartir en una publicación de Facebook",
+			"TWITTER": "Compartir en un tweet",
+			"WHATSAPP": "Compartir en un mensaje de Whatsapp",
+			"COPY": "Copiar enlace al portapapeles"
+		},
+		"RESUME_SESSION": {
+			"MESSAGE": "¿Reanudar sesión en Arweave Web Wallet?",
+			"CONFIRM": "Sí, reanudar sesión",
+			"DISMISS": "Cerrar"
+		}
+  }
+}

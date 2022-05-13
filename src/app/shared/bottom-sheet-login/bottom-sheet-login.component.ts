@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserAuthService } from '../../core/services/user-auth.service';
 import { Subscription, EMPTY } from 'rxjs';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { UtilsService } from '../../core/utils/utils.service';
 import {MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 
@@ -11,12 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./bottom-sheet-login.component.scss']
 })
 export class BottomSheetLoginComponent implements OnInit, OnDestroy {
-	login$: Subscription = Subscription.EMPTY;
+	loginSubscription: Subscription = Subscription.EMPTY;
   stayLoggedIn: boolean = false;
+  loadingLogin = false;
 
   constructor(
   	private _auth: UserAuthService,
-  	private _snackBar: MatSnackBar,
+  	private _utils: UtilsService,
     private _bottomSheetRef: MatBottomSheetRef<BottomSheetLoginComponent>,
     private _router: Router,
   ) {}
@@ -29,9 +30,7 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
   *  @dev Destroy subscriptions
   */
   ngOnDestroy(): void {
-  	if (this.login$) {
-  		this.login$.unsubscribe();
-  	}
+		this.loginSubscription.unsubscribe();
   }
 
   /*
@@ -49,30 +48,26 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
   *  @dev Select a method to connect wallet from modal (or bottom sheet)
   */
   login(walletOption: string, fileInput: any = null) {
+    this.loadingLogin = true;
+    if (walletOption === 'arweavewebwallet') {
+      this.loadingLogin = false;
+    }
 
-  	this.login$ = this._auth.login(walletOption, fileInput, this.stayLoggedIn).subscribe({
-  		next: (res: any) => {
-        this._bottomSheetRef.dismiss(true);
-        this.message('Welcome!', 'success');
+  	this.loginSubscription = this._auth.login(walletOption, fileInput, this.stayLoggedIn).subscribe({
+  		next: (address: string) => {
+        this.loadingLogin = false;
+        this._bottomSheetRef.dismiss(address);
+        this._utils.message('Connection successful!', 'success');
   		},
   		error: (error) => {
-        this.message(`Error: ${error}`, 'error');
-        this._bottomSheetRef.dismiss(false);
+        this.loadingLogin = false;
+        this._utils.message(`Error: ${error}`, 'error');
+        this._bottomSheetRef.dismiss('');
 
   		}
   	});
   }
 
 
-  /*
-  *  Custom snackbar message
-  */
-  message(msg: string, panelClass: string = '', verticalPosition: any = undefined) {
-    this._snackBar.open(msg, 'X', {
-      duration: 8000,
-      horizontalPosition: 'center',
-      verticalPosition: verticalPosition,
-      panelClass: panelClass
-    });
-  }
+
 }

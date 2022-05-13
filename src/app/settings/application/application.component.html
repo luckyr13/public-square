@@ -1,0 +1,25 @@
+<div class="info-container fadeIn">
+	<h2>
+		<mat-icon class="header-icon material-icons-outlined">info</mat-icon>
+		<span>{{ 'SETTINGS.APP_INFO' | translate }}</span>
+	</h2>
+	<mat-list>
+		<mat-list-item>
+			<strong>Permaweb Protocol:</strong>
+			<span> {{ appName }} v{{ protocolVersion }}</span>
+		</mat-list-item>
+		<mat-list-item>
+			<strong>Platform Version:</strong>
+			<span> {{ appVersion }}</span>
+		</mat-list-item>
+	</mat-list>
+	<mat-divider></mat-divider>
+	<h3>
+		Session data
+	</h3>
+	<p>
+		<button (click)="deleteSes()" mat-button color="warn">
+			<mat-icon>delete</mat-icon>Delete Session
+		</button>
+	</p>
+</div>

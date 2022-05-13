@@ -1,8 +1,8 @@
-import {EditorView, Decoration, ViewPlugin, DecorationSet, ViewUpdate} from "@codemirror/view"
-import {RangeSetBuilder} from "@codemirror/rangeset"
-import {Extension} from "@codemirror/state"
-import isUrl from 'validator/lib/isUrl';
-
+import {EditorView, Decoration, ViewPlugin, DecorationSet, ViewUpdate} from "@codemirror/view";
+import {Extension, RangeSetBuilder} from "@codemirror/state";
+import * as linkify from 'linkifyjs';
+import 'linkify-plugin-hashtag';
+import 'linkify-plugin-mention';
 
 const link = Decoration.mark({
   attributes: {class: "cm-link"}
@@ -45,30 +45,13 @@ function linkDeco(view: EditorView) {
 
 function getLinksByPosition(start: number, end: number, s: string) {
 	const res: Array<{from: number, to: number}>= [];
-	let inWord = false;
-	let currentWord = '';
-	const numCharacters = s.length;
-	let i: number;
-	for (i = 0; i < numCharacters; i++) {
-		if (s[i].trim() !== '') {
-			inWord = true;
-			currentWord += s[i];
-		} else {
-			if (inWord) {
-				if (isUrl(currentWord) || (currentWord.length && currentWord[0] === '#')) {
-					res.push({from:  start + (i - currentWord.length), to: (start + i)});
-				}
-			}
-			inWord = false;
-			currentWord = '';
-		}
-	}
+  const links = linkify.find(s);
 
-	if (inWord) {
-		if (isUrl(currentWord) || (currentWord.length && currentWord[0] === '#')) {
-			res.push({from:  start + (i - currentWord.length), to: (start + i)});
-		}
-	}
+  for (const li of links) {
+    if (li.type === 'url' || li.type === 'mention' || li.type === 'hashtag') {
+      res.push({from: start + li.start, to: start + li.end });
+    }
+  }
 
 	return res;
 }

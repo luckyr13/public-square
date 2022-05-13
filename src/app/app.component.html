@@ -2,15 +2,17 @@
   *ngIf="platformLoading$ | async"
   class="main-loader" 
   mode="indeterminate"></mat-progress-bar>
-<app-main-toolbar *ngIf="opened"></app-main-toolbar>
-<mat-sidenav-container [ngClass]="{'container-top-m': !opened}">
+<app-main-toolbar
+  (toggleEvent)="toggle($event)"></app-main-toolbar>
+<mat-sidenav-container>
   <mat-sidenav
-  	mode="side" 
+    mode="side" 
     autoFocus="false"
+    [position]="menuPosition"
     [(opened)]="opened">
     <app-main-menu></app-main-menu>
   </mat-sidenav>
-  <mat-sidenav-content>
-  	<router-outlet></router-outlet>
+  <mat-sidenav-content id="ww-mat-sidenav-main-content">
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

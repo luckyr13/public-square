@@ -1,0 +1,72 @@
+<div>
+  <p>
+    <mat-toolbar class="secondary-toolbar" color="primary">
+      <button mat-icon-button>
+        <mat-icon>settings</mat-icon>
+      </button>
+      <span>{{ 'MAIN_MENU.SETTINGS' | translate }}</span>
+    </mat-toolbar>
+  </p>
+  <nav 
+    mat-tab-nav-bar 
+    class="mat-elevation-z1"
+    color="accent" [tabPanel]="tabPanel">
+    <a 
+      class="action-btn-wrapper"
+      mat-tab-link 
+      [routerLink]="['/', 'settings', 'application']"
+      routerLinkActive="active"
+      #rlApplication="routerLinkActive"
+      [active]="rlApplication.isActive"> 
+      <mat-icon
+        [class]="{ 'material-icons-outlined': !rlApplication.isActive }">info</mat-icon>
+      <div class="action-btn-label">{{ 'SETTINGS.APP_INFO' | translate }}</div>
+    </a>
+    <a
+      class="action-btn-wrapper"
+      mat-tab-link 
+      [routerLink]="['/', 'settings', 'network']"
+      routerLinkActive="active"
+      #rlNetwork="routerLinkActive"
+      [active]="rlNetwork.isActive">
+      <mat-icon
+        [class]="{ 'material-icons-outlined': !rlNetwork.isActive }">settings_input_antenna</mat-icon>
+      <div class="action-btn-label">{{ 'SETTINGS.NETWORK' | translate }}</div>
+    </a>
+    <a
+      class="action-btn-wrapper"
+      mat-tab-link 
+      [routerLink]="['/', 'settings', 'wallet']"
+      routerLinkActive="active"
+      #rlWallet="routerLinkActive"
+      [active]="rlWallet.isActive">
+      <mat-icon
+        [class]="{ 'material-icons-outlined': !rlWallet.isActive }">wallet</mat-icon>
+      <div class="action-btn-label">{{ 'SETTINGS.WALLET' | translate }}</div>
+    </a>
+    <a
+      class="action-btn-wrapper"
+      mat-tab-link 
+      [routerLink]="['/', 'settings', 'appearance']"
+      routerLinkActive="active"
+      #rlAppearance="routerLinkActive"
+      [active]="rlAppearance.isActive">
+      <mat-icon
+        [class]="{ 'material-icons-outlined': !rlAppearance.isActive }">palette</mat-icon>
+      <div class="action-btn-label">{{ 'SETTINGS.APPEARANCE' | translate }}</div>
+    </a>
+    <a
+      class="action-btn-wrapper"
+      mat-tab-link 
+      [routerLink]="['/', 'settings', 'language']"
+      routerLinkActive="active"
+      #rlLanguage="routerLinkActive"
+      [active]="rlLanguage.isActive">
+      <mat-icon
+        [class]="{ 'material-icons-outlined': !rlLanguage.isActive }">translate</mat-icon>
+      <div class="action-btn-label">{{ 'SETTINGS.LANGUAGE' | translate }}</div>
+    </a>
+    
+  </nav>
+  <mat-tab-nav-panel #tabPanel><router-outlet></router-outlet></mat-tab-nav-panel>
+</div>

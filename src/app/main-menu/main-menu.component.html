@@ -1,4 +1,4 @@
-<mat-nav-list *ngIf="account | async">
+<mat-nav-list *ngIf="account">
   <a 
     mat-list-item
     matRipple
@@ -90,18 +90,28 @@
   </a>
 </mat-nav-list>
 
-<mat-nav-list *ngIf="!(account | async)">
+<mat-nav-list *ngIf="!account">
   <a 
     mat-list-item
     matRipple
-    [routerLink]="['']" 
-    [routerLinkActiveOptions]="{exact:true}"
-    [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaHome="routerLinkActive">
+    [routerLink]="['home']" 
+    [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
+    #rlaHome2="routerLinkActive">
     <mat-icon 
       mat-list-icon 
-      [class]="{ 'material-icons-outlined': !rlaHome.isActive }" 
-      [color]="rlaHome.isActive ? 'accent' : 'default'">home</mat-icon>
-    <div mat-line>Home</div>
+      [class]="{ 'material-icons-outlined': !rlaHome2.isActive }" 
+      [color]="rlaHome2.isActive ? 'accent' : 'default'">house</mat-icon>
+    <div mat-line>{{ 'MAIN_MENU.HOME' | translate }}</div>
+  </a>
+  <a mat-list-item
+    matRipple
+    [routerLink]="['settings']" 
+    [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
+    #rlaSettings2="routerLinkActive">
+    <mat-icon
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaSettings2.isActive }" 
+      [color]="rlaSettings2.isActive ? 'accent' : 'default'">settings</mat-icon>
+    <div mat-line>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
   </a>
 </mat-nav-list>

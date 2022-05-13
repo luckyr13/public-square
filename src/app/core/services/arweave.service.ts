@@ -1,33 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, from, map } from 'rxjs';
+import { Observable, throwError, from, map, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import Arweave from 'arweave';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { TransactionStatusResponse } from 'arweave/web/transactions';
 import Transaction from 'arweave/web/lib/transaction';
+import { JWKInterface } from 'arweave/web/lib/wallet';
 import { ArweaveWebWallet } from 'arweave-wallet-connector';
 declare const window: any;
+
+export const arweaveAddressLength = 43;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArweaveService {
   public readonly arweave: Arweave;
-  public readonly baseURL: string = 'https://arweave.net/';
+  public readonly host: string = 'arweave.net';
+  public readonly protocol: string = 'https';
+  public readonly port: number = 443;
+  public readonly baseURL: string = `${this.protocol}://${this.host}:${this.port}/`;
   public readonly blockToSeconds: number = 0.5 / 60;
-  public readonly arweaveWebWallet: ArweaveWebWallet;
+  public readonly arweaveWebWallet = new ArweaveWebWallet({
+    name: 'Public Square',
+    logo: 'https://arweave.net/wJGdli6nMQKCyCdtCewn84ba9-WsJ80-GS-KtKdkCLg'
+  });
+
+  public readonly appInfo = { name: 'Public Square', logo: '' };
 
   constructor() {
     this.arweave = Arweave.init({
-      host: "arweave.net",
-      port: 443,
-      protocol: "https",
+      host: this.host,
+      port: this.port,
+      protocol: this.protocol,
     });
 
-    this.arweaveWebWallet = new ArweaveWebWallet({
-      name: 'Public Square',
-      logo: 'https://arweave.net/wJGdli6nMQKCyCdtCewn84ba9-WsJ80-GS-KtKdkCLg'
-    })
     this.arweaveWebWallet.setUrl('arweave.app');
   }
 
@@ -57,29 +65,46 @@ export class ArweaveService {
   */
   getAccount(method: string): Observable<string> {
     const obs = new Observable<string>((subscriber) => {
-      if (method === 'arconnect' || method === 'finnie') {
+      // If ArConnect
+      if (method === 'arconnect') {
         if (!(window && window.arweaveWallet)) {
           subscriber.error('Login method not available!');
         }
         // Get main account
-        // very similar to window.ethereum.enable
-        this.arweave.wallets.getAddress().then((res: string) => {
-          subscriber.next(res);
+        window.arweaveWallet.connect([
+          'ACCESS_ADDRESS', 'ACCESS_ALL_ADDRESSES',
+          'SIGN_TRANSACTION', 'DISPATCH'
+        ]).then(async () => {
+          const address = await this.arweave.wallets.getAddress();
+          subscriber.next(address);
           subscriber.complete();
         }).catch((error: any) => {
           subscriber.error(error);
         });
-
-      } else if (method === 'webwallet') {
-
+      } // Arweave Web Wallet
+      else if (method === 'arweavewebwallet') {
         this.arweaveWebWallet.connect().then((res: string) => {
           subscriber.next(res);
           subscriber.complete();
         }).catch((error: any) => {
           subscriber.error(error);
         });
-
-      } else {
+      } // Finnie wallet
+      else if (method === 'finnie') {
+        if (!(window && window.arweaveWallet)) {
+          subscriber.error('Login method not available!');
+        }
+        // Get main account
+        window.arweaveWallet.connect([
+          'ACCESS_ADDRESS', 'ACCESS_ALL_ADDRESSES', 'SIGN_TRANSACTION'
+        ]).then(async () => {
+          const address = await this.arweave.wallets.getAddress();
+          subscriber.next(address);
+          subscriber.complete();
+        }).catch((error: any) => {
+          subscriber.error(error);
+        });
+      }else {
         subscriber.error('Wrong login method!');
       }
       
@@ -218,24 +243,88 @@ export class ArweaveService {
   /*
   * @dev Upload a file to the permaweb
   */
-  async uploadFileToArweave(fileBin: any, contentType: string, key: any): Promise<any> {
+  private async _uploadFileToArweave(
+    fileBin: any,
+    contentType: string,
+    key: JWKInterface | "use_wallet",
+    tags: {name: string, value: string}[],
+    loginMethod: string,
+    disableDispatch: boolean): Promise<Transaction|{id: string, type: string}> {
+    // Check if the login method allows dispatch
+    if (!disableDispatch) {
+      if (loginMethod !== 'arconnect' && loginMethod !== 'arweavewebwallet') {
+        throw new Error('Dispatch is not available for this login method!');
+      }
+    }
+
     // Create transaction
     let transaction = await this.arweave.createTransaction({
         data: fileBin,
     }, key);
 
     transaction.addTag('Content-Type', contentType);
-    transaction.addTag('Service', 'PublicSquare');
+    for (const t of tags) {
+      transaction.addTag(t.name, t.value);
+    }
 
-    // Sign transaction
-    await this.arweave.transactions.sign(transaction, key);
+    // If ArConnect try Dispatch first
+    // Limit: 100kb
+    const dataSizeLimitDispatch = 100000;
+    if (loginMethod === 'arconnect' && !disableDispatch) {
+      if (!(window && window.arweaveWallet)) {
+        throw new Error('ArConnect method not available!');
+      }
 
-    // Submit transaction 
-    let uploader = await this.arweave.transactions.getUploader(transaction);
+      if (+(transaction.data_size) > dataSizeLimitDispatch) {
+        throw new Error(`Dispatch is not available for data size > ${dataSizeLimitDispatch} bytes.`);
+      }
 
-    while (!uploader.isComplete) {
-      await uploader.uploadChunk();
-      console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+      const dispatchResult = await window.arweaveWallet.dispatch(transaction);
+      console.log('Trying dispatch method ...', dispatchResult);
+      // Return Dispatch result
+      return dispatchResult;
+
+    } // Else, try ArConnect Sign method
+    else if (loginMethod === 'arconnect') {
+      if (!(window && window.arweaveWallet)) {
+        throw new Error('ArConnect method not available!');
+      }
+
+      console.log('Signing transaction ...');
+
+      // Sign transaction
+      await this.arweave.transactions.sign(transaction, key);
+      // Submit transaction 
+      let uploader = await this.arweave.transactions.getUploader(transaction);
+      while (!uploader.isComplete) {
+        await uploader.uploadChunk();
+        console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+      }
+    } else if (loginMethod === 'arweavewebwallet' && !disableDispatch) {
+      if (!(window && window.arweaveWallet)) {
+        throw new Error('Arweave Wallet method not available!');
+      }
+
+      if (+(transaction.data_size) > dataSizeLimitDispatch) {
+        throw new Error(`Dispatch is not available for data size > ${dataSizeLimitDispatch} bytes.`);
+      }
+
+      const dispatchResult = await window.arweaveWallet.dispatch(transaction);
+      console.log('Trying dispatch method ...', dispatchResult);
+      // Return Dispatch result
+      return dispatchResult;
+
+    } else {
+      console.log('Signing transaction ...');
+
+      // Sign transaction
+      await this.arweave.transactions.sign(transaction, key);
+      // Submit transaction 
+      let uploader = await this.arweave.transactions.getUploader(transaction);
+      while (!uploader.isComplete) {
+        await uploader.uploadChunk();
+        console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+      }
     }
 
     return transaction;
@@ -249,7 +338,7 @@ export class ArweaveService {
     const tx = await this.arweave.createTransaction({ 
       target: _to, quantity: this.arweave.ar.arToWinston(_fee) 
     }, jwk)
-    tx.addTag('Service', 'PublicSquare');
+    tx.addTag('Application', 'PublicSquare');
     tx.addTag('Type', 'Donation');
 
     await this.arweave.transactions.sign(tx, jwk);
@@ -285,7 +374,20 @@ export class ArweaveService {
   * @dev Get tx data as string
   */
   getDataAsString(txId: string): Observable<string | Uint8Array> {
-    return from(this.arweave.transactions.getData(txId, {decode: true, string: true}));
+    return from(fetch(`${this.baseURL}${txId}`)).pipe(
+        switchMap((res: Response) => {
+          if (!res.ok) {
+            throw new Error('Error fetching data from gw ...');
+          }
+          return from(res.text());
+        }),
+        catchError((error) => {
+          console.warn(`Fetching ${txId} data using method 2 ...`);
+          return from(this.arweave.transactions.getData(txId, {decode: true, string: true})).pipe(
+            // Handle when it fails
+          );
+        })
+      );
   }
 
   /**
@@ -316,5 +418,57 @@ export class ArweaveService {
     }
     res = res ? `~${res}` : '';
     return res;
+  }
+
+  /*
+  * @dev Upload a file to the permaweb
+  */
+  uploadFileToArweave(
+      fileBin: any,
+      contentType: string,
+      key:  JWKInterface | "use_wallet",
+      tags: {name: string, value: string}[],
+      method: string,
+      disableDispatch: boolean): Observable<Transaction | {id: string, type: string}> {
+    return from(this._uploadFileToArweave(fileBin, contentType, key, tags, method, disableDispatch));
+  }
+
+  validateAddress(address: string) {
+    // Validate address 
+    if (address && address.length === arweaveAddressLength) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private async _generateSignedTx(
+    fileBin: any,
+    contentType: string,
+    key:  JWKInterface | "use_wallet",
+    tags: {name: string, value: string}[] = []
+  ): Promise<Transaction> {
+    // Create transaction
+    let transaction = await this.arweave.createTransaction({
+        data: fileBin,
+    }, key);
+
+    transaction.addTag('Content-Type', contentType);
+    for (const t of tags) {
+      transaction.addTag(t.name, t.value);
+    }
+
+    await this.arweave.transactions.sign(transaction, key);
+
+    return transaction;
+  }
+
+  public generateSignedTx(
+    fileBin: any,
+    contentType: string,
+    key:  JWKInterface | "use_wallet",
+    tags: {name: string, value: string}[] = []
+  ): Observable<Transaction> {
+    return from(this._generateSignedTx(fileBin, contentType, key, tags));
   }
 }

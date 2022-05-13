@@ -1,6 +1,37 @@
-<div class="fadeIn">
-	<h1 class="logo text-center">Public Square</h1>
-	<div class="text-center">
-		<button class="main-btn" (click)="login()" mat-raised-button color="accent">Join Now!</button>
+<div>
+	<p>
+	  <mat-toolbar class="secondary-toolbar" color="primary">
+	    <button mat-icon-button>
+    		<mat-icon>house</mat-icon>
+  		</button>
+  		<span>{{ 'MAIN_MENU.HOME' | translate }}</span>
+	  </mat-toolbar>
+	</p>
+	<div class="col-body fadeIn">
+		<div class="post-card-container" *ngIf="account">
+			<app-create-post-card
+				[account]="account"
+				(newStoryEvent)="newStoryCreated($event)"></app-create-post-card>
+		</div>
+		<mat-divider *ngIf="account"></mat-divider>
+		<div class="post-list-container">
+			<app-post-card *ngFor="let post of posts" [post]="post"></app-post-card>
+		</div>
+		<div class="more-results-container">
+			<mat-spinner *ngIf="loadingPosts" color="accent" diameter="32"></mat-spinner>
+			<div class="no-results" *ngIf="!posts.length && !loadingPosts">
+				{{ 'GENERAL.LABELS.NO_RESULTS' | translate }}
+			</div>
+			<mat-card 
+				#moreResultsCard 
+				[style.visibility]="!loadingPosts && moreResultsAvailable ? 'visible' : 'hidden'"
+				class="more-results-card mat-elevation-z0"
+				matRipple
+				(click)="moreResults()" >
+			  <mat-card-content class="more-results text-center">
+					{{ 'GENERAL.LABELS.SHOW_OLDER_RESULTS' | translate }}
+			  </mat-card-content>
+			</mat-card>
+		</div>
 	</div>
 </div>

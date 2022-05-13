@@ -1,4 +1,6 @@
-.post-card {
+.create-post-card {
+	width: 100%;
+	margin: 0 auto;
 }
 
 mat-card-header {
@@ -6,12 +8,20 @@ mat-card-header {
 	margin-bottom: 20px;
 }
 
+.mat-card-content {
+	min-height: 50px;
+}
+
 .mat-focused mat-label {
 	
 }
 
 .post-btn mat-icon {
-	margin-left: 10px;
+	margin-left: 0px;
+}
+
+.post-btn {
+	border-radius: 25px;
 }
 
 .post-icon {
@@ -29,20 +39,101 @@ mat-card-header {
 
 .avatar-container {
 	float: left;
-	width: 72px;
+	width: 82px;
 	text-align: left;
+	height: 100%;
 }
 
 .avatar {
-	width: 52px;
-	height: 52px;
+	width: 62px;
+	height: 62px;
 }
 
 .message-container {
 	float: left;
-	width: calc(100% - 72px);
+	width: calc(100% - 82px);
+	height: 100;
 }
 
 .mat-card-actions {
-	padding-top: 12px;
+	padding-top: 0px;
+}
+
+.emotions-container {
+	text-align: center;
+}
+
+.emotions-container .mat-icon {
+	font-size: 18px;
+}
+
+@media (min-width: 800px) {
+	.emotions-container {
+		text-align: left;
+		margin-left: 82px;
+	}
+
+	.create-post-card {
+		width: 80%;
+	}
+	.post-btn .mat-icon {
+		margin-left: 10px;
+	}
+}
+
+.create-post-card-sub {
+	width: 100% !important;
+}
+
+
+.substories {
+	margin-top: 6px;
+}
+
+.substories .mat-list-base .mat-list-item {
+	font-size: 12px !important;
+}
+
+
+.substory-image-grid {
+	margin-top: 16px;
+	width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+  position:relative;
+}
+
+.substory-image {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	flex-shrink: 0;
+	vertical-align: middle;
+	align-self: start;
+  position: absolute;
+	z-index: 0;
+}
+
+.substory-image-address {
+	width: calc(100% - 100px);
+}
+
+.substory-text {
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+.substory-image-card {
+	height: 100px;
+	width: 100px;
+	margin-right: 12px;
+	margin-bottom: 6px;
+	position:relative;
+}
+
+.substory-image-btn {
+	position: absolute;
+	z-index: 10;
+	right: 0;
 }

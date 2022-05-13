@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ArweaveService } from '../../core/services/arweave.service';
-import { Observable, EMPTY, of, throwError, Subject} from 'rxjs';
+import { Observable, EMPTY, of, throwError, Subject, from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
@@ -8,88 +8,124 @@ import { FormControl } from '@angular/forms';
   providedIn: 'root'
 })
 export class UserAuthService {
-private account: Subject<string>;
+  private _account: Subject<string>;
   // Observable string streams
   public account$: Observable<string>;
   // User's private key
   private _arKey: any = null;
   // User's arweave public address
   private _mainAddress: string = '';
-  // Save a temporal copy of the admin list
-  private _adminList: string[] = [];
   // Login method 
   private _method: string = '';
 
-  // Observable source
-  private _userIsModeratorSource = new Subject<boolean>();
-  // Observable stream
-  public userIsModeratorStream = this._userIsModeratorSource.asObservable();
-  public updateUserIsModerator(_isModerator: boolean) {
-    this._userIsModeratorSource.next(_isModerator);
+
+  constructor(
+    private _arweave: ArweaveService) {
+    this._account = new Subject<string>();
+    this.account$ = this._account.asObservable();
+   
   }
 
-  getAdminList() {
-    return this._adminList;
+  public get loginMethod(): string {
+    return this._method;
   }
 
-  setAdminList(admins: string[]) {
-    this._adminList = admins;
-  }
+  public loadAccount(): Observable<boolean> {
+    return new Observable((subscriber) => {
+      const stayLoggedIn = !!window.sessionStorage.getItem('STAY_LOGGED_IN')
+        || !!window.localStorage.getItem('STAY_LOGGED_IN');
+      const storage = stayLoggedIn ? window.localStorage : window.sessionStorage;
+      const method = storage.getItem('METHOD');
+    
+      // Private key method
+      if (method === 'pkFile') {
+        const arkey = storage.getItem('ARKEY');
+        this._arKey = JSON.parse(arkey!);
+        this._arweave.arweave.wallets.jwkToAddress(this._arKey).then((address) => {
+          this.setAccount(address, this._arKey, stayLoggedIn, 'pkFile', '');
+          subscriber.next(!!address);
+          subscriber.complete();
+        }).catch((reason) => {
+          subscriber.error(reason);
+        });
+      } else if (method === 'arconnect' ||
+          method === 'finnie')  {
+        window.addEventListener('arweaveWalletLoaded', (e) => {
+          this.login(method, null, stayLoggedIn).subscribe({
+            next: (address) => {
+              subscriber.next(!!address);
+              subscriber.complete();
+            },
+            error: (error) => {
+              subscriber.error(error);
+            }
+          });
+        });
+         
+      } else if (method === 'arweavewebwallet')  {
+        throw new Error('LaunchArweaveWebWalletModal');
+      } else {
+        subscriber.next(false);
+        subscriber.complete();
+      }
 
-  constructor(private _arweave: ArweaveService) {
-    this.account = new Subject<string>();
-    this.account$ = this.account.asObservable();
+    });
     
   }
 
-  loadAccount() {
-    const mainAddress = window.sessionStorage.getItem('MAINADDRESS')
-      || window.localStorage.getItem('MAINADDRESS');
-    const arkey = window.sessionStorage.getItem('ARKEY')
-      || window.localStorage.getItem('ARKEY');
-    const method = window.sessionStorage.getItem('METHOD')
-      || window.localStorage.getItem('METHOD');
-
-    if (mainAddress) {
-      this._mainAddress = mainAddress
-      this._method = method!;
-      if (arkey) { this._arKey = JSON.parse(arkey) }
-      this.account.next(mainAddress);
-      if (this._method === 'webwallet') {
-        this._arweave.arweaveWebWallet.connect().then((res: any) => {
-          this._mainAddress = res;
-          this.account.next(this._mainAddress);
-        }).catch((error: any) => {
-          console.log('Error loading address');
-        });
-      }
-    }
-  }
-
-  setAccount(mainAddress: string, arKey: any = null, stayLoggedIn: boolean = false, method='') {
+  public setAccount(
+    mainAddress: string,
+    arKey: any = null,
+    stayLoggedIn: boolean = false,
+    method='',
+    password='') {
     const storage = stayLoggedIn ? window.localStorage : window.sessionStorage;
     this._mainAddress = mainAddress;
     this._method = method;
-    storage.setItem('MAINADDRESS', mainAddress);
     storage.setItem('METHOD', method);
+    storage.setItem('STAY_LOGGED_IN', stayLoggedIn ? '1' : '');
     if (arKey) {
       this._arKey = arKey
       storage.setItem('ARKEY', JSON.stringify(this._arKey))
     }
-    this.account.next(mainAddress);
-    const isAdmin = this.getAdminList().indexOf(mainAddress) >= 0;
-    if (isAdmin) {
-      this.updateUserIsModerator(true);
-    } else {
-      this.updateUserIsModerator(false);
+    this._account.next(mainAddress);
+  }
+
+  public addressChangeListener(mainAddress: string, stayLoggedIn: boolean, method: string) {
+    if (method === 'arconnect') {
+      if (!(window && window.arweaveWallet)) {
+        throw Error('ArConnect not found');
+      }
+      window.addEventListener('walletSwitch', (e) => {
+        if (this._mainAddress !== e.detail.address) {
+          this.setAccount(e.detail.address, null, stayLoggedIn, method);
+        }
+      });
+
+    } else if (method === 'arweavewebwallet') {
+      if (!(window && window.arweaveWallet)) {
+        throw Error('ArweaveWallet not found');
+      }
+
+      this._arweave.arweaveWebWallet.on('connect', (address) => {
+        this.setAccount(address, null, stayLoggedIn, method);
+      });
+      this._arweave.arweaveWebWallet.on('disconnect', () => {
+        //this.logout()
+      });
     }
   }
 
-  removeAccount() {
-    for (let key of ['MAINADDRESS', 'ARKEY', 'METHOD']) {
+  public removeAccount() {
+    this._account.next('');
+    this._mainAddress = '';
+    this._method = '';
+    this._arKey = null;
+    for (let key of ['MAINADDRESS', 'ARKEY', 'METHOD', 'STAY_LOGGED_IN']) {
       window.sessionStorage.removeItem(key)
       window.localStorage.removeItem(key)
     }
+
   }
 
 
@@ -97,18 +133,18 @@ private account: Subject<string>;
     return this._mainAddress;
   }
 
-  getPrivateKey() {
+  public getPrivateKey() {
     return this._arKey ? this._arKey : 'use_wallet'
   }
 
-  login(walletOption: string, uploadInputEvent: any = null, stayLoggedIn: boolean = false): Observable<any> {
-    let method = of({});
+  public login(walletOption: string, uploadInputEvent: any = null, stayLoggedIn: boolean = false): Observable<string> {
+    let method = of('');
 
     switch (walletOption) {
-      case 'upload_file':
+      case 'pkFile':
         method = this._arweave.uploadKeyFile(uploadInputEvent).pipe(
             tap( (_res: any) => {
-              this.removeAccount()
+              this.removeAccount();
               this.setAccount(_res.address, _res.key, stayLoggedIn, walletOption)
             })
           );
@@ -116,24 +152,26 @@ private account: Subject<string>;
       case 'arconnect':
         method = this._arweave.getAccount(walletOption).pipe(
             tap( (_account: any) => {
-              this.removeAccount()
-              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption)
+              this.removeAccount();
+              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
+              this.addressChangeListener(_account.toString(), stayLoggedIn, walletOption);
             })
           );
       break;
-      case 'webwallet':
+      case 'arweavewebwallet':
         method = this._arweave.getAccount(walletOption).pipe(
             tap( (_account: any) => {
-              this.removeAccount()
-              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption)
+              this.removeAccount();
+              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
+              this.addressChangeListener(_account.toString(), stayLoggedIn, walletOption);
             })
           );
       break;
       case 'finnie':
         method = this._arweave.getAccount(walletOption).pipe(
             tap( (_account: any) => {
-              this.removeAccount()
-              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption)
+              this.removeAccount();
+              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
             })
           );
       break;
@@ -145,16 +183,34 @@ private account: Subject<string>;
     return method;
   }
 
-  logout() {
-    this.removeAccount();
-    this.account.next('');
-    this.updateUserIsModerator(false);
+  public logout() {
     if ((this._method === 'finnie' || 
         this._method === 'arconnect' || 
-        this._method === 'webwallet') &&
+        this._method === 'arweavewebwallet') &&
         (window && window.arweaveWallet)) {
       window.arweaveWallet.disconnect();
     }
+    this.removeAccount();
   }
+
+  public destroySession() {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.location.reload();
+  }
+
+  public getSessionData() {
+    return {
+      localStorage: window.localStorage,
+      sessionStorage: window.sessionStorage
+    }
+  }
+
+  public getStayLoggedIn() {
+    const stayLoggedIn = !!window.sessionStorage.getItem('STAY_LOGGED_IN')
+        || !!window.localStorage.getItem('STAY_LOGGED_IN');
+    return stayLoggedIn;
+  }
+
 
 }

@@ -5,10 +5,10 @@ import ArDB from 'ardb';
 import Arweave from 'arweave';
 
 export class ArdbWrapper {
-	public readonly ardb: ArDB;
+  public readonly ardb: ArDB;
 
   constructor(private _arweave: Arweave) {
-  	this.ardb = new ArDB(_arweave);
+    this.ardb = new ArDB(_arweave);
   }
 
   /*
@@ -30,7 +30,7 @@ export class ArdbWrapper {
             subscriber.next(<ArdbTransaction[]>res);
             subscriber.complete();
           })
-          .catch((error) => {
+          .catch((error: string) => {
             subscriber.error(error);
           });
       } else {
@@ -41,7 +41,7 @@ export class ArdbWrapper {
             subscriber.next(<ArdbTransaction[]>res);
             subscriber.complete();
           })
-          .catch((error) => {
+          .catch((error: string) => {
             subscriber.error(error);
           });
       }
@@ -56,4 +56,43 @@ export class ArdbWrapper {
   next(): Observable<ArdbTransaction[]> {
     return from(<Promise<ArdbTransaction[]>>this.ardb.next());
   }
+
+  /*
+  * @dev Search transaction
+  */
+  searchOneTransaction(
+    from: string[] | string,
+    txId: string): Observable<ArdbTransaction> {
+    const obs = new Observable<ArdbTransaction>((subscriber) => {
+      this.ardb.search('transactions')
+        .id(txId)
+        .from(from).findOne().then((res: ArdbTransaction|ArdbBlock) => {
+          subscriber.next(<ArdbTransaction>res);
+          subscriber.complete();
+        })
+        .catch((error: string) => {
+          subscriber.error(error);
+        });
+    });
+    return obs;
+  }
+
+  /*
+  * @dev Search transaction
+  */
+  searchOneTransactionById(
+    txId: string): Observable<ArdbTransaction> {
+    const obs = new Observable<ArdbTransaction>((subscriber) => {
+      this.ardb.search('transactions')
+        .id(txId).findOne().then((res: ArdbTransaction|ArdbBlock) => {
+          subscriber.next(<ArdbTransaction>res);
+          subscriber.complete();
+        })
+        .catch((error: string) => {
+          subscriber.error(error);
+        });
+    });
+    return obs;
+  }
+
 }

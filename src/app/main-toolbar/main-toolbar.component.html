@@ -1,43 +1,130 @@
 <p>
   <mat-toolbar class="mat-elevation-z1" color="primary">
-    <span class="logo" routerLink="./dashboard"><span>🐘</span>Public Square</span>
-    <span class="logo-sm" routerLink="./dashboard"><span>🐘</span></span>
+    <button 
+      mat-icon-button
+      (click)="toggle()"
+      aria-label="Main menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="logo" routerLink="./home">{{ appName }}</span>
     <span class="spacer"></span>
-
-    <button mat-icon-button aria-label="Theme" [matMenuTriggerFor]="themeMenu">
+    <button 
+      class="hide-xs" 
+      mat-icon-button aria-label="Theme" 
+      *ngIf="showThemeSelector"
+      [matMenuTriggerFor]="themeMenu">
       <mat-icon>format_color_fill</mat-icon>
     </button>
     <mat-menu #themeMenu="matMenu">
+      <mat-list class="theme-menu-container">
+        <mat-list-item>
+          <span matLine class="theme-menu-title">
+            Current theme
+          </span>
+          <span matLine class="theme-menu-subtitle" *ngIf="theme && getTheme(theme.value)">
+            {{ getTheme(theme.value).label }}
+          </span>
+        </mat-list-item>
+      </mat-list>
       <mat-radio-group aria-label="Select an option" [formControl]="theme" (change)="updateTheme(theme.value)">
-        <div mat-menu-item>
-          <mat-radio-button value="dark-theme">Dark Square</mat-radio-button>
-        </div>
-        <div mat-menu-item>
-          <mat-radio-button value="light-theme">Light Square</mat-radio-button>
-        </div>
-        <div mat-menu-item>
-          <mat-radio-button value="light-pink-theme">Light Pink</mat-radio-button>
-        </div>
-        <div mat-menu-item>
-          <mat-radio-button value="teal-theme">Teal Blue</mat-radio-button>
-        </div>
-        <div mat-menu-item>
-          <mat-radio-button value="dark-indigo-theme">Dark Indigo</mat-radio-button>
-        </div>
-        <div mat-menu-item>
-          <mat-radio-button value="dark-deep-purple-theme">Deep Purple</mat-radio-button>
+        <div mat-menu-item *ngFor="let th of getThemesList()">
+          <mat-radio-button [value]="th">{{ getTheme(th).label }}</mat-radio-button>
         </div>
       </mat-radio-group>
-
     </mat-menu>
-
-    <button mat-icon-button aria-label="Account Info" [matMenuTriggerFor]="userMenu">
-      <mat-icon>person</mat-icon>
+    <button 
+      class="hide-xs" 
+      mat-icon-button aria-label="Settings" 
+      *ngIf="showSettingsSelector"
+      [matMenuTriggerFor]="settingsMenu">
+      <mat-icon >settings</mat-icon>
+    </button>
+    <mat-menu #settingsMenu="matMenu">
+      <button
+        mat-menu-item
+        [routerLink]="['/', 'settings', 'application']" 
+        [routerLinkActive]="['active']"
+        #rlaAppInfo="routerLinkActive">
+        <mat-icon [ngClass]=" { 'material-icons-outlined': !rlaAppInfo.isActive }">info</mat-icon>
+        <span>{{ 'SETTINGS.APP_INFO' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        [routerLink]="['/', 'settings', 'network']" 
+        [routerLinkActive]="['active']"
+        #rlaNetwork="routerLinkActive">
+        <mat-icon [ngClass]=" { 'material-icons-outlined': !rlaNetwork.isActive }">settings_input_antenna</mat-icon>
+        <span>{{ 'SETTINGS.NETWORK' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        [routerLink]="['/', 'settings', 'wallet']" 
+        [routerLinkActive]="['active']"
+        #rlaWallet="routerLinkActive">
+        <mat-icon [ngClass]=" { 'material-icons-outlined': !rlaWallet.isActive }">wallet</mat-icon>
+        <span>{{ 'SETTINGS.WALLET' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        [routerLink]="['/', 'settings', 'appearance']" 
+        [routerLinkActive]="['active']"
+        #rlaAppearance="routerLinkActive">
+        <mat-icon [ngClass]=" { 'material-icons-outlined': !rlaAppearance.isActive }">palette</mat-icon>
+        <span>{{ 'SETTINGS.APPEARANCE' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        [routerLink]="['/', 'settings', 'language']"
+        [routerLinkActive]="['active']"
+        #rlaTranslate="routerLinkActive">
+        <mat-icon [ngClass]="{ 'material-icons-outlined': !rlaTranslate.isActive }">translate</mat-icon>
+        <span>{{ 'SETTINGS.LANGUAGE' | translate }}</span>
+      </button>
+    </mat-menu>
+    <button
+      mat-button
+      class="btn-connect"
+      aria-label="Log in"
+      (click)="login()"
+      *ngIf="!account">
+      <mat-icon>login</mat-icon>
+      <span class="hide-sm">{{ 'GENERAL.BUTTONS.CONNECT' | translate }}</span>
+    </button>
+    <button 
+      mat-icon-button
+      aria-label="User menu"
+      [matMenuTriggerFor]="userMenu"
+      *ngIf="account">
+      <img *ngIf="profileImage" class="avatar" [src]="profileImage">
+      <mat-icon *ngIf="!profileImage">person</mat-icon>
     </button>
     <mat-menu #userMenu="matMenu">
+      <mat-list class="user-info-container">
+        <mat-list-item>
+          <img matListAvatar [src]="profileImage" alt="...">
+          <h3 matLine *ngIf="profile && profile.name" class="big-username"> {{ profile.name }} </h3>
+          <div matLine>
+            <a [routerLink]="[profile.username]" 
+              *ngIf="profile && profile.username" class="small-username-2 user-link">
+              <strong>@{{ profile.username }}</strong>
+            </a>
+            <app-arweave-address
+              [address]="account"
+              class="small-username-2"></app-arweave-address>
+            <div class="small-username-2 login-method-span">
+              <strong>{{ 'GENERAL.LABELS.METHOD' | translate }}:</strong> {{ method }}
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <button mat-menu-item [routerLink]="[account]">
+        <mat-icon>person</mat-icon>
+        <span>{{ 'GENERAL.LABELS.PROFILE' | translate }}</span>
+      </button>
       <button mat-menu-item [routerLink]="['logout']">
         <mat-icon>logout</mat-icon>
-        <span>Log Out</span>
+        <span>{{ 'GENERAL.LABELS.LOGOUT_COMPOSED' | translate:{ value: ellipsis(account) } }}</span>
       </button>
     </mat-menu>
   </mat-toolbar>

@@ -1,0 +1,49 @@
+<h2 mat-dialog-title class="title-text">
+	Post story
+</h2>
+<div class="title-buttons">
+	<button
+		mat-icon-button
+		[disabled]="loadingPostingSubstories || loadingPostingMainStory"
+		aria-label="Close window"
+		(click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="clear-both"></div>
+<mat-dialog-content
+	class="content border-right-special">
+	<div *ngIf="!loadingPostingSubstories && !loadingPostingMainStory">
+		<p>Do you want to post this Story?</p>
+		<p class="text-center substories" *ngIf="data.substories && data.substories.length">
+			+ {{ data.substories.length }} substor{{ data.substories.length === 1 ? 'y' : 'ies'}} detected!
+		</p>
+		<p class="text-right">
+			<mat-checkbox class="dispatch-chk" [formControl]="useDispatch">
+				Post for FREE (Dispatch method)
+			</mat-checkbox>
+		</p>
+	</div>
+	<div *ngIf="loadingPostingSubstories">
+		<p><span>Posting substories ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
+	</div>	
+	<div *ngIf="loadingPostingMainStory">
+		<p><span>Posting main story ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
+		
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions align="start">
+  <button 
+  	mat-button
+  	[disabled]="loadingPostingSubstories || loadingPostingMainStory"
+  	(click)="close()">Close</button>
+  <div class="spacer"></div>
+  <button
+  	mat-flat-button
+  	cdkFocusInitial
+  	(click)="submit()"
+  	[disabled]="loadingPostingSubstories || loadingPostingMainStory"
+  	color="accent">
+  	<span>Yes, post story now!</span> 
+  </button>
+</mat-dialog-actions>

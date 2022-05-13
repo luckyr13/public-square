@@ -11,33 +11,48 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatDividerModule} from '@angular/material/divider';
-import { CreatePostCardComponent } from './create-post-card/create-post-card.component';
-import { PostCardComponent } from './post-card/post-card.component';
 import {MatCardModule} from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { VerificationProgressCardComponent } from './verification-progress-card/verification-progress-card.component';
-import { ArBalanceCardComponent } from './ar-balance-card/ar-balance-card.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import {OverlayModule} from '@angular/cdk/overlay';
-import { EmojisComponent } from './emojis/emojis.component';
 import {PortalModule} from '@angular/cdk/portal';
 import {MatRippleModule} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
-
+import { EmojisComponent } from './emojis/emojis.component';
+import {RouterModule} from '@angular/router';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ArweaveAddressComponent } from './arweave-address/arweave-address.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { BottomSheetShareComponent } from './bottom-sheet-share/bottom-sheet-share.component';
+import { FileManagerDialogComponent } from './file-manager-dialog/file-manager-dialog.component';
+import { UploadFileDialogComponent } from './upload-file-dialog/upload-file-dialog.component';
+import { StoryPlayerSubstoryComponent } from './story-player-substory/story-player-substory.component';
+import {TranslateModule} from '@ngx-translate/core';
+import { CreatePostCardComponent } from './create-post-card/create-post-card.component';
+import { PostCardComponent } from './post-card/post-card.component';
+import { PostPlayerComponent } from './post-player/post-player.component';
+import { SubmitPostDialogComponent } from './submit-post-dialog/submit-post-dialog.component';
 
 @NgModule({
   declarations: [
     BottomSheetLoginComponent,
+    EmojisComponent,
+    ArweaveAddressComponent,
+    ConfirmationDialogComponent,
+    BottomSheetShareComponent,
+    FileManagerDialogComponent,
+    UploadFileDialogComponent,
+    StoryPlayerSubstoryComponent,
     CreatePostCardComponent,
     PostCardComponent,
-    VerificationProgressCardComponent,
-    ArBalanceCardComponent,
-    EmojisComponent
+    PostPlayerComponent,
+    SubmitPostDialogComponent
   ],
   imports: [
     CommonModule,
@@ -56,6 +71,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     OverlayModule,
     PortalModule,
     MatRippleModule,
+    RouterModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    TranslateModule
   ],
   exports: [
   	MatToolbarModule,
@@ -68,8 +89,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatSnackBarModule,
     MatBottomSheetModule,
     MatDividerModule,
-    CreatePostCardComponent,
-    PostCardComponent,
     MatCardModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -78,10 +97,16 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatRadioModule,
     NgxSkeletonLoaderModule,
     OverlayModule,
-    EmojisComponent,
     PortalModule,
     MatRippleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CreatePostCardComponent,
+    PostCardComponent,
+    MatTabsModule,
+    MatTooltipModule,
+    ArweaveAddressComponent,
+    MatDialogModule,
+    TranslateModule
   ]
 })
 export class SharedModule { }
