@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { from, Observable, Subscription, concatMap, of } from 'rxjs';
 import { UtilsService } from '../../core/utils/utils.service';
 import { PostService } from '../../core/services/post.service';
@@ -11,7 +11,7 @@ import { PostService } from '../../core/services/post.service';
   styleUrls: ['./submit-post-dialog.component.scss']
 })
 export class SubmitPostDialogComponent implements OnInit {
-  useDispatch = new FormControl(false);
+  useDispatch = new UntypedFormControl(false);
   loadingPostingSubstories = false;
   loadingPostingMainStory = false;
   postingSubstoriesSubscription = Subscription.EMPTY;

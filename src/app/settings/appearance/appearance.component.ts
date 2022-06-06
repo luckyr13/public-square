@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { UserSettingsService } from '../../core/services/user-settings.service';
 import { UtilsService } from '../../core/utils/utils.service';
 
@@ -9,7 +9,7 @@ import { UtilsService } from '../../core/utils/utils.service';
   styleUrls: ['./appearance.component.scss']
 })
 export class AppearanceComponent implements OnInit {
-  theme = new FormControl('');
+  theme = new UntypedFormControl('');
 
   constructor(
     private _userSettings: UserSettingsService,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { UserSettingsService } from '../core/services/user-settings.service';
 import { UserAuthService } from '../core/services/user-auth.service';
 import { BottomSheetLoginComponent } from '../shared/bottom-sheet-login/bottom-sheet-login.component';
@@ -20,7 +20,7 @@ import { UtilsService } from '../core/utils/utils.service';
   styleUrls: ['./main-toolbar.component.scss']
 })
 export class MainToolbarComponent implements OnInit, OnDestroy {
-  theme = new FormControl('');
+  theme = new UntypedFormControl('');
   @Output() toggleEvent = new EventEmitter<boolean>();
   account = '';
   method = '';
