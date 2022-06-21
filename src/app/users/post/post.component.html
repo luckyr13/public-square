@@ -2,6 +2,36 @@
 <div class="post-list-container" *ngIf="post && !loadingPost">
 	<app-post-card [post]="post" [fullMode]="true"></app-post-card>
 </div>
+<div class="text-center">
+	<a 
+		(click)="viewLikes()"
+		mat-button 
+		class="likes-subtitle"
+		*ngIf="!loadingPost && !loadingLikes">
+		<mat-icon aria-label="Likes" color="warn">favorite</mat-icon>
+		<span>{{ likes.length >= maxLikes ? '+' : '' }}{{ likes.length }} Likes</span>
+	</a>
+</div>
+<h3 class="replies-subtitle">Replies:</h3>
+<div class="post-list-container" *ngIf="post && !loadingPost">
+	<app-post-card
+		*ngFor="let reply of replies"
+		[post]="reply"
+		[fullMode]="false"></app-post-card>
+</div>
 <div class="more-results-container">
-	<mat-spinner *ngIf="loadingPost" color="accent" diameter="32"></mat-spinner>
+	<mat-spinner *ngIf="loadingPost || loadingReplies" color="accent" diameter="32"></mat-spinner>
+	<div class="no-results" *ngIf="!replies.length && !loadingReplies">
+		{{ 'GENERAL.LABELS.NO_RESULTS' | translate }}
+	</div>
+	<mat-card 
+		#moreResultsCard 
+		[style.visibility]="!loadingReplies && moreResultsAvailable && replies.length ? 'visible' : 'hidden'"
+		class="more-results-card mat-elevation-z0"
+		matRipple
+		(click)="moreReplies()" >
+	  <mat-card-content class="more-results text-center">
+			{{ 'GENERAL.LABELS.SHOW_OLDER_RESULTS' | translate }}
+	  </mat-card-content>
+	</mat-card>
 </div>

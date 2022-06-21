@@ -1,1 +1,31 @@
-<div class="no-results"> No results.</div>
+<div class="post-list-container">
+	<ng-container
+		*ngFor="let reply of replies">
+		<h4 class="label-replied">
+			<mat-icon aria-label="Likes" color="accent">reply</mat-icon>
+			{{mainUsername}} replied:
+		</h4>
+		<app-post-card
+			[post]="reply"
+			[fullMode]="false"></app-post-card>
+		<app-post-card
+			[txId]="extractTagFromTx(reply, 'In-Reply-To')!"
+			[fullMode]="false"></app-post-card>
+	</ng-container>
+</div>
+<div class="more-results-container">
+	<mat-spinner *ngIf="loadingReplies" color="accent" diameter="32"></mat-spinner>
+	<div class="no-results" *ngIf="!replies.length && !loadingReplies">
+		{{ 'GENERAL.LABELS.NO_RESULTS' | translate }}
+	</div>
+	<mat-card 
+		#moreResultsCard 
+		[style.visibility]="!loadingReplies && moreResultsAvailable ? 'visible' : 'hidden'"
+		class="more-results-card mat-elevation-z0"
+		matRipple
+		(click)="moreResults()" >
+	  <mat-card-content class="more-results text-center">
+			{{ 'GENERAL.LABELS.SHOW_OLDER_RESULTS' | translate }}
+	  </mat-card-content>
+	</mat-card>
+</div>
