@@ -35,7 +35,7 @@ export class FollowService {
     const tags: {name: string, value: string}[] = [
       { name: 'App-Name', value: this._appSettings.protocolName },
       { name: 'Version', value: this._appSettings.protocolVersion },
-      { name: 'Type', value: 'Follow' },
+      { name: 'Type', value: 'follow' },
       { name: 'Username', value: username.trim() },
       ...extraTags
     ];
@@ -77,7 +77,7 @@ export class FollowService {
       },
       {
         name: "Type",
-        values: ["Follow"]
+        values: ["follow"]
       },
       {
         name: "Username",
@@ -149,7 +149,7 @@ export class FollowService {
       },
       {
         name: "Type",
-        values: ["Follow"]
+        values: ["follow"]
       }
     ];
     const fields: fieldType[] = ['id', 'owner', 'tags'];

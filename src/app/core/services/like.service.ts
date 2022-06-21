@@ -33,7 +33,7 @@ export class LikeService {
     const tags: {name: string, value: string}[] = [
       { name: 'App-Name', value: this._appSettings.protocolName },
       { name: 'Version', value: this._appSettings.protocolVersion },
-      { name: 'Type', value: 'Like' },
+      { name: 'Type', value: 'like' },
       { name: 'Like-Target', value: txToLike.trim() },
       ...extraTags
     ];
@@ -64,7 +64,7 @@ export class LikeService {
       },
       {
         name: "Type",
-        values: ["Like"]
+        values: ["like"]
       },
       {
         name: "Like-Target",
@@ -132,7 +132,7 @@ export class LikeService {
       },
       {
         name: "Type",
-        values: ["Like"]
+        values: ["like"]
       }
     ];
     return this._ardb2.searchTransactions(from, limit, maxHeight, tags).pipe(
