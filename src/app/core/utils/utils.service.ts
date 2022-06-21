@@ -33,7 +33,7 @@ export class UtilsService {
         return '_blank';
       },
       formatHref: {
-        hashtag: (href: string) => this.getBaseURL() + '#/search/' + href.substr(1),
+        hashtag: (href: string) => this.getBaseURL() + '#/browse/' + href.substr(1),
         mention: (href: string) => this.getBaseURL() + '#/' + href.substr(1)
       }
     }

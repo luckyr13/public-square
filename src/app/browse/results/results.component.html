@@ -1,0 +1,37 @@
+<div class="profiles-container" *ngIf="profiles.length">
+	<h2>Users</h2>
+	<mat-list>
+	  <mat-list-item
+	  	class="profile-list-item"
+	  	*ngFor="let profile of profiles"
+	  	[routerLink]="['/', profile.username]">
+	  	<img
+				matListAvatar 
+				[src]="getImageUrl(profile.image!)">
+	  	<span matLine *ngIf="profile.name" class="ellipsis nowrap profile-name">
+	  		{{ profile.name }} (@{{ profile.username }})
+	  	</span>
+			<app-arweave-address matLine *ngFor="let addr of profile.addresses" [address]="addr"></app-arweave-address>
+	  </mat-list-item>
+	</mat-list>
+</div>
+<div class="post-list-container">
+	<h2 *ngIf="posts.length">Posts</h2>
+	<app-post-card *ngFor="let post of posts" [post]="post"></app-post-card>
+</div>
+<div class="more-results-container">
+	<mat-spinner *ngIf="loadingPosts" color="accent" diameter="32"></mat-spinner>
+	<div class="no-results" *ngIf="!posts.length && !loadingPosts">
+		No stories found.
+	</div>
+	<mat-card 
+		#moreResultsCard 
+		[style.visibility]="!loadingPosts && moreResultsAvailable ? 'visible' : 'hidden'"
+		class="more-results-card mat-elevation-z0"
+		matRipple
+		(click)="moreResults()" >
+	  <mat-card-content class="more-results text-center">
+			Get more results
+	  </mat-card-content>
+	</mat-card>
+</div>

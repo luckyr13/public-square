@@ -1,0 +1,42 @@
+<mat-spinner *ngIf="loadingResults" color="accent" diameter="32"></mat-spinner>
+<div *ngIf="!loadingResults" class="fadeIn">
+	<div class="col-6">
+		<h2>Trending hashtags</h2>
+		<div class="trending-container">
+			<div *ngFor="let ht of getTrendingHashtags()">
+				<a (click)="navigate(removeInitialSymbol(ht.hashtag, '#'), 'browse')">
+					{{ ht.hashtag }}
+				</a> ({{ ht.qty }})
+			</div>
+		</div>
+	</div>
+	<div class="col-6">
+		<h2>Trending mentions</h2>
+		<div class="trending-container">
+			<div *ngFor="let mention of getTrendingMentions()">
+				<a (click)="navigate(removeInitialSymbol(mention.mention, '@'), 'browse')">{{ mention.mention }}</a> ({{ mention.qty }})
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="no-results clear-both" *ngIf="!results.length && !loadingResults">
+	Nothing found!
+</div>
+
+<div class="more-results-container clear-both">
+	<div class="text-center" *ngIf="results.length && !loadingResults">
+		From {{ results.length }} stories.
+	</div>
+	<mat-spinner *ngIf="loadingMoreResults" color="accent" diameter="32"></mat-spinner>
+	<mat-card 
+		#moreResultsCard 
+		[style.visibility]="!loadingResults && !loadingMoreResults && moreResultsAvailable ? 'visible' : 'hidden'"
+		class="more-results-card mat-elevation-z0"
+		matRipple
+		(click)="moreResults()" >
+	  <mat-card-content class="more-results text-center fadeIn">
+			Get more results
+	  </mat-card-content>
+	</mat-card>
+</div>

@@ -1,0 +1,30 @@
+<div>
+  <p>
+    <mat-toolbar class="secondary-toolbar" color="primary">
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+      <span>{{ 'MAIN_MENU.SEARCH' | translate }}</span>
+    </mat-toolbar>
+  </p>
+
+  <div class="search-container">
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmitSearch()">
+    	<p>
+  		  <mat-form-field appearance="standard" color="accent">
+  		    <mat-label>Search Narrative</mat-label>
+  		    <input
+            matInput 
+            placeholder="Introduce an Arweave address, #hashtag or @username"
+            autocomplete="off" 
+            formControlName="query">
+  		  </mat-form-field>
+  		  <button 
+          type="submit"
+          [disabled]="!searchForm.valid"
+          mat-flat-button color="accent"><mat-icon>search</mat-icon></button>
+  		</p>
+    </form>
+  </div>
+  <router-outlet></router-outlet>
+</div>

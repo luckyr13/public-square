@@ -1,0 +1,53 @@
+h2 {
+	padding: 40px;
+	padding-bottom: 0px;
+}
+
+.trending-container {
+	padding: 20px;
+}
+.trending-container a {
+	cursor: pointer;
+}
+.mat-spinner {
+	margin: 0 auto;
+}
+
+.more-results-container {
+  padding-top: 20px;
+}
+
+.no-results {
+  padding: 20px;
+  text-align: center;
+  font-style: italic;
+}
+
+.more-results {
+  font-weight: bold;
+  font-style: italic;
+}
+.more-results-card {
+  cursor: pointer;
+  border-radius: 0px;
+  width: 100%;
+  margin-top: 20px;
+  height: 50px;
+  margin-bottom: 60px;
+}
+
+.more-results-container {
+  padding-top: 20px;
+}
+
+.col-6 {
+	width: 100%;
+	text-align: center;
+}
+
+@media (min-width: 600px) {
+	.col-6 {
+		width: 50%;
+		float: left;
+	}
+}

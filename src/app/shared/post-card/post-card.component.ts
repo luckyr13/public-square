@@ -374,7 +374,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.loadingContent = false;
-        this._utils.message(error, 'error');
+        console.error('_loadContentHelperLoadContent error', error);
       }
     });
   }
