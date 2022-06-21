@@ -43,7 +43,6 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
   @Input('account') account!: string;
   @Output('newStoryEvent') newStoryEvent = new EventEmitter<string>();
   @Output('contentChangeEvent') contentChangeEvent = new EventEmitter<string>();
-  @Input('isSubstory') isSubstory!: boolean;
   @Input('showSubmitButton') showSubmitButton: boolean = true;
   substories: {id: string, content: string, type: 'text'|'image', arrId: number}[] = [];
   unsignedTxSubscription = Subscription.EMPTY;
@@ -141,18 +140,7 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
     this.unsignedTxSubscription.unsubscribe();
   }
 
-  submitSubstory() {
-    this.loadingCreatePost = true;
-    this.newStoryEvent.emit(this.messageContent);
-    this.substories = [];
-  }
-
   submit() {
-    if (this.isSubstory) {
-      this.submitSubstory();
-      return;
-    }
-
     this.loadingCreatePost = true;
     this.codemirrorWrapper.editable(false);
 

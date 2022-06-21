@@ -5,6 +5,16 @@
     		<mat-icon>house</mat-icon>
   		</button>
   		<span>{{ 'MAIN_MENU.HOME' | translate }}</span>
+  		<div class="spacer"></div>
+  		<button
+  			color="primary"
+  			class="btn-filter"
+  			mat-flat-button
+  			(click)="openFilterDialog()"
+  			*ngIf="account">
+    		<mat-icon class="material-icons-outlined">tune</mat-icon>
+    		<span>Filter</span>
+  		</button>
 	  </mat-toolbar>
 	</p>
 	<div class="col-body fadeIn">

@@ -1,6 +1,5 @@
 <mat-card 
 	class="create-post-card mat-elevation-z0 " 
-	[ngClass]="{ 'create-post-card-sub': isSubstory }"
 	[style.display]="!account ? 'none' : ''"
 	>
 	<mat-card-content class="card-content">
@@ -88,10 +87,7 @@
 			class="post-btn"
 			(click)="submit()"
 			mat-raised-button color="accent">
-			<span class="hide-sm" *ngIf="isSubstory">
-				{{ 'GENERAL.BUTTONS.ADD_SUBSTORY' | translate }}
-			</span>
-			<span class="hide-sm" *ngIf="!isSubstory">
+			<span class="hide-sm">
 				{{ 'GENERAL.BUTTONS.POST' | translate }}
 			</span>
 			<mat-icon>send</mat-icon></button>

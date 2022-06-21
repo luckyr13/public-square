@@ -126,6 +126,9 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .border-color-theme {
     border-color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
   }
+  .background-color-theme {
+    background-color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
+  }
   .color-accent-theme {
     color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
   }
@@ -157,6 +160,9 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .border-color-theme {
     border-color: mat.get-color-from-palette($light-theme-primary, 'default') !important;
   }
+  .background-color-theme {
+    background-color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
+  }
   .color-accent-theme {
     color: mat.get-color-from-palette($light-theme-primary, 'default') !important;
   }
@@ -185,6 +191,9 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .border-color-theme {
     border-color: mat.get-color-from-palette($light-pink-accent, 'default') !important;
   }
+  .background-color-theme {
+    background-color: mat.get-color-from-palette($light-pink-accent, 'default') !important;
+  }
   .color-accent-theme {
     color: mat.get-color-from-palette($light-pink-accent, 'default') !important;
   }
@@ -211,6 +220,9 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   @include mat.all-component-colors($dark-deep-purple-theme);
   .border-color-theme {
     border-color: mat.get-color-from-palette($dark-deep-purple-accent, 'default') !important;
+  }
+  .background-color-theme {
+    background-color: mat.get-color-from-palette($dark-deep-purple-accent, 'default') !important;
   }
   .color-accent-theme {
     color: mat.get-color-from-palette($dark-deep-purple-accent, 'default') !important;
@@ -241,6 +253,9 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .border-color-theme {
     border-color: mat.get-color-from-palette($dark-pink-accent, 'default') !important;
   }
+  .background-color-theme {
+    background-color: mat.get-color-from-palette($dark-pink-accent, 'default') !important;
+  }
   .color-accent-theme {
     color: mat.get-color-from-palette($dark-pink-accent, 'default') !important;
   }
@@ -268,6 +283,9 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   @include mat.all-component-colors($light-blue-theme);
   .border-color-theme {
     border-color: mat.get-color-from-palette($light-blue-accent, 'default') !important;
+  }
+  .background-color-theme {
+    background-color: mat.get-color-from-palette($light-blue-accent, 'default') !important;
   }
   .color-accent-theme {
     color: mat.get-color-from-palette($light-blue-accent, 'default') !important;
@@ -297,26 +315,24 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .border-color-theme {
     border-color: mat.get-color-from-palette($dark-blue-gray-accent, 'default') !important;
   }
+  .background-color-theme {
+    background-color: mat.get-color-from-palette($dark-blue-gray-accent, 'default') !important;
+  }
   .color-accent-theme {
     color: mat.get-color-from-palette($dark-blue-gray-accent, 'default') !important;
   }
   .mat-drawer-container {
-    /*
-    * #ece9e6
-    */
     background-color: rgb(27, 39, 51);
 
-  }
-  .mat-dialog-container, .mat-dialog-container .mat-card, .mat-bottom-sheet-container, .mat-bottom-sheet-container {
+  }.mat-dialog-container, .mat-dialog-container .mat-card, .mat-bottom-sheet-container {
     background-color: rgb(27, 39, 51);
   }
-  .mat-drawer, .mat-menu-panel, .mat-toolbar {
+  .mat-drawer, .mat-menu-panel, .mat-toolbar, .mat-flat-button.mat-primary {
     background-color: #161F29 !important;
   }
 
   .mat-card, .substory-container {
     background-color: rgb(27, 39, 51);
-    color: #ece9e6 !important;
   }
   .border-same-as-background {
     border-color: #0f0f0f !important;
@@ -425,11 +441,6 @@ body {
   line-height: 42px;
   padding-top: 6px;
   font-style: italic;
-}
-
-.secondary-toolbar mat-icon {
-  font-size: 20px;
-  line-height: 42px;
 }
 
 

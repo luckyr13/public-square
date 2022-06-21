@@ -11,6 +11,10 @@ import { UtilsService } from '../core/utils/utils.service';
 import { ArweaveService } from '../core/services/arweave.service';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { PendingPostsService } from '../core/services/pending-posts.service';
+import { FilterDialogComponent } from '../shared/filter-dialog/filter-dialog.component'; 
+import { MatDialog } from '@angular/material/dialog';
+import { Direction } from '@angular/cdk/bidi';
+import { UserSettingsService } from '../core/services/user-settings.service';
 
 @Component({
   templateUrl: './home.component.html',
@@ -35,12 +39,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     private _appSettings: AppSettingsService,
     private _utils: UtilsService,
     private _arweave: ArweaveService,
-    private _ngZone: NgZone) {
+    private _ngZone: NgZone,
+    private _dialog: MatDialog,
+    private _userSettings: UserSettingsService) {
     this.version = this._appSettings.appVersion;
   }
 
   ngOnInit(): void {
-    this.loadingPosts = true;
     this.account = this._auth.getMainAddressSnapshot();
 
     this._auth.account$.subscribe((account) => {
@@ -62,45 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     });
 
-    this._postSubscription = this._arweave.getNetworkInfo().pipe(
-      switchMap((info: NetworkInfoInterface) => {
-        const currentHeight = info.height;
-        return this._post.getLatestPosts([], this.maxPosts, currentHeight);
-      }),
-      mergeMap((latestPosts) => {
-        if (!this.account) {
-          return of(latestPosts);
-        }
-        return this._pendingPosts.getPendingPosts(
-          [this.account], undefined, undefined
-        ).pipe(
-          map((pendingPosts) => {
-            const res = pendingPosts.filter((v) => {
-              for (const p of this.posts) {
-                if (p.id == v.id) {
-                  return false;
-                }
-              }
-              return true;
-            });
-            return res.concat(latestPosts);
-          })
-        );
-      })
-    ).subscribe({
-      next: (posts) => {
-        if (!posts || !posts.length) {
-          this.moreResultsAvailable = false;
-        }
-        this.posts.push(...posts);
-        this.loadingPosts = false;
-      },
-      error: (error) => {
-        this.loadingPosts = false;
-        this.moreResultsAvailable = false;
-        this._utils.message(error, 'error');
-      }
-    });
+    this.loadPosts();
 
     this._auth.account$.subscribe((_account) => {
       this.account = _account;
@@ -121,9 +88,52 @@ export class HomeComponent implements OnInit, OnDestroy {
       
     })
 
+  }
 
-
+  loadPosts(addressList: string[] = []) {
+    this.loadingPosts = true;
+    this.posts = [];
     
+    this._postSubscription = this._arweave.getNetworkInfo().pipe(
+      switchMap((info: NetworkInfoInterface) => {
+        const currentHeight = info.height;
+        return this._post.getLatestPosts(addressList, this.maxPosts, currentHeight);
+      }),
+      mergeMap((latestPosts) => {
+        if (!this.account) {
+          return of(latestPosts);
+        }
+        return this._pendingPosts.getPendingPosts(
+          addressList, undefined, undefined
+        ).pipe(
+          map((pendingPosts) => {
+            const res = pendingPosts.filter((v) => {
+              for (const p of this.posts) {
+                if (p.id == v.id) {
+                  return false;
+                }
+              }
+              return true;
+            });
+            return res.concat(latestPosts);
+          })
+        );
+      })
+    ).subscribe({
+      next: (posts) => {
+        if (!posts || !posts.length) {
+          this.moreResultsAvailable = false;
+        } else {
+          this.posts.push(...posts);
+        }
+        this.loadingPosts = false;
+      },
+      error: (error) => {
+        this.loadingPosts = false;
+        this.moreResultsAvailable = false;
+        this._utils.message(error, 'error');
+      }
+    });
   }
 
   moreResults() {
@@ -156,6 +166,32 @@ export class HomeComponent implements OnInit, OnDestroy {
       owner: this.account
     };
     this.posts.unshift(txMeta);
+  }
+
+  openFilterDialog() {
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+
+    const dialogRef = this._dialog.open(
+      FilterDialogComponent,
+      {
+        restoreFocus: false,
+        autoFocus: false,
+        disableClose: false,
+        data: {
+          address: this.account
+        },
+        direction: direction,
+        width: '420px'
+      });
+
+    dialogRef.afterClosed().subscribe((addressList: string[]) => {
+      if (addressList && addressList.length) {
+        this.loadPosts(addressList);
+      }
+    });
   }
 
 }
