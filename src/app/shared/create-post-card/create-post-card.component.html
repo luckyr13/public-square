@@ -82,7 +82,7 @@
 				appearance="line" 
 				[theme]="{ 'height.px': 36, 'width.px': 100, 'marginBottom.px': 0 }"></ngx-skeleton-loader>
 		<button 
-			*ngIf="!loading"
+			*ngIf="!loading && showSubmitButton"
 			[disabled]="!messageContent || loadingCreatePost"
 			class="post-btn"
 			(click)="submit()"

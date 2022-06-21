@@ -50,6 +50,7 @@
 			Your reply:
 		</h5>
 		<app-create-post-card
+			[emitContent]="true"
 			[showSubmitButton]="false"
 			[account]="data.myAddress"
 			(contentChangeEvent)="contentChangeEvent($event)"></app-create-post-card>

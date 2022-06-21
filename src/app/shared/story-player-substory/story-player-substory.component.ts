@@ -60,6 +60,7 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
 
   maxPreviewSize = 250;
   realPreviewSize = this.maxPreviewSize;
+  @Input('fullMode') fullMode: boolean = false;
 
   constructor(
     private _arweave: ArweaveService,

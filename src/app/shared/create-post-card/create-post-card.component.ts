@@ -46,7 +46,8 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
   @Input('showSubmitButton') showSubmitButton: boolean = true;
   substories: {id: string, content: string, type: 'text'|'image', arrId: number}[] = [];
   unsignedTxSubscription = Subscription.EMPTY;
-
+  @Input('emitContent') emitContent: boolean = false;
+  
   constructor(
     private _verto: VertoService,
     private _arweave: ArweaveService,
@@ -140,7 +141,17 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
     this.unsignedTxSubscription.unsubscribe();
   }
 
+  submitSubstory() {
+    this.loadingCreatePost = true;
+    this.newStoryEvent.emit(this.messageContent);
+    this.substories = [];
+  }
+
   submit() {
+    if (this.emitContent) {
+      this.submitSubstory();
+      return;
+    }
     this.loadingCreatePost = true;
     this.codemirrorWrapper.editable(false);
 

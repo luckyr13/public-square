@@ -9,6 +9,7 @@ import { UserSettingsService } from '../../core/services/user-settings.service';
 export class PostPlayerComponent implements OnInit {
   isDarkTheme = false;
   @Input('substories') substories!: {id: string, type: string}[];
+  @Input('fullMode') fullMode: boolean = false;
   currentSubstory: { id: string, type: string }|null = null;
   currentSubstoryIdArrPos = 0;
   infiniteScrollActive = true;

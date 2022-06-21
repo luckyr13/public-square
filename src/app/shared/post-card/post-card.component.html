@@ -1,5 +1,6 @@
 <mat-card
 	class="post-card fadeIn mat-elevation-z0"
+	*ngIf="post"
 	[routerLink]="['/', profile && profile.username ? profile.username : post.owner, post.id]">
 	<mat-card-content>
 		<div [ngClass]="{ 'card-content': !fullMode } ">
@@ -84,6 +85,14 @@
 					<div class="profile-secondary-actions text-right">
 						<button
 							mat-icon-button
+							(click)="$event.stopPropagation(); goBack()"
+							color="accent"
+							*ngIf="fullMode"
+							aria-label="Go back">
+		          <mat-icon>arrow_back</mat-icon>
+		        </button>
+						<button
+							mat-icon-button
 							(click)="$event.stopPropagation()"
 							color="accent"
 							aria-label="More options"
@@ -102,6 +111,17 @@
 				              [isAddress]="false"
 				              class="small-username-2">Id: </app-arweave-address>
 				          </div>
+				        </mat-list-item>
+				        <mat-list-item 
+				        	class="tx-metadata-chips"
+				        	*ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0))">
+						  		<h4 class="meta" matLine>Tx metadata:</h4>
+						  		<span matLine *ngIf="application">Application: {{ application }} </span>
+									<span matLine *ngIf="appName" >App-Name: {{ appName }}</span>
+									<span matLine *ngIf="service">Service: {{ service }} </span>
+									<span matLine *ngIf="storyType" >Story type: {{ storyType }}</span>
+									<span matLine *ngIf="storyContentType" >Content type: {{ storyContentType }}</span>
+									<span matLine *ngIf="owner" >Owner: {{ owner }}</span>
 				        </mat-list-item>
 				      </mat-list>
 						</mat-menu>
@@ -156,7 +176,8 @@
 			  <div class="story-image-container" *ngIf="validateContentType(storyContentType, 'image')">
 				  <img (click)="openStory($event, post.id)" [src]="getFullImgUrlFromTx(post.id)">
 			 	</div>
-			  
+			 	
+			 	
 			  <div 
 			  	*ngIf="!loadingContent && contentError clear-both"
 			  	class="content-error fadeIn">
@@ -172,7 +193,9 @@
 		      </button>
 			  </div>
 			  <div class="clear-both" *ngIf="substories.length">
-			  	<app-post-player [substories]="substories"></app-post-player>
+			  	<app-post-player
+			  		[substories]="substories"
+			  		[fullMode]="fullMode"></app-post-player>
 			  </div>
 			  <div 
 			  	*ngIf="post && (!post.blockId || post.blockHeight == 0) "
@@ -185,17 +208,19 @@
 			</div>
 			<!-- /story-container -->
 		</div>
-	 <div 
-	  	*ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0))"
+	</mat-card-content>
+	<mat-card-actions>
+		<div 
+	  	*ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0)) && showActions"
 	  	class="fadeIn story-actions">
 	  	<div class="action-btn-wrapper">
         <button 
         	mat-button 
         	class="blue-hover"
-        	(click)="comment($event)"
-        	aria-label="Comment">
-	        <mat-icon class="material-icons-outlined">comment</mat-icon>
-        	<div>{{ 'GENERAL.STORY.COMMENT' | translate }}</div>
+        	(click)="reply($event)"
+        	aria-label="Reply">
+	        <mat-icon class="material-icons-outlined">reply</mat-icon>
+        	<div>{{ 'GENERAL.STORY.REPLY' | translate }}</div>
 	      </button>
       </div>
 	  	<div class="action-btn-wrapper">
@@ -229,20 +254,7 @@
 	      </button>
 	  	</div>
 	  </div>
-	  <div
-	  	class="clear-both tx-metadata-chips"
-	  	*ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0)) && fullMode">
-	  		<h4 class="meta">Tx metadata:</h4>
-	  		<span *ngIf="application">Application: {{ application }} </span>
-				<span *ngIf="appName" >App-Name: {{ appName }}</span>
-				<span *ngIf="service">Service: {{ service }} </span>
-				<span *ngIf="storyType" >Story type: {{ storyType }}</span>
-				<span *ngIf="storyContentType" >Content type: {{ storyContentType }}</span>
-				<span *ngIf="owner" >Owner: {{ owner }}</span>
-		</div>
-	</mat-card-content>
-	<mat-card-actions align="end">
-		
+	  
 	</mat-card-actions>
 </mat-card>
 <mat-divider></mat-divider>

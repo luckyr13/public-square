@@ -33,7 +33,7 @@ export class RepostService {
     const tags: {name: string, value: string}[] = [
       { name: 'App-Name', value: this._appSettings.protocolName },
       { name: 'Version', value: this._appSettings.protocolVersion },
-      { name: 'Type', value: 'Repost' },
+      { name: 'Type', value: 'repost' },
       { name: 'Post-Id', value: txToRepost.trim() },
       ...extraTags
     ];
@@ -64,7 +64,7 @@ export class RepostService {
       },
       {
         name: "Type",
-        values: ["Repost"]
+        values: ["repost"]
       },
       {
         name: "Post-Id",
@@ -132,7 +132,7 @@ export class RepostService {
       },
       {
         name: "Type",
-        values: ["Repost"]
+        values: ["repost"]
       }
     ];
     return this._ardb2.searchTransactions(from, limit, maxHeight, tags).pipe(

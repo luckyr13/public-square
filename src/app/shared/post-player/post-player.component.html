@@ -11,8 +11,9 @@
     </div>
 	</div>
 	<app-story-player-substory
-		[substory]="currentSubstory!" 
-		(loadingSubstoryEvent)="updateLoadingSubstory($event)"></app-story-player-substory>
+		[substory]="currentSubstory!"
+		(loadingSubstoryEvent)="updateLoadingSubstory($event)" 
+		[fullMode]="fullMode"></app-story-player-substory>
 	
 	<div
 		class="arrow-container vcenter"

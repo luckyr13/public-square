@@ -34,7 +34,7 @@ export class ReplyService {
     const tags: {name: string, value: string}[] = [
       { name: 'App-Name', value: this._appSettings.protocolName },
       { name: 'Version', value: this._appSettings.protocolVersion },
-      { name: 'Type', value: 'Reply' },
+      { name: 'Type', value: 'reply' },
       { name: 'In-Reply-To', value: txToReply.trim() },
       ...extraTags
     ];
@@ -65,7 +65,7 @@ export class ReplyService {
       },
       {
         name: "Type",
-        values: ["Reply"]
+        values: ["reply"]
       },
       {
         name: "In-Reply-To",
@@ -133,7 +133,7 @@ export class ReplyService {
       },
       {
         name: "Type",
-        values: ["Reply"]
+        values: ["reply"]
       }
     ];
     return this._ardb2.searchTransactions(from, limit, maxHeight, tags).pipe(

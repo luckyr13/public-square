@@ -44,7 +44,8 @@
 			"COMMENT": "Comentar",
 			"REPOST": "Repostear",
 			"LIKE": "Me gusta",
-			"SHARE": "Compartir"
+			"SHARE": "Compartir",
+			"REPLY": "Responder"
 		}
 	},
 	"SETTINGS": {

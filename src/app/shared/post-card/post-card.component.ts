@@ -12,6 +12,12 @@ import { BottomSheetShareComponent } from '../bottom-sheet-share/bottom-sheet-sh
 import { Direction } from '@angular/cdk/bidi';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component'; 
 import {MatDialog} from '@angular/material/dialog';
+import { Location } from '@angular/common';
+import { ReplyDialogComponent } from '../reply-dialog/reply-dialog.component';
+import { LikeDialogComponent } from '../like-dialog/like-dialog.component';
+import { RepostDialogComponent } from '../repost-dialog/repost-dialog.component';
+import { PostService } from '../../core/services/post.service';
+import { AppSettingsService } from '../../core/services/app-settings.service';
 
 @Component({
   selector: 'app-post-card',
@@ -19,8 +25,10 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./post-card.component.scss']
 })
 export class PostCardComponent implements OnInit, OnDestroy {
-  @Input() post!: TransactionMetadata;
-  @Input() fullMode = false;
+  @Input('post') post!: TransactionMetadata;
+  @Input('fullMode') fullMode = false;
+  @Input('txId') txId: string = '';
+  @Input('showActions') showActions = true;
   loadingContent = false;
   loadingProfile = false;
   profileImage = 'assets/images/blank-profile.png';
@@ -39,38 +47,16 @@ export class PostCardComponent implements OnInit, OnDestroy {
   owner: string = '';
   storyType: string = '';
   storyContentType: string = '';
-  supportedFiles: Record<string, string[]> = {
-    'image': [
-      'image/gif', 'image/png',
-      'image/jpeg', 'image/bmp',
-      'image/webp'
-    ],
-    'audio': [
-      'audio/midi', 'audio/mpeg',
-      'audio/webm', 'audio/ogg',
-      'audio/wav'
-    ],
-    'video': [
-      'video/webm', 'video/ogg', 'video/mp4'
-    ],
-    'text': [
-      'text/plain'
-    ],
-  };
-
-  /*
-  *  Default: 
-  *  Story: 100kb = 100000b
-  *  Image: 1mb = 1000000b
-  */
-  storyMaxSizeBytes = 100000;
-  storyImageMaxSizeBytes = 3000000;
   contentError = '';
 
   maxPreviewSize = 250;
   realPreviewSize = this.maxPreviewSize;
 
-  // Tx metadata
+  loadingPostMetadata = false;
+  private _postMetadataSubscription = Subscription.EMPTY;
+
+  repostId: string = '';
+  isReposted = false;
 
 
   constructor(
@@ -80,11 +66,36 @@ export class PostCardComponent implements OnInit, OnDestroy {
     private _userSettings: UserSettingsService,
     private _utils: UtilsService,
     private _bottomSheetShare: MatBottomSheet,
-    private _dialog: MatDialog) { }
+    private _dialog: MatDialog,
+    private _location: Location,
+    private _post: PostService,
+    private _appSettings: AppSettingsService) { }
 
   ngOnInit(): void {
+    if (this.txId) {
+      this.loadPostAndThenData(this.txId);
+    } else if (this.post) {
+      this.loadData();
+    }
+  }
+
+  loadPostAndThenData(tx: string, recurLv = 0) {
+    this.loadingPostMetadata = true;
+    this._postMetadataSubscription = this._post.getPostById(tx).subscribe({
+      next: (post) => {
+        this.post = post;
+        this.loadData(recurLv);
+      },
+      error: (error) => {
+        this.loadingPostMetadata = false;
+        this._utils.message(error, 'error');
+      }
+    })
+  }
+
+  loadData(recurLv = 0) {
     this.loadVertoProfile();
-    this.loadContent();
+    this.loadContent(recurLv);
     if (this.post.blockTimestamp) {
       this.post.blockTimestamp = this._utils.dateFormat(this.post.blockTimestamp);
     }
@@ -102,13 +113,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
     }
     for (const t of tags) {
       // Get substories
-      if (t.name === 'Substory') {
-        if (this._arweave.validateAddress(t.value)) {
-          this.substories.push({ id: t.value, type: 'tx' });
-        } else {
-          console.error('Invalid Substory tag', t);
-        }
-      } else if (t.name === 'App-Name') {
+      if (t.name === 'App-Name') {
         this.appName = t.value;
       } else if (t.name === 'Application') {
         this.application = t.value;
@@ -118,6 +123,12 @@ export class PostCardComponent implements OnInit, OnDestroy {
         this.storyType = t.value;        
       } else if (t.name === 'Content-Type') {
         this.storyContentType = t.value;
+      } else if (t.name === 'Post-Id') {
+        if (this._arweave.validateAddress(t.value)) {
+          this.repostId = t.value;
+        } else {
+          console.error('Invalid Repost Story Id', t);
+        }
       }
     }
   }
@@ -125,9 +136,10 @@ export class PostCardComponent implements OnInit, OnDestroy {
   loadVertoProfile() {
     const account = this.post.owner;
     this.loadingProfile = true;
+    this.profile = null;
     this.profileSubscription = this._verto.getProfile(account).subscribe({
       next: (profile: UserInterface|undefined) => {
-        this.profileImage = 'assets/images/blank-profile.png';
+        this.profileImage = 'assets/images/blank-profile.jpg';
         
         if (profile) {
           if (profile.image) {
@@ -142,8 +154,6 @@ export class PostCardComponent implements OnInit, OnDestroy {
         this._utils.message(error, 'error');
       }
     });
-
-   
   }
 
   ngOnDestroy() {
@@ -156,16 +166,105 @@ export class PostCardComponent implements OnInit, OnDestroy {
     return this._utils.ellipsis(s);
   }
 
-  comment(event: MouseEvent) {
+
+  reply(event: MouseEvent) {
     event.stopPropagation();
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+    const myAddress = this._auth.getMainAddressSnapshot();
+
+    const dialogRef = this._dialog.open(
+      ReplyDialogComponent,
+      {
+        restoreFocus: false,
+        autoFocus: false,
+        disableClose: true,
+        data: {
+          // address: this.account
+          myAddress: myAddress,
+          txId: this.post.id,
+          postOwner: this.post.owner,
+          postOwnerUsername: this.profile && this.profile.username ? this.profile.username : '',
+          postOwnerImage: this.profileImage,
+          postContent: this.originalRawContent,
+          contentType: this.storyContentType
+        },
+        direction: direction
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((res) => {
+      
+    });
+  
   }
+
 
   repost(event: MouseEvent) {
     event.stopPropagation();
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+    const myAddress = this._auth.getMainAddressSnapshot();
+
+    const dialogRef = this._dialog.open(
+      RepostDialogComponent,
+      {
+        restoreFocus: false,
+        autoFocus: false,
+        disableClose: false,
+        data: {
+          myAddress: myAddress,
+          txId: this.post.id,
+          postOwner: this.post.owner,
+          postOwnerUsername: this.profile && this.profile.username ? this.profile.username : '',
+          postOwnerImage: this.profileImage,
+          postContent: this.originalRawContent,
+          contentType: this.storyContentType
+        },
+        direction: direction
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((res) => {
+    });
   }
 
   like(event: MouseEvent) {
     event.stopPropagation();
+
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+    const myAddress = this._auth.getMainAddressSnapshot();
+
+    const dialogRef = this._dialog.open(
+      LikeDialogComponent,
+      {
+        restoreFocus: false,
+        autoFocus: false,
+        disableClose: true,
+        data: {
+          // address: this.account
+          myAddress: myAddress,
+          txId: this.post.id,
+          postOwner: this.post.owner,
+          postOwnerUsername: this.profile && this.profile.username ? this.profile.username : '',
+          postOwnerImage: this.profileImage,
+          postContent: this.originalRawContent,
+          contentType: this.storyContentType
+        },
+        direction: direction
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((res) => {
+    });
+      
   }
 
   openStory(event: MouseEvent, txId: string) {
@@ -248,9 +347,9 @@ export class PostCardComponent implements OnInit, OnDestroy {
     return detectedYouTubeIds;
   }
 
-  _loadContentHelperLoadContent() {
+  _loadContentHelperLoadContent(_postId: string) {
     this.loadingContent = true;
-    this.contentSubscription = this._arweave.getDataAsString(this.post.id).subscribe({
+    this.contentSubscription = this._arweave.getDataAsString(_postId).subscribe({
       next: (data: string|Uint8Array) => {
         // this.content = this._utils.sanitize(`${data}`);
         this.originalRawContent = this._utils.sanitizeFull(`${data}`);
@@ -258,8 +357,6 @@ export class PostCardComponent implements OnInit, OnDestroy {
         const detectedLinks = links.map((val) => {
           return val.href;
         });
-
-        
         
         // Extract youtube links
         const detectedYouTubeIds = this.detectYouTubeLinks(detectedLinks);
@@ -291,21 +388,29 @@ export class PostCardComponent implements OnInit, OnDestroy {
     return (this._utils.sanitize(s.substr(0, length)) + ellipsis);
   }
 
-  loadContent() {
+  loadContent(recurLv = 0) {
     const dataSize = this.post.dataSize ? +(this.post.dataSize) : 0;
     // Read tags and
     // fill substories array
     this.owner = this.post.owner;
+    this.storyContentType = this.post.dataType ? this.post.dataType : '';
     this.extractTagsFromPost(this.post);
-    if (dataSize <= this.storyMaxSizeBytes && this.validateContentType(this.storyContentType, 'text')) {// Load content
-      this._loadContentHelperLoadContent();
-    } else if (dataSize <= this.storyImageMaxSizeBytes && this.validateContentType(this.storyContentType, 'image')) {
-      // Load content
-      this._loadContentHelperLoadContent();
-    } else if (!dataSize) {
-      this.contentError = 'Couldn\'t fetch data size value. Tx is not mined yet.';
-    } else {
-      this.contentError = `Story is too big to be displayed. Size limit for images: ${this.storyImageMaxSizeBytes}bytes. Size limit for text: ${this.storyMaxSizeBytes}bytes. Story size: ${dataSize} bytes.`;
+    if (this.storyType === 'post' || 
+        this.storyType === 'reply') { 
+      if (dataSize <= this._appSettings.storyMaxSizeBytes && this.validateContentType(this.storyContentType, 'text')) {// Load content
+        this._loadContentHelperLoadContent(this.post.id);
+      } else if (!this.post || this.post.dataSize === undefined) {
+        this.contentError = `Transaction is pending ...`;
+      } else {
+        this.contentError = `Story is too big to be displayed.
+          Size limit for text: ${this._appSettings.storyMaxSizeBytes}bytes.
+          Story size: ${this.post.dataSize} bytes.`;
+      }
+    } else if (this.storyType === 'repost' && this.repostId !== '' && !recurLv) {
+      this.isReposted = true;
+      this.loadPostAndThenData(this.repostId, recurLv + 1);
+    } else if (this.storyType !== 'repost' && this.storyType !== '') {
+      this.contentError = `Unknown story type 👽 ${this.post.id} - ${this.storyType}`;
     }
   }
 
@@ -329,6 +434,12 @@ export class PostCardComponent implements OnInit, OnDestroy {
   }
 
   confirmDialog(href: string) {
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    // defLang.writing_system
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+
     const dialogRef = this._dialog.open(
       ConfirmationDialogComponent,
       {
@@ -339,7 +450,8 @@ export class PostCardComponent implements OnInit, OnDestroy {
           content: `Do you really want to visit this site? ${href}`,
           closeLabel: 'No',
           confirmLabel: 'Yes, open link in new tab'
-        }
+        },
+        direction: direction
       }
     );
 
@@ -354,14 +466,18 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
   validateContentType(contentType: string, desiredType: 'image'|'audio'|'video'|'text') {
     return (
-      Object.prototype.hasOwnProperty.call(this.supportedFiles, desiredType) ?
-      this.supportedFiles[desiredType].indexOf(contentType) >= 0 :
+      Object.prototype.hasOwnProperty.call(this._appSettings.supportedFiles, desiredType) ?
+      this._appSettings.supportedFiles[desiredType].indexOf(contentType) >= 0 :
       false
     );
   }
 
   getFullImgUrlFromTx(tx: string) {
     return `${this._arweave.baseURL}${tx}`;
+  }
+
+  goBack() {
+    this._location.back();
   }
 
 }

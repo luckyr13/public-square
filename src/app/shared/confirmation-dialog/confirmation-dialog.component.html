@@ -1,15 +1,15 @@
 <h2 mat-dialog-title *ngIf="data.title">{{ data.title }}</h2>
 <mat-dialog-content>
   <p class="content">
-  	{{ data.content }}
+    {{ data.content }}
   </p>
 </mat-dialog-content>
 <mat-dialog-actions align="start">
-  <button mat-button (click)="close(false)">{{ data.closeLabel }}</button>
+  <button mat-button 
+    cdkFocusInitial (click)="close(false)">{{ data.closeLabel }}</button>
   <div class="spacer"></div>
   <button
-  	mat-flat-button
-  	cdkFocusInitial
-  	(click)="close(true)"
-  	color="accent">{{ data.confirmLabel }}</button>
+    mat-flat-button
+    (click)="close(true)"
+    color="accent">{{ data.confirmLabel }}</button>
 </mat-dialog-actions>

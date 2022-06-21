@@ -44,7 +44,8 @@
 			"COMMENT": "Comment",
 			"REPOST": "Repost",
 			"LIKE": "Like",
-			"SHARE": "Share"
+			"SHARE": "Share",
+			"REPLY": "Reply"
 		}
 	},
 	"SETTINGS": {

@@ -1,7 +1,7 @@
 .post-card {
 	width: 100%;
 	margin: 0 auto;
-	padding: 22px;
+	padding: 12px;
 	padding-bottom: 10px;
 	border-radius: 0px;
 }
@@ -65,13 +65,12 @@ mat-card-header {
 .story-container {
 	width: 100%;
 	min-height: 100%;
-	padding-left: 14px;
 	word-break: normal;
 	overflow-wrap: anywhere;
 }
 
 .story-container .content {
-	min-height: 40px;
+	min-height: 30px;
 	clear: both;
 	margin-bottom: 20px;
 }
@@ -93,7 +92,7 @@ mat-card-header {
 }
 
 .mat-card-actions {
-	padding-top: 12px;
+	margin-top: 22px;
 }
 
 
@@ -132,7 +131,7 @@ mat-card-header {
 	.avatar-container {
 		width: 82px;
 		text-align: left;
-		padding-right: 12px;
+		margin-right: 12px;
 	}
 
 	.avatar-fullmode {
@@ -253,7 +252,6 @@ h2 {
 	text-decoration: underline;
 }
 .tx-metadata-chips {
-	margin-top: 22px;
 }
 
 .tx-metadata-chips span {
@@ -262,6 +260,8 @@ h2 {
 	color: white;
 	padding: 4px;
 	margin-left: 4px;
+	display: block;
+	margin-bottom: 4px;
 }
 
 .story-image-container {
@@ -270,10 +270,27 @@ h2 {
 }
 .story-image-container img {
 	max-width: 100%;
-
 }
 
 .meta {
-	margin-top: 40px;
-	margin-bottom: 12px;
+	margin-bottom: 12px !important;
+}
+
+.story-video-container {
+	text-align: center;
+	padding: 20px;
+}
+.story-video-container video {
+	max-width: 80%;
+}
+.story-audio-container {
+	text-align: center;
+	padding: 20px;
+}
+.story-audio-container video {
+	max-width: 80%;
+}
+.label-reposted {
+  padding-left: 20px;
+  margin: 20px 0px 0px 0px;
 }
