@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         const moreResultsPos = this.moreResultsCard.nativeElement.offsetTop -
           this.moreResultsCard.nativeElement.scrollTop;
         const padding = 700;
-        if ((scroll > moreResultsPos - padding) && 
+        if ((scroll > moreResultsPos - padding && moreResultsPos) && 
             !this.loadingPosts &&
             this.moreResultsAvailable) {
           this.moreResults();
