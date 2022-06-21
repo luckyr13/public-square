@@ -1,7 +1,6 @@
-
 .content {
 	float: left;
-	width: 92%;
+	width: calc(100% - 80px);
 	height: 100%;
 	position: relative;
 	text-align: center;
@@ -80,4 +79,47 @@
 .content .youtube-container iframe {
 	width: 100%;
 	height: 100%;
+}
+
+@media (min-width: 600px) {
+	.content {
+		width: calc(100% - 120px);
+	}
+}
+
+
+.content .video-container {
+	width: 100%;
+	height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.content .video-container video {
+	max-width: 80%;
+	min-width: 50%;
+	text-align: center;
+}
+
+.content .audio-container {
+	width: 100%;
+	height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+
+.content .audio-container video {
+	max-width: 80%;
+	min-width: 50%;
+	text-align: center;
 }

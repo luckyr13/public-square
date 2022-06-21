@@ -31,7 +31,9 @@
 	  		*ngIf="substoryContent.content && !substoryContent.loading"
 	  		[innerHTML]="substoryContent.content">
 			</p>
-	  	<div class="text-right" *ngIf="!substoryContent.loading && substoryContent.raw && showStoryMoreTextBtn()">
+	  	<div
+	  		class="text-right"
+	  		*ngIf="!substoryContent.loading && substoryContent.raw && showStoryMoreTextBtn()">
 	  		<button 
         	mat-button
         	class="btn-see-more"
@@ -41,34 +43,19 @@
         	See more
 	      </button>
 	  	</div>
+	  	<div
+	  		class="text-right"
+	  		*ngIf="!substoryContent.loading && fullMode">
+	  		<button 
+        	mat-button
+        	class="btn-see-more"
+        	color="accent"
+        	[routerLink]="['/', owner, substory.id]"
+        	aria-label="Open" matTooltip="Open">
+        	Open substory
+	      </button>
+	  	</div>
 	  </div>
-	</div>
-	<!-- image -->
-	<div
-		class="substory-container image-container"
-		*ngIf="substoryContent.type.indexOf('image') >= 0  && !substoryContent.loading">
-		<mat-spinner color="accent" [diameter]="40" *ngIf="substoryContent.loading"></mat-spinner>
-		<div
-			class="text-error fadeIn"
-			*ngIf="substoryContent.error">
-			<p>
-				{{ substoryContent.error }}
-			</p>
-			<button 
-      	mat-icon-button
-      	class="btn-open-anyway"
-      	(click)="openStory($event, substory.id)"
-      	aria-label="Open in new window" matTooltip="Open in new window">
-      	<mat-icon class="material-icons-outlined">open_in_new</mat-icon>
-      </button>
-		</div>
-		<div
-			[routerLink]="['/', owner, substory.id]"
-			class="image-container fadeIn"
-			*ngIf="substoryContent.content"
-			[ngStyle]="{ 'background-image': 'url(' + substoryContent.content + ')' }">
-			
-		</div>
 	</div>
 
 	<!-- Youtube Video -->

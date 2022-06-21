@@ -8,52 +8,83 @@ $player-height: 320px;
 	cursor: default;
 }
 
-.player-container .arrow-container {
-	float: left;
-	width: 4%;
-	height: 100%;
-	text-align: center;
-	cursor: pointer;
-	position: relative;
-	opacity: 0.2;
-}
-
-.player-container .arrow-container:hover {
-	opacity: 0.4;
-}
-
-.player-container .arrow-container.arrow-dark {
-	filter: invert(100%);
-}
-
-
 .vcenter {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/*
+* Small arrows
+*/
 
-.arrow {
+.player-container .arrow-small-container {
+	float: left;
+	width: 40px;
+	height: 100%;
+	text-align: center;
+	position: relative;
+}
+
+.player-container .arrow-small-container:hover {
+}
+
+.player-container .arrow-small-container.arrow-dark {
+	filter: invert(100%);
+}
+
+.arrow-small {
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.arrow img {
-	width: 100%;
-	height: 100%;
-}
 
-.arrow.left {
-	transform: rotate(180deg);
+.arrow-small.left {
 
 }
 
-.arrow.right img {
+.arrow-small.right {
 }
 
-.player-container .arrow-container.off {
-	opacity: 0.1;
-	cursor: default;
+.arrow-icon {
+	font-size: 32px !important;
+}
+
+.player-circle-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+  justify-content: center;
+  padding: 14px;
+  flex-wrap: wrap;
+}
+
+.player-circle {
+	width: 10px;
+	height: 10px;
+	border-radius: 10px;
+	border: 1px solid;
+	margin-right: 6px;
+	margin-bottom: 6px;
+}
+
+.player-circle:hover {
+	cursor: pointer;
+}
+.player-circle.active {
+	background-color: #000;
+}
+.player-circle.active-dark {
+	background-color: #FFF;
+}
+
+@media (min-width: 600px) {
+	.player-container .arrow-small-container {
+		width: 60px;
+	}
 }

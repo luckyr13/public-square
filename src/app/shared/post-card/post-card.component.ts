@@ -45,8 +45,8 @@ export class PostCardComponent implements OnInit, OnDestroy {
   application: string = '';
   appName: string = '';
   owner: string = '';
-  storyType: string = '';
-  storyContentType: string = '';
+  postType: string = '';
+  postContentType: string = '';
   contentError = '';
 
   maxPreviewSize = 250;
@@ -120,9 +120,9 @@ export class PostCardComponent implements OnInit, OnDestroy {
       } else if (t.name === 'Service') {
         this.application = t.value;
       } else if (t.name === 'Type') {
-        this.storyType = t.value;        
+        this.postType = t.value;        
       } else if (t.name === 'Content-Type') {
-        this.storyContentType = t.value;
+        this.postContentType = t.value;
       } else if (t.name === 'Post-Id') {
         if (this._arweave.validateAddress(t.value)) {
           this.repostId = t.value;
@@ -189,7 +189,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
           postOwnerUsername: this.profile && this.profile.username ? this.profile.username : '',
           postOwnerImage: this.profileImage,
           postContent: this.originalRawContent,
-          contentType: this.storyContentType
+          contentType: this.postContentType
         },
         direction: direction
       }
@@ -223,7 +223,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
           postOwnerUsername: this.profile && this.profile.username ? this.profile.username : '',
           postOwnerImage: this.profileImage,
           postContent: this.originalRawContent,
-          contentType: this.storyContentType
+          contentType: this.postContentType
         },
         direction: direction
       }
@@ -256,7 +256,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
           postOwnerUsername: this.profile && this.profile.username ? this.profile.username : '',
           postOwnerImage: this.profileImage,
           postContent: this.originalRawContent,
-          contentType: this.storyContentType
+          contentType: this.postContentType
         },
         direction: direction
       }
@@ -393,11 +393,11 @@ export class PostCardComponent implements OnInit, OnDestroy {
     // Read tags and
     // fill substories array
     this.owner = this.post.owner;
-    this.storyContentType = this.post.dataType ? this.post.dataType : '';
+    this.postContentType = this.post.dataType ? this.post.dataType : '';
     this.extractTagsFromPost(this.post);
-    if (this.storyType === 'post' || 
-        this.storyType === 'reply') { 
-      if (dataSize <= this._appSettings.storyMaxSizeBytes && this.validateContentType(this.storyContentType, 'text')) {// Load content
+    if (this.postType === 'post' || 
+        this.postType === 'reply') { 
+      if (dataSize <= this._appSettings.storyMaxSizeBytes && this.validateContentType(this.postContentType, 'text')) {// Load content
         this._loadContentHelperLoadContent(this.post.id);
       } else if (!this.post || this.post.dataSize === undefined) {
         this.contentError = `Transaction is pending ...`;
@@ -406,11 +406,11 @@ export class PostCardComponent implements OnInit, OnDestroy {
           Size limit for text: ${this._appSettings.storyMaxSizeBytes}bytes.
           Story size: ${this.post.dataSize} bytes.`;
       }
-    } else if (this.storyType === 'repost' && this.repostId !== '' && !recurLv) {
+    } else if (this.postType === 'repost' && this.repostId !== '' && !recurLv) {
       this.isReposted = true;
       this.loadPostAndThenData(this.repostId, recurLv + 1);
-    } else if (this.storyType !== 'repost' && this.storyType !== '') {
-      this.contentError = `Unknown story type 👽 ${this.post.id} - ${this.storyType}`;
+    } else if (this.postType !== 'repost' && this.postType !== '') {
+      this.contentError = `Unknown story type 👽 ${this.post.id} - ${this.postType}`;
     }
   }
 

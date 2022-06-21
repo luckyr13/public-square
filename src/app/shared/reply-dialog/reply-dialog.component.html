@@ -22,30 +22,6 @@
 		  	</div>
 		  </div>
 	 	</ng-container>
-	 	<!-- Story type: image  -->
-	  <div class="story-image-container" *ngIf="validateContentType(data.contentType, 'image')">
-		  <img (click)="openLink($event, data.txId)" [src]="getFullImgUrlFromTx(data.txId)">
-	 	</div>
-	 	<!-- Story type: video  -->
-	  <div 
-	  	(click)="$event.stopPropagation();"
-	  	class="story-video-container" 
-	  	*ngIf="validateContentType(data.contentType, 'video')">
-		  <video  controls preload="none" poster="assets/images/videoPoster.jpg">
-			  <source [src]="getFullImgUrlFromTx(data.txId)">
-				Your browser does not support the video tag.
-			</video>
-	 	</div>
-	 	<!-- Story type: audio  -->
-	  <div 
-	  	(click)="$event.stopPropagation();"
-	  	class="story-audio-container" 
-	  	*ngIf="validateContentType(data.contentType, 'audio')">
-		  <audio controls preload="none">
-			  <source [src]="getFullImgUrlFromTx(data.txId)">
-				Your browser does not support the audio tag.
-			</audio>
-	 	</div>
 		<h5 class="reply-subtitle clear-both">
 			Your reply:
 		</h5>

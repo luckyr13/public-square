@@ -119,8 +119,8 @@
 						  		<span matLine *ngIf="application">Application: {{ application }} </span>
 									<span matLine *ngIf="appName" >App-Name: {{ appName }}</span>
 									<span matLine *ngIf="service">Service: {{ service }} </span>
-									<span matLine *ngIf="storyType" >Story type: {{ storyType }}</span>
-									<span matLine *ngIf="storyContentType" >Content type: {{ storyContentType }}</span>
+									<span matLine *ngIf="postType" >Post type: {{ postType }}</span>
+									<span matLine *ngIf="postContentType" >Content type: {{ postContentType }}</span>
 									<span matLine *ngIf="owner" >Owner: {{ owner }}</span>
 				        </mat-list-item>
 				      </mat-list>
@@ -149,7 +149,7 @@
 			  	*ngIf="loadingContent"
 			  	[theme]="{ 'height.px': 18, 'marginBottom.px': 20, 'marginTop.px': 0, 'width': '90%' }"></ngx-skeleton-loader>
 			  <!-- Story type: text -->
-			  <ng-container *ngIf="validateContentType(storyContentType, 'text')">
+			  <ng-container *ngIf="validateContentType(postContentType, 'text')">
 				  <div 
 				  	#contentContainer
 				  	class="content fadeIn">
@@ -172,12 +172,6 @@
 				  	</div>
 				  </div>
 			 	</ng-container>
-			 	<!-- Story type: image  -->
-			  <div class="story-image-container" *ngIf="validateContentType(storyContentType, 'image')">
-				  <img (click)="openStory($event, post.id)" [src]="getFullImgUrlFromTx(post.id)">
-			 	</div>
-			 	
-			 	
 			  <div 
 			  	*ngIf="!loadingContent && contentError clear-both"
 			  	class="content-error fadeIn">

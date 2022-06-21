@@ -9,6 +9,11 @@ import { UtilsService } from '../../core/utils/utils.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component'; 
 import {MatDialog} from '@angular/material/dialog';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { Direction } from '@angular/cdk/bidi';
+import { UserSettingsService } from '../../core/services/user-settings.service';
+import { AppSettingsService } from '../../core/services/app-settings.service';
+import { PostService } from '../../core/services/post.service';
+
 
 @Component({
   selector: 'app-story-player-substory',
@@ -28,44 +33,22 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
   substoryContentSubscription = Subscription.EMPTY;
   @Input('substory') substory!: { id: string, type: string};
   @Output() loadingSubstoryEvent = new EventEmitter<boolean>();
-  supportedFiles: Record<string, string[]> = {
-    'image': [
-      'image/gif', 'image/png',
-      'image/jpeg', 'image/bmp',
-      'image/webp'
-    ],
-    'audio': [
-      'audio/midi', 'audio/mpeg',
-      'audio/webm', 'audio/ogg',
-      'audio/wav'
-    ],
-    'video': [
-      'video/webm', 'video/ogg', 'video/mp4'
-    ],
-    'text': [
-      'text/plain'
-    ],
-  };
   @ViewChild('contentContainer') contentContainer!: ElementRef;
   owner: string = '';
-
-  /*
-  *  Default: 
-  *  Story: 100kb = 100000b
-  *  Image: 3mb = 3000000b
-  */
-  storyMaxSizeBytes = 100000;
-  storyImageMaxSizeBytes = 3000000;
   contentError = '';
 
   maxPreviewSize = 250;
   realPreviewSize = this.maxPreviewSize;
+
   @Input('fullMode') fullMode: boolean = false;
 
   constructor(
     private _arweave: ArweaveService,
     private _utils: UtilsService,
-    private _dialog: MatDialog) {
+    private _dialog: MatDialog,
+    private _userSettings: UserSettingsService,
+    private _appSettings: AppSettingsService,
+    private _post: PostService) {
   }
 
   ngOnInit(): void {
@@ -92,42 +75,48 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
 
         this.owner = tx.owner;
 
-        for (const sfCat of Object.keys(this.supportedFiles)) {
-          for (const sf of this.supportedFiles[sfCat]) {
+        for (const sfCat of Object.keys(this._appSettings.supportedFiles)) {
+          for (const sf of this._appSettings.supportedFiles[sfCat]) {
             supportedFiles.push(sf);
           }
         }
 
-        for (const t of tags) {
-          if (t.name === 'Content-Type' && supportedFiles.indexOf(t.value) >= 0) {
-            this.substoryContent.type = t.value;
-            if (t.value.indexOf('image') >= 0) {
-              // Check dataSize first
-              const dataSize = +(tx.dataSize!);
-              if (dataSize > this.storyImageMaxSizeBytes) {
-                this.substoryContent.error = `Image is too big to be displayed. Size limit: ${this.storyImageMaxSizeBytes}bytes. Image size: ${dataSize} bytes.`;
+        this.substoryContent.type = tx.dataType ? tx.dataType : '';
+        if (this.substoryContent.type) {
+          if (supportedFiles.indexOf(this.substoryContent.type) >= 0) {
+            this.substoryContent.type = this.substoryContent.type;
+            if (this.substoryContent.type.indexOf('text') >= 0) {
+              const dataSize = tx.dataSize ? +(tx.dataSize) : 0;
+              if (dataSize > this._appSettings.storyMaxSizeBytes) {
+                this.substoryContent.error = `Story is too big to be displayed. Size limit: ${this._appSettings.storyMaxSizeBytes}bytes. Story size: ${dataSize} bytes.`;
                 this.substoryContent.loading = false;
                 this.loadingSubstoryEvent.emit(false);
                 throw new Error(this.substoryContent.error);
               }
-
-              let fileURL = `${this._arweave.baseURL}${tx.id}`;
-              fileURL = this._utils.sanitizeFull(`${fileURL}`);
-              this.substoryContent.content = fileURL;
-              this.substoryContent.loading = false;
-                this.loadingSubstoryEvent.emit(false);
-              return of(fileURL);
+              return this.loadContent(tx.id);
+            }
+          }
+          
+        } else {
+          for (const t of tags) {
+            if (t.name === 'Content-Type' && supportedFiles.indexOf(t.value) >= 0) {
+              this.substoryContent.type = t.value;
+              if (t.value.indexOf('text') >= 0) {
+                const dataSize = tx.dataSize ? +(tx.dataSize) : 0;
+                if (dataSize > this._appSettings.storyMaxSizeBytes) {
+                  this.substoryContent.error = `Story is too big to be displayed. Size limit: ${this._appSettings.storyMaxSizeBytes}bytes. Story size: ${dataSize} bytes.`;
+                  this.substoryContent.loading = false;
+                  this.loadingSubstoryEvent.emit(false);
+                  throw new Error(this.substoryContent.error);
+                }
+                return this.loadContent(tx.id);
+              }
             }
           }
         }
-        const dataSize = +(tx.dataSize!);
-        if (dataSize > this.storyMaxSizeBytes) {
-          this.substoryContent.error = `Story is too big to be displayed. Size limit: ${this.storyMaxSizeBytes}bytes. Story size: ${dataSize} bytes.`;
-          this.substoryContent.loading = false;
-          this.loadingSubstoryEvent.emit(false);
-          throw new Error(this.substoryContent.error);
-        }
-        return this.loadContent(tx.id);
+        
+        
+        throw new Error('Invalid substory type');
       })
     ).subscribe({
       next: () => {
@@ -171,8 +160,7 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
       error: '',
       raw: ''
     };
-    return of();
-    /* this._substory.getPost(txId).pipe(
+    return this._post.getPostById(txId).pipe(
       tap({
         next: (txData) => {
           // this.substoriesContent[txId].loading = false;
@@ -182,7 +170,7 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
           this.substoryContent.loading = false;
         }
       })
-    ); */;
+    );
   }
 
   ngOnDestroy() {
@@ -219,6 +207,11 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
   }
 
   confirmDialog(href: string) {
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+
     const dialogRef = this._dialog.open(
       ConfirmationDialogComponent,
       {
@@ -229,7 +222,8 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
           content: `Do you really want to visit this site? ${href}`,
           closeLabel: 'No',
           confirmLabel: 'Yes, open link in new tab'
-        }
+        },
+        direction: direction
       }
     );
 
@@ -267,6 +261,9 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     this.realPreviewSize = `${this.substoryContent.raw}`.length;
     this.substoryContent.content = this.substr(this.substoryContent.raw, this.realPreviewSize);
+    
+    // Intercept click on anchors
+    this.interceptClicks();
   }
 
   getYoutubeUrl(id: string) {
