@@ -1,0 +1,44 @@
+<mat-dialog-content
+	class="content border-right-special"
+	*ngIf="data.wallets">
+	<div *ngIf="!loadingFollow && !followTxId">
+		<p>Do you want to follow this user?</p>
+		<p class="text-center" *ngIf="data.username">
+			{{ data.username }}
+		</p>
+		<p class="text-center wallets" *ngFor="let w of data.wallets">
+			{{ w }}
+		</p>
+		<p class="text-right">
+			<mat-checkbox class="dispatch-chk" [formControl]="useDispatch">
+				Follow for FREE (Dispatch method)
+			</mat-checkbox>
+		</p>
+	</div>
+	<div *ngIf="loadingFollow">
+		<p><span>Sending tx ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
+	</div>
+	<div *ngIf="!loadingFollow && followTxId">
+		<p>Tx {{followTxId}} created succesfully!</p>
+		<p>
+			Your transaction is gonna be mined in the next minutes. You can take a coffee now! ☕
+		</p>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions 
+	align="start" 
+	*ngIf="data.wallets">
+  <button 
+  	mat-button
+  	[disabled]="loadingFollow"
+  	cdkFocusInitial (click)="close(false)">Close</button>
+  <div class="spacer"></div>
+  <button
+  	mat-flat-button
+  	(click)="submit()"
+  	*ngIf="!followTxId"
+  	[disabled]="loadingFollow"
+  	color="accent">
+  	<span>Yes, I want to follow this user! </span> 
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,91 @@
+<mat-dialog-content
+	class="content">
+	<div *ngIf="!loadingReply && !replyTxId && data.myAddress">
+		<p class="text-center" *ngIf="data.postOwnerImage">
+			<img
+		  	class="avatar"
+		  	mat-card-avatar
+		  	[src]="data.postOwnerImage">
+		</p>
+		<p *ngIf="data.postOwner">
+			<strong>{{ data.postOwnerUsername ? data.postOwnerUsername : data.postOwner }}</strong>
+		</p>
+		<!-- Story type: text -->
+	  <ng-container *ngIf="validateContentType(data.contentType, 'text')">
+		  <div 
+		  	#contentContainer
+		  	class="content fadeIn">
+		  	<!-- Preview -->
+		  	<div 
+		  		*ngIf="!loadingReply && data.postContent">
+		  		{{ data.postContent }}
+		  	</div>
+		  </div>
+	 	</ng-container>
+	 	<!-- Story type: image  -->
+	  <div class="story-image-container" *ngIf="validateContentType(data.contentType, 'image')">
+		  <img (click)="openLink($event, data.txId)" [src]="getFullImgUrlFromTx(data.txId)">
+	 	</div>
+	 	<!-- Story type: video  -->
+	  <div 
+	  	(click)="$event.stopPropagation();"
+	  	class="story-video-container" 
+	  	*ngIf="validateContentType(data.contentType, 'video')">
+		  <video  controls preload="none" poster="assets/images/videoPoster.jpg">
+			  <source [src]="getFullImgUrlFromTx(data.txId)">
+				Your browser does not support the video tag.
+			</video>
+	 	</div>
+	 	<!-- Story type: audio  -->
+	  <div 
+	  	(click)="$event.stopPropagation();"
+	  	class="story-audio-container" 
+	  	*ngIf="validateContentType(data.contentType, 'audio')">
+		  <audio controls preload="none">
+			  <source [src]="getFullImgUrlFromTx(data.txId)">
+				Your browser does not support the audio tag.
+			</audio>
+	 	</div>
+		<h5 class="reply-subtitle clear-both">
+			Your reply:
+		</h5>
+		<app-create-post-card
+			[showSubmitButton]="false"
+			[isSubstory]="true"
+			[account]="data.myAddress"
+			(contentChangeEvent)="contentChangeEvent($event)"></app-create-post-card>
+		<p class="text-right">
+			<mat-checkbox class="dispatch-chk" [formControl]="useDispatch">
+				Reply for FREE (Dispatch method)
+			</mat-checkbox>
+		</p>
+	</div>
+	<h3 class="text-center login-first" *ngIf="!data.myAddress">
+		Please login first!
+	</h3>
+	<div *ngIf="loadingReply">
+		<p><span>Sending tx ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
+	</div>
+	<div *ngIf="!loadingReply && replyTxId">
+		<p>Tx {{replyTxId}} created succesfully!</p>
+		<p>
+			Your transaction is gonna be mined in the next minutes. You can take a coffee now! ☕
+		</p>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions 
+	align="start" >
+  <button 
+  	mat-button
+  	[disabled]="loadingReply"
+  	cdkFocusInitial (click)="close()">Close</button>
+  <div class="spacer"></div>
+  <button
+  	mat-flat-button
+  	class="reply-btn"
+  	(click)="submit()"
+  	[disabled]="loadingReply || replyTxId !== '' || message == ''"
+  	color="accent">
+  	<mat-icon>reply</mat-icon><span>{{ 'GENERAL.STORY.REPLY' | translate }}</span>
+  </button>
+</mat-dialog-actions>

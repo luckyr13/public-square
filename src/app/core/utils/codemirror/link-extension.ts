@@ -34,7 +34,7 @@ function linkDeco(view: EditorView) {
       let line = view.state.doc.lineAt(pos);
       const links = getLinksByPosition(line.from, line.to, line.text);
       for (const cl of links) {
-      	builder.add(cl.from, cl.to, link);
+        builder.add(cl.from, cl.to, link);
       }
       
       pos = line.to + 1;
@@ -44,7 +44,7 @@ function linkDeco(view: EditorView) {
 }
 
 function getLinksByPosition(start: number, end: number, s: string) {
-	const res: Array<{from: number, to: number}>= [];
+  const res: Array<{from: number, to: number}>= [];
   const links = linkify.find(s);
 
   for (const li of links) {
@@ -53,7 +53,7 @@ function getLinksByPosition(start: number, end: number, s: string) {
     }
   }
 
-	return res;
+  return res;
 }
 
 export function linkExtension(options: {step?: number} = {}): Extension {

@@ -12,12 +12,12 @@ import { UserSettingsService } from '../../core/services/user-settings.service';
 import { UtilsService } from '../../core/utils/utils.service';
 import {MatDialog} from '@angular/material/dialog';
 import {MatMenuTrigger} from '@angular/material/menu';
-import {MatButton} from '@angular/material/button';
 import { FileManagerDialogComponent } from '../file-manager-dialog/file-manager-dialog.component'; 
 import { UploadFileDialogComponent } from '../upload-file-dialog/upload-file-dialog.component';
 import { SubmitPostDialogComponent } from '../submit-post-dialog/submit-post-dialog.component';
 import Transaction from 'arweave/web/lib/transaction';
 import {TranslateService} from '@ngx-translate/core';
+import { Direction } from '@angular/cdk/bidi';
 
 
 @Component({
@@ -42,8 +42,9 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
   themeSubscription = Subscription.EMPTY;
   @Input('account') account!: string;
   @Output('newStoryEvent') newStoryEvent = new EventEmitter<string>();
-  @ViewChild('matButtonImage') matButtonImage!: MatButton;
+  @Output('contentChangeEvent') contentChangeEvent = new EventEmitter<string>();
   @Input('isSubstory') isSubstory!: boolean;
+  @Input('showSubmitButton') showSubmitButton: boolean = true;
   substories: {id: string, content: string, type: 'text'|'image', arrId: number}[] = [];
   unsignedTxSubscription = Subscription.EMPTY;
 
@@ -62,6 +63,7 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
   ngOnInit(): void {
     this.contentSubscription = this.codemirrorWrapper.contentStream.subscribe((content) => {
       this.messageContent = content;
+      this.contentChangeEvent.emit(content);
     });
     this.isDarkTheme = this._userSettings.isDarkTheme(this._userSettings.getDefaultTheme());
     this.themeSubscription = this._userSettings.currentThemeStream.subscribe((theme) => {
@@ -154,6 +156,10 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
     this.loadingCreatePost = true;
     this.codemirrorWrapper.editable(false);
 
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
 
     const dialogRef = this._dialog.open(
       SubmitPostDialogComponent,
@@ -165,7 +171,8 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
           address: this.account,
           substories: this.substories,
           mainStory: this.messageContent
-        }
+        },
+        direction: direction
       }
     );
 
@@ -198,77 +205,6 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
     }
   }
 
-  fileManager(type: string) {
-    const dialogRef = this._dialog.open(
-      FileManagerDialogComponent,
-      {
-        restoreFocus: false,
-        autoFocus: false,
-        disableClose: true,
-        data: {
-          type: type,
-          address: this.account
-        }
-      });
-
-    // Manually restore focus to the menu trigger
-    dialogRef.afterClosed().subscribe((tx: string) => { 
-      this.matButtonImage.focus();
-      if (tx) {
-        const ids = this.substories.map((v) => {
-          return v.arrId;
-        });
-        const maxId = ids && ids.length ? Math.max(...ids) + 1 : 0;
-        const newId = this.substories.push({
-          id: tx,
-          type: 'image',
-          arrId: maxId,
-          content: ''
-        });
-      }
-    });
-  }
-
-  uploadFile(type: string) {
-    const dialogRef = this._dialog.open(
-      UploadFileDialogComponent,
-      {
-        restoreFocus: false,
-        autoFocus: true,
-        disableClose: true,
-        data: {
-          type: type,
-          address: this.account
-        }
-      }
-    );
-
-    // Manually restore focus to the menu trigger
-    dialogRef.afterClosed().subscribe((tx: string) => {
-      this.matButtonImage.focus();
-      if (tx) {
-        const ids = this.substories.map((v) => {
-          return v.arrId;
-        });
-        const maxId = ids && ids.length ? Math.max(...ids) + 1 : 0;
-        const newId = this.substories.push({
-          id: tx,
-          type: 'image',
-          arrId: maxId,
-          content: ''
-        });
-      }
-    });
-  }
-
-  addSubstory() {
-   
-  }
-
-  searchStory() {
-    
-  }
-
   getImgUrlFromTx(tx: string) {
     return `${this._arweave.baseURL}${tx}`;
   }
@@ -291,8 +227,5 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
     this.substories.splice(i, 1);
   }
 
-  comingSoon() {
-    alert('Coming soon!');
-  }
 
 }

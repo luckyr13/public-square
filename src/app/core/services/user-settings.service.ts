@@ -128,5 +128,9 @@ export class UserSettingsService {
   isDarkTheme(theme: string) {
     return this.themes[theme].dark;
   }
+
+  getLangObject(langCode: string): LanguageObj|null {
+    return this._langService.getLangObject(langCode);
+  }
   
 }

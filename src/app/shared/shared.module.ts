@@ -38,6 +38,17 @@ import { CreatePostCardComponent } from './create-post-card/create-post-card.com
 import { PostCardComponent } from './post-card/post-card.component';
 import { PostPlayerComponent } from './post-player/post-player.component';
 import { SubmitPostDialogComponent } from './submit-post-dialog/submit-post-dialog.component';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
+import { ViewLikesDialogComponent } from './view-likes-dialog/view-likes-dialog.component';
+import { ReplyDialogComponent } from './reply-dialog/reply-dialog.component';
+import { LikeDialogComponent } from './like-dialog/like-dialog.component';
+import { RepostDialogComponent } from './repost-dialog/repost-dialog.component';
+import { FollowDialogComponent } from './follow-dialog/follow-dialog.component';
+import { UserCardComponent } from './user-card/user-card.component';
+import { DonateDialogComponent } from './donate-dialog/donate-dialog.component';
+import {MatSliderModule} from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,7 +63,16 @@ import { SubmitPostDialogComponent } from './submit-post-dialog/submit-post-dial
     CreatePostCardComponent,
     PostCardComponent,
     PostPlayerComponent,
-    SubmitPostDialogComponent
+    SubmitPostDialogComponent,
+    FollowDialogComponent,
+    UserCardComponent,
+    DonateDialogComponent,
+    ReplyDialogComponent,
+    LikeDialogComponent,
+    RepostDialogComponent,
+    FilterDialogComponent,
+    PasswordDialogComponent,
+    ViewLikesDialogComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +96,9 @@ import { SubmitPostDialogComponent } from './submit-post-dialog/submit-post-dial
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    TranslateModule
+    TranslateModule,
+    MatSliderModule,
+    FormsModule
   ],
   exports: [
   	MatToolbarModule,
@@ -106,7 +128,8 @@ import { SubmitPostDialogComponent } from './submit-post-dialog/submit-post-dial
     MatTooltipModule,
     ArweaveAddressComponent,
     MatDialogModule,
-    TranslateModule
+    TranslateModule,
+    UserCardComponent
   ]
 })
 export class SharedModule { }

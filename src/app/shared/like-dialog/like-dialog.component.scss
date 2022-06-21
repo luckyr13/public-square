@@ -1,0 +1,80 @@
+.content {
+	padding: 10px;
+	min-height: 100px;
+	max-width: 680px;
+	min-width: 200px;
+}
+
+.content p {
+	padding: 6px;
+}
+
+.title-text {
+	font-weight: bold;
+}
+
+.mat-dialog-container {
+	padding: 0px;
+}
+
+@media (min-width: 420px) {
+	.content {
+		min-width: 400px;
+	}
+
+}
+
+
+@media (min-width: 820px) {
+	.content {
+		min-width: 666px;
+	}
+}
+
+.wallets {
+	font-size: 12px;
+}
+
+.dispatch-chk {
+	font-size: 12px;
+}
+
+.mat-spinner {
+	display: inline;
+	margin-left: 12px;
+}
+
+.avatar {
+	margin-top: 10px;
+	width: 62px;
+	height: 62px;
+	cursor: pointer;
+	border-radius: 32px;
+	float: left;
+	margin-right: 18px;
+}
+
+.like-btn span {
+	margin-left: 6px;
+}
+.story-image-container {
+	text-align: center;
+	padding: 20px;
+}
+.story-image-container img {
+	max-width: 50%;
+}
+.story-video-container {
+	text-align: center;
+	padding: 20px;
+}
+.story-video-container video {
+	max-width: 50%;
+}
+.story-audio-container {
+	text-align: center;
+	padding: 20px;
+}
+.story-audio-container video {
+	max-width: 50%;
+}

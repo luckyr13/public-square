@@ -8,7 +8,6 @@ declare const document: any;
 })
 export class AppSettingsService {
   appName = '🐘 Public Square';
-
   appVersion = '0.1.1';
 
   // Dev protocol
@@ -28,6 +27,18 @@ export class AppSettingsService {
 
   // Observable string streams
   public scrollTopStream = this._scrollTopSource.asObservable();
+
+  supportedFiles: Record<string, string[]> = {
+    'text': [
+      'text/plain'
+    ],
+  };
+
+  /*
+  *  Default: 
+  *  Story: 100kb = 100000b
+  */
+  storyMaxSizeBytes = 100000;
 
   public updateScrollTop(_scroll: number) {
     this._scrollTopSource.next(_scroll);

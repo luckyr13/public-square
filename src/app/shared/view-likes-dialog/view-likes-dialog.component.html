@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Likes</h1>
+<mat-dialog-content
+	class="content border-right-special">
+	<ng-container *ngFor="let tx of likesList">
+		<app-user-card
+		(click)="close()"
+		[address]="tx.owner"></app-user-card>
+		<div class="list-number text-right">{{ timestampToDate(tx.blockTimestamp) }}</div>
+		<mat-divider></mat-divider>
+	</ng-container>
+	<div class="more-results-container">
+		<mat-spinner *ngIf="loadingLikes" color="accent" diameter="32"></mat-spinner>
+		<div class="no-results" *ngIf="!likesList.length && !loadingLikes">
+			No results.
+		</div>
+		<mat-card class="more-results-card mat-elevation-z0" matRipple *ngIf="!loadingLikes && moreResultsAvailable" (click)="moreResults()" >
+		  <mat-card-content class="more-results text-center">
+				Show more
+		  </mat-card-content>
+		</mat-card>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions 
+	align="end" >
+  <button 
+  	mat-button
+  	cdkFocusInitial (click)="close()">Close</button>
+</mat-dialog-actions>

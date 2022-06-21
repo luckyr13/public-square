@@ -24,17 +24,6 @@
   </a>
   <a mat-list-item
     matRipple
-    [routerLink]="['notifications']" 
-    [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaNotifications="routerLinkActive">
-    <mat-icon
-      mat-list-icon
-      [class]="{ 'material-icons-outlined': !rlaNotifications.isActive }" 
-      [color]="rlaNotifications.isActive ? 'accent' : 'default'">notifications</mat-icon>
-    <div mat-line>Notifications</div>
-  </a>
-  <a mat-list-item
-    matRipple
     [routerLink]="account" 
     [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
     #rlaProfile="routerLinkActive">
@@ -54,17 +43,6 @@
       [class]="{ 'material-icons-outlined': !rlaVotes.isActive }" 
       [color]="rlaVotes.isActive ? 'accent' : 'default'">how_to_vote</mat-icon>
     <div mat-line>Votes</div>
-  </a>
-  <a mat-list-item
-    matRipple
-    [routerLink]="['friends']" 
-    [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaFriends="routerLinkActive">
-    <mat-icon
-      mat-list-icon
-      [class]="{ 'material-icons-outlined': !rlaFriends.isActive }" 
-      [color]="rlaFriends.isActive ? 'accent' : 'default'">people_alt</mat-icon>
-    <div mat-line>{{ 'MAIN_MENU.FRIENDS' | translate }}</div>
   </a>
   <a mat-list-item
     matRipple

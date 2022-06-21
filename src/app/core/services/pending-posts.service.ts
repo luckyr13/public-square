@@ -37,7 +37,7 @@ export class PendingPostsService {
       },
       {
         name: "Type",
-        values: ["post"]
+        values: ["post", "repost"]
       },
     ];
     return this._ardb.searchTransactions(from, limit, maxHeight, tags).pipe(

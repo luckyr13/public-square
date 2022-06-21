@@ -3,6 +3,7 @@ import { ArweaveService } from '../../core/services/arweave.service';
 import { Observable, EMPTY, of, throwError, Subject, from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { AddressKey } from '../../core/interfaces/address-key';
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +33,14 @@ export class UserAuthService {
 
   public loadAccount(): Observable<boolean> {
     return new Observable((subscriber) => {
-      const stayLoggedIn = !!window.sessionStorage.getItem('STAY_LOGGED_IN')
-        || !!window.localStorage.getItem('STAY_LOGGED_IN');
+      const stayLoggedIn = this.getStayLoggedIn();
       const storage = stayLoggedIn ? window.localStorage : window.sessionStorage;
       const method = storage.getItem('METHOD');
     
       // Private key method
       if (method === 'pkFile') {
+        throw new Error('LaunchPasswordModal');
+        /*
         const arkey = storage.getItem('ARKEY');
         this._arKey = JSON.parse(arkey!);
         this._arweave.arweave.wallets.jwkToAddress(this._arKey).then((address) => {
@@ -48,6 +50,7 @@ export class UserAuthService {
         }).catch((reason) => {
           subscriber.error(reason);
         });
+        */
       } else if (method === 'arconnect' ||
           method === 'finnie')  {
         window.addEventListener('arweaveWalletLoaded', (e) => {
@@ -70,7 +73,6 @@ export class UserAuthService {
       }
 
     });
-    
   }
 
   public setAccount(
@@ -78,7 +80,7 @@ export class UserAuthService {
     arKey: any = null,
     stayLoggedIn: boolean = false,
     method='',
-    password='') {
+    arKeyEncrypted: any = null) {
     const storage = stayLoggedIn ? window.localStorage : window.sessionStorage;
     this._mainAddress = mainAddress;
     this._method = method;
@@ -86,7 +88,7 @@ export class UserAuthService {
     storage.setItem('STAY_LOGGED_IN', stayLoggedIn ? '1' : '');
     if (arKey) {
       this._arKey = arKey
-      storage.setItem('ARKEY', JSON.stringify(this._arKey))
+      storage.setItem('ARKEY', arKeyEncrypted)
     }
     this._account.next(mainAddress);
   }
@@ -121,7 +123,7 @@ export class UserAuthService {
     this._mainAddress = '';
     this._method = '';
     this._arKey = null;
-    for (let key of ['MAINADDRESS', 'ARKEY', 'METHOD', 'STAY_LOGGED_IN']) {
+    for (let key of ['MAINADDRESS', 'ARKEY', 'METHOD', 'STAY_LOGGED_IN', 'CRYPTO_CTR']) {
       window.sessionStorage.removeItem(key)
       window.localStorage.removeItem(key)
     }
@@ -137,21 +139,29 @@ export class UserAuthService {
     return this._arKey ? this._arKey : 'use_wallet'
   }
 
-  public login(walletOption: string, uploadInputEvent: any = null, stayLoggedIn: boolean = false): Observable<string> {
-    let method = of('');
+  public login(
+    walletOption: 'arconnect'|'arweavewebwallet'|'finnie'|'pkFile',
+    uploadInputEvent: Event|null = null,
+    stayLoggedIn: boolean = false): Observable<string|AddressKey> {
+    let method: Observable<string|AddressKey>;
 
     switch (walletOption) {
       case 'pkFile':
-        method = this._arweave.uploadKeyFile(uploadInputEvent).pipe(
-            tap( (_res: any) => {
+        if (uploadInputEvent) {
+          method = this._arweave.uploadKeyFile(uploadInputEvent).pipe(
+            tap( (_res: AddressKey) => {
               this.removeAccount();
-              this.setAccount(_res.address, _res.key, stayLoggedIn, walletOption)
+              // Encrypt the key first!
+              // this.setAccount(_res.address, _res.key, stayLoggedIn, walletOption)
             })
           );
+        } else {
+          throw Error('InputError');
+        }
       break;
       case 'arconnect':
         method = this._arweave.getAccount(walletOption).pipe(
-            tap( (_account: any) => {
+            tap( (_account: string) => {
               this.removeAccount();
               this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
               this.addressChangeListener(_account.toString(), stayLoggedIn, walletOption);
@@ -160,7 +170,7 @@ export class UserAuthService {
       break;
       case 'arweavewebwallet':
         method = this._arweave.getAccount(walletOption).pipe(
-            tap( (_account: any) => {
+            tap( (_account: string) => {
               this.removeAccount();
               this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
               this.addressChangeListener(_account.toString(), stayLoggedIn, walletOption);
@@ -169,7 +179,7 @@ export class UserAuthService {
       break;
       case 'finnie':
         method = this._arweave.getAccount(walletOption).pipe(
-            tap( (_account: any) => {
+            tap( (_account: string) => {
               this.removeAccount();
               this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
             })

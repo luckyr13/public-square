@@ -1,0 +1,37 @@
+.content {
+	min-height: 428px;
+	max-width: 666px;
+}
+.more-results {
+	cursor: pointer;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 12px;
+}
+
+.mat-spinner {
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.no-results {
+	padding: 20px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.col-chk {
+	float: left;
+	width: 20%;
+	min-height: 100px;
+}
+
+.col-user-card {
+	float: left;
+	width: 80%;
+	min-height: 100px;
+}
+
+section {
+	margin-top: 20px;
+}

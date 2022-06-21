@@ -1,0 +1,83 @@
+<mat-dialog-content
+	class="content border-right-special">
+	<div *ngIf="!loadingRepost && !repostTxId && data.myAddress">
+		<p class="text-center" *ngIf="data.postOwnerImage">
+			<img
+		  	class="avatar"
+		  	mat-card-avatar
+		  	[src]="data.postOwnerImage">
+		</p>
+		<p *ngIf="data.postOwner">
+			<strong>{{ data.postOwnerUsername ? data.postOwnerUsername : data.postOwner }}</strong>
+		</p>
+		<!-- Story type: text -->
+	  <ng-container *ngIf="validateContentType(data.contentType, 'text')">
+		  <div 
+		  	#contentContainer
+		  	class="content fadeIn">
+		  	<!-- Preview -->
+		  	<div 
+		  		*ngIf="!loadingRepost && data.postContent">
+		  		{{ data.postContent }}
+		  	</div>
+		  </div>
+	 	</ng-container>
+	 	<!-- Story type: image  -->
+	  <div class="story-image-container" *ngIf="validateContentType(data.contentType, 'image')">
+		  <img (click)="openLink($event, data.txId)" [src]="getFullImgUrlFromTx(data.txId)">
+	 	</div>
+	 	<!-- Story type: video  -->
+	  <div 
+	  	(click)="$event.stopPropagation();"
+	  	class="story-video-container" 
+	  	*ngIf="validateContentType(data.contentType, 'video')">
+		  <video  controls preload="none" poster="assets/images/videoPoster.jpg">
+			  <source [src]="getFullImgUrlFromTx(data.txId)">
+				Your browser does not support the video tag.
+			</video>
+	 	</div>
+	 	<!-- Story type: audio  -->
+	  <div 
+	  	(click)="$event.stopPropagation();"
+	  	class="story-audio-container" 
+	  	*ngIf="validateContentType(data.contentType, 'audio')">
+		  <audio controls preload="none">
+			  <source [src]="getFullImgUrlFromTx(data.txId)">
+				Your browser does not support the audio tag.
+			</audio>
+	 	</div>
+		<p class="text-right">
+			<mat-checkbox class="dispatch-chk" [formControl]="useDispatch">
+				Repost for FREE (Dispatch method)
+			</mat-checkbox>
+		</p>
+	</div>
+	<h3 class="text-center" *ngIf="!data.myAddress">
+		Please login first!
+	</h3>
+	<div *ngIf="loadingRepost">
+		<p><span>Sending tx ...</span><mat-spinner color="accent" [diameter]="20"></mat-spinner></p>
+	</div>
+	<div *ngIf="!loadingRepost && repostTxId">
+		<p>Tx {{repostTxId}} created succesfully!</p>
+		<p>
+			Your transaction is gonna be mined in the next minutes. You can take a coffee now! ☕
+		</p>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions 
+	align="start" >
+  <button 
+  	mat-button
+  	[disabled]="loadingRepost"
+  	cdkFocusInitial (click)="close()">Close</button>
+  <div class="spacer"></div>
+  <button
+  	mat-flat-button
+  	class="repost-btn"
+  	(click)="submit()"
+  	[disabled]="loadingRepost || repostTxId !== '' || !data.myAddress"
+  	color="accent">
+  	<mat-icon>repeat</mat-icon><span>{{ 'GENERAL.STORY.REPOST' | translate }}</span> 
+  </button>
+</mat-dialog-actions>

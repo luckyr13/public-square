@@ -13,7 +13,14 @@ import { Observable } from 'rxjs';
 import { UserSettingsService } from './core/services/user-settings.service';
 import { LanguageService, LanguageObj } from './core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
-
+import { AddressKey } from './core/interfaces/address-key';
+import {
+  PasswordDialogComponent 
+} from './shared/password-dialog/password-dialog.component';
+import { ArweaveService } from './core/services/arweave.service';
+import { SubtleCryptoService } from './core/utils/subtle-crypto.service';
+import { JWKInterface } from 'arweave/web/lib/wallet';
+import * as b64 from 'base64-js';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +42,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private _utils: UtilsService,
     private _lang: LanguageService,
     public dialog: MatDialog,
-    private _translate: TranslateService
+    private _translate: TranslateService,
+    private _arweave: ArweaveService,
+    private _crypto: SubtleCryptoService
   ) {
     this.platformLoading$ = this._appSettings.loadingPlatform$;
   }
@@ -53,6 +62,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this._translate.get('DIALOGS.RESUME_SESSION').subscribe((res: any) => {
             this.resumeSessionDialog(res.MESSAGE, res.CONFIRM, res.DISMISS);
           });
+          
+
+        } else if (error == 'Error: LaunchPasswordModal') {
+          // Launch password modal
+          this.passwordDialog();
           
 
         } else {
@@ -99,13 +113,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           null,
           stayLoggedIn
         ).subscribe({
-          next: (address: string) => {
-            this._utils.message('Connection successful!', 'success');
+          next: (address: string|AddressKey) => {
+            this._utils.message('Welcome!', 'success');
           },
           error: (error) => {
             this._utils.message(`Error: ${error}`, 'error');
           }
         });
+      } else {
+        this._auth.logout();
       }
     });
   }
@@ -119,9 +135,54 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   consoleWelcomeMessage() {
-    console.log('%c👋 Welcome to Public Square!', 'background: #aaf0d1; color: #330c62; font-size: 32px; padding: 10px; margin-bottom: 20px;');
+    console.log('%c👋 Welcome to Narrative!', 'background: #FBD6D2; color: #330c62; font-size: 32px; padding: 10px; margin-bottom: 20px;');
   
   }
 
+  passwordDialog() {
+    const dialogRef = this.dialog.open(PasswordDialogComponent, {
+      data: {
+        title: 'Resume session',
+        confirmLabel: 'Login',
+        closeLabel: 'Cancel'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(password => {
+      if (password) {
+        const stayLoggedIn = this._auth.getStayLoggedIn();
+        const storage = stayLoggedIn ? window.localStorage : window.sessionStorage;
+        const arkey = storage.getItem('ARKEY')!;
+        //const finalArKey = JSON.parse(this.b64_to_utf8(arkey));
+        const ciphertext = b64.toByteArray(arkey);
+        this._crypto.decrypt(password, ciphertext).subscribe({
+          next: (p) => {
+            let key: JWKInterface|undefined = undefined;
+            try {
+              key = JSON.parse(this._crypto.decodeTxtMessage(p.p));
+              this._arweave.arweave.wallets.jwkToAddress(key).then((address) => {
+                this._auth.setAccount(address, key, stayLoggedIn, 'pkFile', arkey);
+              }).catch((reason) => {
+                this._auth.logout();
+                this._utils.message('Error loading key', 'error');
+              });
+            } catch (error) {
+              this.passwordDialog();
+              console.error('ErrPwdDialog', error)
+            }
+            
+
+          },
+          error: (error) => {
+            this._utils.message(error, 'error');
+          }
+        });
+        
+        
+      } else {
+        this._auth.logout();
+      }
+    });
+  }
   
 }

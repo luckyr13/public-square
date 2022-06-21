@@ -1,6 +1,7 @@
 import { Observable, from } from 'rxjs';
 import ArdbBlock from 'ardb/lib/models/block';
 import ArdbTransaction from 'ardb/lib/models/transaction';
+import { fieldType } from 'ardb/lib/faces/fields';
 import ArDB from 'ardb';
 import Arweave from 'arweave';
 
@@ -18,15 +19,17 @@ export class ArdbWrapper {
     from: string[] | string,
     limit: number = 100,
     maxHeight: number = 0,
-    tags: Array<{name: string, values: string|string[]}> ): Observable<ArdbTransaction[]> {
-
+    tags: Array<{name: string, values: string|string[]}>,
+    fields: fieldType|fieldType[]=[]): Observable<ArdbTransaction[]> {
     const obs = new Observable<ArdbTransaction[]>((subscriber) => {
       if (from.length) {
         this.ardb.search('transactions')
           .limit(limit)
           .from(from)
           .max(maxHeight)
-          .tags(tags).find().then((res: ArdbTransaction[]|ArdbBlock[]) => {
+          .tags(tags)
+          .only(fields)
+          .find().then((res: ArdbTransaction[]|ArdbBlock[]) => {
             subscriber.next(<ArdbTransaction[]>res);
             subscriber.complete();
           })
@@ -37,7 +40,9 @@ export class ArdbWrapper {
         this.ardb.search('transactions')
           .limit(limit)
           .max(maxHeight)
-          .tags(tags).find().then((res: ArdbTransaction[]|ArdbBlock[]) => {
+          .tags(tags)
+          .only(fields)
+          .find().then((res: ArdbTransaction[]|ArdbBlock[]) => {
             subscriber.next(<ArdbTransaction[]>res);
             subscriber.complete();
           })

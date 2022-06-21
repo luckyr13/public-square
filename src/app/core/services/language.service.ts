@@ -81,6 +81,7 @@ export class LanguageService {
   };
 
   getLangObject(lang: string): LanguageObj|null {
+    lang = lang.toLowerCase();
     if (Object.prototype.hasOwnProperty.call(this.langs, lang)) {
       return this.langs[lang];
     }
