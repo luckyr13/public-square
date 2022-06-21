@@ -15,7 +15,6 @@ const routes: Routes = [
 			{
 				path: 'squares', loadChildren: () => import('../squares/squares.module').then(m => m.SquaresModule)
 			},
-			{ path: 'settings', loadChildren: () => import('../settings/settings.module').then(m => m.SettingsModule) },
 			{ path: 'browse', loadChildren: () => import('../browse/browse.module').then(m => m.BrowseModule) },
 			{ path: 'votes', loadChildren: () => import('../votes/votes.module').then(m => m.VotesModule) },
 			{

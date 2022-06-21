@@ -99,15 +99,13 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
   */
   login() {
     const defLang = this._userSettings.getDefaultLang();
-    /*
-    let direction: Direction = defLang.writing_system === 'LTR' ? 
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
       'ltr' : 'rtl';
-    */
 
-    const sheet = this._bottomSheet.open(BottomSheetLoginComponent//, {
-      // direction: direction
-    //}
-    );
+    const sheet = this._bottomSheet.open(BottomSheetLoginComponent, {
+       direction: direction
+    });
 
     sheet.afterDismissed().subscribe((address) => {
       // this.account = address;

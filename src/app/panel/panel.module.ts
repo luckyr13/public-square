@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { SharedModule } from '../shared/shared.module';
 import { PanelRoutingModule } from './panel-routing.module';
 import { LogoutComponent } from './logout/logout.component';
 
@@ -12,8 +10,7 @@ import { LogoutComponent } from './logout/logout.component';
   ],
   imports: [
     CommonModule,
-    PanelRoutingModule,
-    SharedModule
+    PanelRoutingModule
   ]
 })
 export class PanelModule { }
