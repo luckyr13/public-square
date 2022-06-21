@@ -1,0 +1,23 @@
+<h2>Following</h2>
+<div class="following-list-container">
+	<div *ngFor="let f of following" class="following-list-col">
+  	<app-user-card [address]="f.wallets[0]"></app-user-card>
+	</div>
+</div>
+<div class="more-results-container clear-both">
+	<mat-spinner *ngIf="loadingFollowing" color="accent" diameter="32"></mat-spinner>
+	<div class="no-results" *ngIf="!following.length && !loadingFollowing">
+		No results!
+	</div>
+	<mat-card 
+		#moreResultsCard 
+		[style.visibility]="!loadingFollowing && moreResultsAvailable ? 'visible' : 'hidden'"
+		class="more-results-card mat-elevation-z0"
+		matRipple
+		(click)="moreResults()" >
+	  <mat-card-content class="more-results text-center">
+			Show more results
+	  </mat-card-content>
+	</mat-card>
+
+</div>

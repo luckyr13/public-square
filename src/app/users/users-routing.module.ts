@@ -7,6 +7,9 @@ import { ProfileResolverService } from '../core/route-guards/profile-resolver.se
 import { RepliesComponent } from './replies/replies.component';
 import { LikesComponent } from './likes/likes.component';
 import { PendingComponent } from './pending/pending.component';
+import { FollowersComponent } from './followers/followers.component';
+import { FollowingComponent } from './following/following.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 const routes: Routes = [
 	{
@@ -24,6 +27,15 @@ const routes: Routes = [
 			},
 			{
 				path: 'pending', component: PendingComponent, resolve: {profile: ProfileResolverService}
+			},
+			{
+				path: 'followers', component: FollowersComponent, resolve: {profile: ProfileResolverService}
+			},
+			{
+				path: 'following', component: FollowingComponent, resolve: {profile: ProfileResolverService}
+			},
+			{
+				path: 'edit', component: EditProfileComponent, resolve: {profile: ProfileResolverService}
 			},
 			{
 				path: ':storyId', component: PostComponent, resolve: {profile: ProfileResolverService}

@@ -11,21 +11,37 @@
 			<app-arweave-address
 				*ngFor="let address of addressList"
 				[address]="address" class="small-username address"></app-arweave-address>
+			<ng-container *ngIf="username" >
+				<a [routerLink]="['/', username, 'followers']" 
+          class="small-username user-link">{{ numFollowers >= maxFollowers ? '+' : '' }} {{ numFollowers }} Followers</a>
+        <a [routerLink]="['/', username, 'following']" 
+          class="small-username user-link">{{ numFollowing >= maxFollowing ? '+' : '' }} {{ numFollowing }} Following</a>
+			</ng-container>
+			<ng-container *ngIf="!username && addressList[0]" >
+				<a [routerLink]="['/', addressList[0], 'followers']" 
+          class="small-username user-link">{{ numFollowers >= maxFollowers ? '+' : '' }} {{ numFollowers }} Followers</a>
+        <a [routerLink]="['/', addressList[0], 'following']" 
+          class="small-username user-link">{{ numFollowing >= maxFollowing ? '+' : '' }} {{ numFollowing }} Following</a>
+			</ng-container>
 		</div>
 		<div class="profile-actions" *ngIf="editProfileFlag">
-	    <button [routerLink]="['/', 'logout']" mat-stroked-button color="warn"><mat-icon>logout</mat-icon> Log out</button>
-	    <button mat-stroked-button color="accent"><mat-icon>edit</mat-icon> Edit Profile</button>
+	    <button [routerLink]="['/', 'logout']" mat-stroked-button>
+	    	<mat-icon color="warn">logout</mat-icon> Log out
+	    </button>
+	    <button
+	    	mat-stroked-button
+	    	[routerLink]="['/', username || addressList[0], 'edit']">
+	    	<mat-icon color="accent">edit</mat-icon> Edit Profile</button>
 		</div>
 		<div class="profile-actions" *ngIf="!editProfileFlag && isLoggedIn">
-	    <button mat-stroked-button color="accent">
-	    	<mat-icon>person_add_alt</mat-icon>
+	    <button mat-stroked-button (click)="confirmFollowDialog(username, addressList)">
+	    	<mat-icon color="accent">person_add_alt</mat-icon>
 	    	Follow
 	    </button>
-	    <button mat-stroked-button color="accent">
-	    	<mat-icon class="material-icons-outlined">monetization_on</mat-icon>
+	    <button mat-stroked-button (click)="donate()">
+	    	<mat-icon class="material-icons-outlined" color="accent">monetization_on</mat-icon>
 	    	Donate
 	    </button>
-	    <button mat-flat-button color="accent"><mat-icon>people_alt</mat-icon> Add</button>
 		</div>
 	</div>
 	<div class="bio" *ngIf="bio">

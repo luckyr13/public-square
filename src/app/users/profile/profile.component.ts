@@ -3,14 +3,23 @@ import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from '../../core/interfaces/user-profile';
 import { ArweaveService } from '../../core/services/arweave.service';
 import { UserAuthService } from '../../core/services/user-auth.service';
+import { FollowDialogComponent } from '../../shared/follow-dialog/follow-dialog.component'; 
+import {MatDialog} from '@angular/material/dialog';
+import { Subscription, switchMap } from 'rxjs';
+import { FollowService } from '../../core/services/follow.service';
+import { NetworkInfoInterface } from 'arweave/web/network';
+import { UserSettingsService } from '../../core/services/user-settings.service';
+import { Direction } from '@angular/cdk/bidi';
+import { DonateDialogComponent } from '../../shared/donate-dialog/donate-dialog.component';
+import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
-  profileImage: string = 'assets/images/blank-profile.png';
+export class ProfileComponent implements OnInit, OnDestroy {
+  profileImage: string = 'assets/images/blank-profile.jpg';
   username: string = '';
   addressList: string[] = [];
   bio: string = '';
@@ -18,18 +27,27 @@ export class ProfileComponent implements OnInit {
   addressRouteParam = '';
   editProfileFlag = false;
   isLoggedIn = false;
+  maxFollowers = 50;
+  maxFollowing = 50;
+  numFollowers = 0;
+  numFollowing = 0;
+  private _followersSubscription = Subscription.EMPTY;
+  private _followingSubscription = Subscription.EMPTY;
   
   constructor(
     private _route: ActivatedRoute,
     private _arweave: ArweaveService,
-    private _auth: UserAuthService) { }
+    private _auth: UserAuthService,
+    private _dialog: MatDialog,
+    private _follow: FollowService,
+    private _userSettings: UserSettingsService) { }
 
   ngOnInit(): void {
     // Profile already loaded
     this._route.data
     .subscribe(data => {
       const profile: UserProfile = data['profile'];
-      this.profileImage = 'assets/images/blank-profile.png';
+      this.profileImage = 'assets/images/blank-profile.jpg';
       this.username = '';
       this.bio = '';
       this.addressList = [];
@@ -51,6 +69,9 @@ export class ProfileComponent implements OnInit {
       const currentAddress = this._auth.getMainAddressSnapshot();
       this.isLoggedIn = !!currentAddress;
       this.validateCurrentAddress(currentAddress);
+
+      this.loadFollowers(this.username, this.addressList);
+      this.loadFollowing(this.addressList);
       
     });
 
@@ -72,6 +93,133 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  confirmFollowDialog(username:string, wallets: string[]) {
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+
+    const dialogRef = this._dialog.open(
+      FollowDialogComponent,
+      {
+        restoreFocus: false,
+        autoFocus: false,
+        disableClose: true,
+        data: {
+          content: `Do you really want to follow ${username}?`,
+          closeLabel: 'No',
+          confirmLabel: 'Yes, I want to follow this user',
+          wallets: wallets,
+          username: username
+        },
+        direction: direction
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((confirm: string) => {
+      
+    });
+  }
+
+  loadFollowers(username: string, wallets: string|string[]) {
+    this.numFollowers = 0;
+    this._followersSubscription = this._arweave.getNetworkInfo().pipe(
+      switchMap((info: NetworkInfoInterface) => {
+        const currentHeight = info.height;
+        return this._follow.getFollowers(username, wallets, this.maxFollowers, currentHeight);
+      }),
+    ).subscribe({
+      next: (followers) => {
+        this.numFollowers = (new Set(followers.map(f => f.owner))).size;
+      },
+      error: (error) => {
+        console.error('ErrFollowers', error);
+      }
+    })
+
+  }
+
+  loadFollowing(from: string[]) {
+    this.numFollowing = 0;
+    this._followingSubscription = this._arweave.getNetworkInfo().pipe(
+      switchMap((info: NetworkInfoInterface) => {
+        const currentHeight = info.height;
+        return this._follow.getFollowing(from, this.maxFollowing, currentHeight);
+      }),
+    ).subscribe({
+      next: (following) => {
+        const followingTmp: string[] = [];
+        
+        for (const f of following) {
+          const infoAddresses = this.extractTagsFromTx(f);
+          if (infoAddresses.username &&
+              followingTmp.indexOf(infoAddresses.username) < 0) {
+            followingTmp.push(infoAddresses.username);
+            this.numFollowing++;
+          } else if (!infoAddresses.username) {
+            let flagWalletFound = false;
+            for (const w of infoAddresses.wallets) {
+              if (followingTmp.indexOf(w) < 0 && !flagWalletFound) {
+                this.numFollowing++;
+                flagWalletFound = true;
+              }
+              followingTmp.push(w);
+            }
+
+          }
+        }
+
+      },
+      error: (error) => {
+        console.error('ErrFollowing', error);
+      }
+    })
+  }
+
+  ngOnDestroy() {
+    this._followingSubscription.unsubscribe();
+    this._followersSubscription.unsubscribe();
+  }
+
+
+  donate() {
+    const defLangCode = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLangCode);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+    const mainAddress = this._auth.getMainAddressSnapshot();
+    const to = this.addressList[0] ? this.addressList[0] : '';
+
+    const dialogRef = this._dialog.open(DonateDialogComponent, {
+      data: {
+        mainAddress,
+        to
+      },
+      direction: direction,
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+    });
+  }
+
+  extractTagsFromTx(tx: TransactionMetadata): {username: string, wallets: string[]} {
+    const tags = tx && tx.tags ? tx.tags : [];
+    const res: {username: string, wallets: string[]} = { username: '', wallets: []};
+    for (const t of tags) {
+      if (t.name === 'Wallet') {
+        if (this._arweave.validateAddress(t.value)) {
+          res.wallets.push(t.value);
+        } else {
+          console.error('Invalid wallet tag', t);
+        }
+      } else if (t.name === 'Username') {
+        res.username = t.value.trim();
+      }
+    }
+
+    return res;
+  }
   
 
 }

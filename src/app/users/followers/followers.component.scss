@@ -1,0 +1,44 @@
+.more-results {
+  font-weight: bold;
+  font-style: italic;
+}
+.more-results-card {
+  cursor: pointer;
+  border-radius: 0px;
+  width: 100%;
+  margin-top: 20px;
+  height: 50px;
+}
+
+.more-results-container {
+  padding-top: 20px;
+}
+
+.mat-spinner {
+  margin: 0 auto;
+}
+
+.no-results {
+  padding: 20px;
+  text-align: center;
+  font-style: italic;
+}
+.followers-list-container {
+  padding-top: 2px;
+}
+
+h2 {
+  padding: 20px;
+}
+
+.followers-list-col {
+  float: left;
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .followers-list-col {
+    float: left;
+    width: 50%;
+  }
+}

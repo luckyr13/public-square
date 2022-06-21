@@ -1,0 +1,23 @@
+<h2>Followers</h2>
+<div class="followers-list-container">
+	<div *ngFor="let follower of followers" class="followers-list-col">
+  	<app-user-card [address]="follower"></app-user-card>
+	</div>
+</div>
+<div class="more-results-container clear-both">
+	<mat-spinner *ngIf="loadingFollowers" color="accent" diameter="32"></mat-spinner>
+	<div class="no-results" *ngIf="!followers.size && !loadingFollowers">
+		There are no followers yet!
+	</div>
+	<mat-card 
+		#moreResultsCard 
+		[style.visibility]="!loadingFollowers && moreResultsAvailable ? 'visible' : 'hidden'"
+		class="more-results-card mat-elevation-z0"
+		matRipple
+		(click)="moreResults()" >
+	  <mat-card-content class="more-results text-center">
+			Show more results
+	  </mat-card-content>
+	</mat-card>
+
+</div>
