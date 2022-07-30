@@ -275,8 +275,8 @@ export class ArweaveService {
     }
 
     // If ArConnect try Dispatch first
-    // Limit: 100kb
-    const dataSizeLimitDispatch = 100000;
+    // Limit: 120kb
+    const dataSizeLimitDispatch = 120000;
     if (loginMethod === 'arconnect' && !disableDispatch) {
       if (!(window && window.arweaveWallet)) {
         throw new Error('ArConnect method not available!');
