@@ -11,7 +11,7 @@
   	<img class="default-img" mat-card-avatar *ngIf="!profile" [src]="getImageUrl('')">
 		<app-arweave-address matLine [address]="address"></app-arweave-address>
 		<ng-container 
-			*ngIf="profile && profile.addresses">
+			*ngIf="profile && profile.addresses && !hideSecondaryAddressess">
 			<app-arweave-address
 				*ngFor="let wallet of profile.addresses; index as i" 
 				matLine [address]="wallet">Wallet {{ i + 1 }}: </app-arweave-address>

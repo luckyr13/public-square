@@ -16,6 +16,7 @@ export class UserCardComponent implements OnInit, OnDestroy {
   defaultProfileImage = 'assets/images/blank-profile.jpg';
   loadingProfile = false;
   @Input('disableNavigateToProfile') disableNavigateToProfile = false;
+  @Input('hideSecondaryAddressess') hideSecondaryAddressess = false;
 
   constructor(
     private _verto: VertoService,
