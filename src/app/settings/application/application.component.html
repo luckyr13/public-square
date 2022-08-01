@@ -12,14 +12,48 @@
 			<strong>Platform Version:</strong>
 			<span> {{ appVersion }}</span>
 		</mat-list-item>
+		<mat-list-item>
+			<strong>Links:</strong>
+			<span class="social-media" *ngIf="!isDarkTheme">
+				<a href="https://github.com/luckyr13/public-square" target="_blank">
+					<img src="assets/images/social-media/github.png">
+				</a>
+				<a href="" target="_blank">
+					<img src="assets/images/social-media/discord1.png">
+				</a>
+				<a href="https://arweave.app" target="_blank">
+					<img src="assets/images/login-methods/arweaveViewSmall.svg">
+				</a>
+				<a href="https://arconnect.io" target="_blank">
+					<img src="assets/images/login-methods/arconnect-logo.svg">
+				</a>
+			</span>
+			<span class="social-media" *ngIf="isDarkTheme">
+				<a href="https://github.com/luckyr13/public-square" target="_blank">
+					<img src="assets/images/social-media/github2.png">
+				</a>
+				<a href="" target="_blank">
+					<img src="assets/images/social-media/discord2.png">
+				</a>
+				<a href="https://arweave.app" target="_blank">
+					<img src="assets/images/login-methods/arweaveViewSmall.svg">
+				</a>
+				<a href="https://arconnect.io" target="_blank">
+					<img src="assets/images/login-methods/arconnect-logo.svg">
+				</a>
+			</span>
+		</mat-list-item>
 	</mat-list>
 	<mat-divider></mat-divider>
 	<h3>
 		Session data
 	</h3>
-	<p>
+	<div class="session-data">
+		<pre>{{ sessionData | json }}</pre>
+	</div>
+	<p class="text-right">
 		<button (click)="deleteSes()" mat-button color="warn">
-			<mat-icon>delete</mat-icon>Delete Session
+			<mat-icon>delete</mat-icon>Clear Session
 		</button>
 	</p>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppSettingsService } from '../../core/services/app-settings.service';
 import { UserAuthService } from '../../core/services/user-auth.service';
+import { UserSettingsService } from '../../core/services/user-settings.service';
 
 @Component({
   selector: 'app-application',
@@ -12,10 +13,12 @@ export class ApplicationComponent implements OnInit {
   appVersion = '';
   protocolVersion = '';
   sessionData: {localStorage: Storage, sessionStorage: Storage};
+  isDarkTheme = false;
 
   constructor(
     private _appSettings: AppSettingsService,
-    private _userAuth: UserAuthService) {
+    private _userAuth: UserAuthService,
+    private _userSettings: UserSettingsService) {
     this.appName = this._appSettings.protocolName;
     this.appVersion = this._appSettings.appVersion;
     this.protocolVersion = this._appSettings.protocolVersion;
@@ -23,6 +26,10 @@ export class ApplicationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isDarkTheme = this._userSettings.isDarkTheme(this._userSettings.getDefaultTheme());
+    this._userSettings.currentThemeStream.subscribe((theme) => {
+      this.isDarkTheme = this._userSettings.isDarkTheme(theme);
+    });
   }
 
   deleteSes() {

@@ -17,6 +17,14 @@
 				[routerLink]="['/', 'logout']"
 				mat-button color="warn"
 				*ngIf="mainAddress"><mat-icon>logout</mat-icon> Log out</a>
+			<button
+				*ngIf="!mainAddress"
+	      mat-button
+	      aria-label="Log in"
+	      (click)="login()">
+	      <mat-icon>login</mat-icon>
+	      <span>{{ 'GENERAL.BUTTONS.CONNECT' | translate }}</span>
+	    </button>
 		</mat-list-item>
 	</mat-list>
 

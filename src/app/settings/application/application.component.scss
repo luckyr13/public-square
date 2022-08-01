@@ -41,3 +41,28 @@ h2 span {
 	padding: 20px;
 	font-size: 12px;
 }
+.session-data {
+	width: 50%;
+	margin: 0 auto;
+	white-space: nowrap;
+  overflow: hidden;
+}
+.session-data pre {
+  white-space: initial;
+	text-align: center;
+}
+.social-media {
+  vertical-align: middle;
+}
+
+.social-media img {
+	width: 32px;
+	margin-left: 16px;
+	line-height: 32px;
+  vertical-align: middle;
+}
+
+.social-media img:hover {
+	margin-top: -6px;
+}
+
