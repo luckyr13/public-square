@@ -2,6 +2,7 @@
 	padding: 20px;
 	min-height: 428px;
 	max-width: 880px;
+	min-width: 200px;
 }
 
 .content .mat-spinner {
@@ -87,6 +88,7 @@
 	}
 	.content {
 		min-height: 438px;
+		min-width: 400px;
 	}
 
 }
@@ -134,4 +136,20 @@
 .image-preview img {
 	max-width: 100%;
 	max-height: 100%;
+}
+
+.cancel-btn {
+	margin-left: 32px;
+}
+
+.content img,
+.content audio,
+.content video {
+	max-width: 80%;
+	margin: 0 auto;
+}
+.dispatch-chk {
+	font-size: 12px;
+	margin-top: 12px;
+	margin-bottom: 20px;
 }

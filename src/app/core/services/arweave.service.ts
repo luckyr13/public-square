@@ -27,8 +27,9 @@ export class ArweaveService {
     name: 'Public Square',
     logo: 'https://arweave.net/wJGdli6nMQKCyCdtCewn84ba9-WsJ80-GS-KtKdkCLg'
   });
-
   public readonly appInfo = { name: 'Public Square', logo: '' };
+  // Limit: 120kb
+  public dataSizeLimitDispatch = 120000;
 
   constructor() {
     this.arweave = Arweave.init({
@@ -275,15 +276,13 @@ export class ArweaveService {
     }
 
     // If ArConnect try Dispatch first
-    // Limit: 120kb
-    const dataSizeLimitDispatch = 120000;
     if (loginMethod === 'arconnect' && !disableDispatch) {
       if (!(window && window.arweaveWallet)) {
         throw new Error('ArConnect method not available!');
       }
 
-      if (+(transaction.data_size) > dataSizeLimitDispatch) {
-        throw new Error(`Dispatch is not available for data size > ${dataSizeLimitDispatch} bytes.`);
+      if (+(transaction.data_size) > this.dataSizeLimitDispatch) {
+        throw new Error(`Dispatch is not available for data size > ${this.dataSizeLimitDispatch} bytes.`);
       }
 
       const dispatchResult = await window.arweaveWallet.dispatch(transaction);
@@ -317,8 +316,8 @@ export class ArweaveService {
         throw new Error('Arweave Wallet method not available!');
       }
 
-      if (+(transaction.data_size) > dataSizeLimitDispatch) {
-        throw new Error(`Dispatch is not available for data size > ${dataSizeLimitDispatch} bytes.`);
+      if (+(transaction.data_size) > this.dataSizeLimitDispatch) {
+        throw new Error(`Dispatch is not available for data size > ${this.dataSizeLimitDispatch} bytes.`);
       }
 
       const dispatchResult = await window.arweaveWallet.dispatch(transaction);
