@@ -27,7 +27,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
   appName: string;
   profileSubscription: Subscription = Subscription.EMPTY;
   profile: UserInterface|null = null;
-  profileImage: string = 'assets/images/blank-profile.png';
+  profileImage: string = 'assets/images/blank-profile.jpg';
   showThemeSelector = false;
   showSettingsSelector = true;
 
@@ -62,7 +62,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
               }
             } else {
               this.profile = null;
-              this.profileImage = 'assets/images/blank-profile.png';
+              this.profileImage = 'assets/images/blank-profile.jpg';
             }
           },
           error: (error) => {
@@ -73,7 +73,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
         this.account = '';
         this.method = '';
         this.profile = null;
-        this.profileImage = 'assets/images/blank-profile.png';
+        this.profileImage = 'assets/images/blank-profile.jpg';
       }
     });
   }

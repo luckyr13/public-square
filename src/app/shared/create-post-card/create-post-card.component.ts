@@ -32,7 +32,7 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
   codemirrorWrapper: CodeMirrorWrapper;
   loadingData = false;
   profileSubscription: Subscription = Subscription.EMPTY;
-  profileImage: string = 'assets/images/blank-profile.png';
+  profileImage: string = 'assets/images/blank-profile.jpg';
   nickname: string = '';
   messageContent: string = '';
   contentSubscription: Subscription = Subscription.EMPTY;
@@ -73,7 +73,7 @@ export class CreatePostCardComponent implements OnInit, OnDestroy, AfterContentI
 
   loadVertoProfile(account: string) {
     this.loadingData = true;
-    this.profileImage = 'assets/images/blank-profile.png';
+    this.profileImage = 'assets/images/blank-profile.jpg';
     this.nickname = '';
     account = account.trim();
     
