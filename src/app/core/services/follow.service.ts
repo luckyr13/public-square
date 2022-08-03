@@ -70,11 +70,11 @@ export class FollowService {
       {
         name: "Content-Type",
         values: ["text/plain"]
-      },
+      },/*
       {
         name: "Version",
         values: [this._appSettings.protocolVersion]
-      },
+      },*/
       {
         name: "Type",
         values: ["follow"]
@@ -142,11 +142,11 @@ export class FollowService {
       {
         name: "Content-Type",
         values: ["text/plain"]
-      },
+      },/*
       {
         name: "Version",
         values: [this._appSettings.protocolVersion]
-      },
+      },*/
       {
         name: "Type",
         values: ["follow"]

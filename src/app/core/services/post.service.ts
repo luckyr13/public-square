@@ -177,5 +177,9 @@ export class PostService {
         })
       );
   }
+  
+  resetArDB() {
+    this._ardb = new ArdbWrapper(this._arweave.arweave);
+  }
 
 }

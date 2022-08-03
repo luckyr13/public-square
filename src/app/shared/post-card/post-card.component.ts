@@ -48,6 +48,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
   postType: string = '';
   postContentType: string = '';
   contentError = '';
+  postVersion: string = '';
 
   maxPreviewSize = 250;
   realPreviewSize = this.maxPreviewSize;
@@ -123,6 +124,8 @@ export class PostCardComponent implements OnInit, OnDestroy {
         this.postType = t.value;        
       } else if (t.name === 'Content-Type') {
         this.postContentType = t.value;
+      } else if (t.name === 'Version') {
+        this.postVersion = t.value;
       } else if (t.name === 'Post-Id') {
         if (this._arweave.validateAddress(t.value)) {
           this.repostId = t.value;

@@ -33,11 +33,11 @@ private _ardb: ArdbWrapper;
       {
         name: "Content-Type",
         values: ["text/plain"]
-      },
+      },/*
       {
         name: "Version",
         values: [this._appSettings.protocolVersion]
-      },
+      },*/
       {
         name: "Type",
         values: ["post"]
