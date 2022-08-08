@@ -8,7 +8,7 @@ declare const document: any;
 })
 export class AppSettingsService {
   appName = '🐘 Public Square';
-  appVersion = '0.2.2';
+  appVersion = '0.2.3';
 
   // Dev protocol
   // protocolVersion = '0.0-dev';
@@ -31,6 +31,11 @@ export class AppSettingsService {
   supportedFiles: Record<string, string[]> = {
     'text': [
       'text/plain'
+    ],
+    'image': [
+      'image/gif', 'image/png',
+      'image/jpeg', 'image/bmp',
+      'image/webp'
     ],
   };
 
