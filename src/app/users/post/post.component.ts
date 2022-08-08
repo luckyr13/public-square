@@ -38,7 +38,8 @@ export class PostComponent implements OnInit, OnDestroy {
   public loadingLikes = false;
   public likes: TransactionMetadata[] = [];
   private _likesSubscription: Subscription = Subscription.EMPTY;
-  public maxLikes = 50;
+  public maxLikes = 9;
+  public maxLikesQuery = 20;
 
   constructor(
     private route: ActivatedRoute,
@@ -133,7 +134,7 @@ export class PostComponent implements OnInit, OnDestroy {
     this._repliesSubscription = this._arweave.getNetworkInfo().pipe(
       switchMap((info: NetworkInfoInterface) => {
         const currentHeight = info.height;
-        return this._like.getStoryLikes(storyId, this.maxLikes, currentHeight)
+        return this._like.getStoryLikes(storyId, this.maxLikesQuery, currentHeight)
       }),
     ).subscribe({
       next: (likes) => {

@@ -2,23 +2,36 @@
 	<h2>Edit profile</h2>
 	<h4>Banner image</h4>
 	<p>The image at the top of your profile.</p>
-	<div class="profile-header mat-elevation-z2 frozen"></div>
+	<div class="profile-header mat-elevation-z2 pacific-dream"
+		[ngStyle]="{'background-image': bannerImage ? 'url(' + bannerImage + ')' : ''}"></div>
+	<mat-progress-bar 
+		*ngIf="loadingSavingNewBannerImage"
+		class="progress-bar-header" color="accent" mode="indeterminate"></mat-progress-bar>
+		
 	<p class="action-panel">
 		<button 
 			mat-flat-button
 			color="accent"
+			[disabled]="loadingSavingNewBannerImage"
 			(click)="uploadFile('image')"
 			type="button"><mat-icon class="material-icons-outlined">image</mat-icon> Upload file</button>
 		<button
 			mat-flat-button
 			color="accent"
+			[disabled]="loadingSavingNewBannerImage"
 			(click)="fileManager('image')"
 			type="button"><mat-icon>perm_media</mat-icon> File manager</button>
 		<button
 			mat-flat-button
+			color="warn"
+			[disabled]="loadingSavingNewBannerImage"
+			(click)="removeBannerImage()"
+			type="button"><mat-icon>delete</mat-icon> Remove image</button>
+		<button
+			mat-flat-button
 			color="accent"
-			disabled
-			(click)="fileManager('image')"
+			[disabled]="!saveNewBannerImage || loadingSavingNewBannerImage"
+			(click)="saveBannerImage()"
 			type="button"><mat-icon>save</mat-icon> Save changes</button>
 	</p>
 	<h4>Profile image</h4>

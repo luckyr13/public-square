@@ -1,0 +1,46 @@
+.content {
+	padding: 10px;
+	min-height: 100px;
+	max-width: 680px;
+	min-width: 200px;
+	margin: 0 auto;
+}
+
+.content p {
+	padding: 6px;
+}
+
+.title-text {
+	font-weight: bold;
+}
+
+.mat-dialog-container {
+	padding: 0px;
+}
+
+@media (min-width: 420px) {
+	.content {
+		min-width: 400px;
+	}
+
+}
+
+
+@media (min-width: 820px) {
+	.content {
+		min-width: 680px;
+	}
+}
+
+.wallets {
+	font-size: 12px;
+}
+
+.dispatch-chk {
+	font-size: 12px;
+}
+
+.mat-spinner {
+	display: inline;
+	margin-left: 12px;
+}

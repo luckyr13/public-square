@@ -1,15 +1,13 @@
 <h2 mat-dialog-title class="title-text">
 	Upload files 
 	<small *ngIf="data.type === 'image'">(Filter: Image)</small>
-	<small *ngIf="data.type === 'video'">(Filter: Video)</small>
-	<small *ngIf="data.type === 'audio'">(Filter: Audio)</small>
 </h2>
 
 <div class="title-buttons">
 	<button
 		mat-icon-button
 		aria-label="Close window"
-		(click)="close(null)">
+		(click)="close()">
     <mat-icon>close</mat-icon>
   </button>
 </div>
@@ -78,16 +76,6 @@
 	<h3>File preview</h3>
 	<ng-container *ngIf="data.type === 'image'">
 		<img [src]="file.buffer">
-	</ng-container>
-	<ng-container *ngIf="data.type === 'video'">
-		<video [src]="file.buffer" controls>
-			Your browser doesn't support video
-		</video>
-	</ng-container>
-	<ng-container *ngIf="data.type === 'audio'">
-		<audio [src]="file.buffer" controls>
-			Your browser doesn't support audio
-		</audio>
 	</ng-container>
 	<div class="text-center">
 		<p>

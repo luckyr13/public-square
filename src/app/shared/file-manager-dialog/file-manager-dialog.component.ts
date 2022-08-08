@@ -5,6 +5,7 @@ import { TransactionMetadata } from '../../core/interfaces/transaction-metadata'
 import { Subscription } from 'rxjs';
 import { FileExplorerService } from '../../core/services/file-explorer.service';
 import { ArweaveService } from '../../core/services/arweave.service';
+import { AppSettingsService } from '../../core/services/app-settings.service';
 
 @Component({
   selector: 'app-file-manager-dialog',
@@ -12,24 +13,6 @@ import { ArweaveService } from '../../core/services/arweave.service';
   styleUrls: ['./file-manager-dialog.component.scss']
 })
 export class FileManagerDialogComponent implements OnInit, OnDestroy {
-  supportedFiles: Record<string, string[]> = {
-    'image': [
-      'image/gif', 'image/png',
-      'image/jpeg', 'image/bmp',
-      'image/webp'
-    ],
-    'audio': [
-      'audio/midi', 'audio/mpeg',
-      'audio/webm', 'audio/ogg',
-      'audio/wav'
-    ],
-    'video': [
-      'video/webm', 'video/ogg', 'video/mp4'
-    ],
-    'text': [
-      'text/plain'
-    ],
-  };
   files: TransactionMetadata[] = [];
   private _loadingFilesSubscription = Subscription.EMPTY;
   private _nextResultsSubscription = Subscription.EMPTY;
@@ -41,16 +24,17 @@ export class FileManagerDialogComponent implements OnInit, OnDestroy {
   constructor(
     private _dialogRef: MatDialogRef<FileManagerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      type: string,
+      type: 'image'|'',
       address: string,
     },
     private _utils: UtilsService,
     private _fileExplorer: FileExplorerService,
-    private _arweave: ArweaveService) { }
+    private _arweave: ArweaveService,
+    private _appSettings: AppSettingsService) { }
 
 
   ngOnInit(): void {
-    const types = this.supportedFiles[this.data.type];
+    const types = this._appSettings.supportedFiles[this.data.type];
     this.loadingFiles = true;
     const limit = 20;
     this._loadingFilesSubscription = this._fileExplorer.getUserFiles(types, this.data.address, limit).subscribe({
@@ -68,8 +52,8 @@ export class FileManagerDialogComponent implements OnInit, OnDestroy {
     })
   }
 
-  close(tx: string = '') {
-    this._dialogRef.close(tx);
+  close(res: { id: string, type: 'image'|''}|null|undefined = null) {
+    this._dialogRef.close(res);
   }
 
   moreResults() {

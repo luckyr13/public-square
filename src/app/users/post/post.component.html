@@ -9,7 +9,7 @@
 		class="likes-subtitle"
 		*ngIf="!loadingPost && !loadingLikes">
 		<mat-icon aria-label="Likes" color="warn">favorite</mat-icon>
-		<span>{{ likes.length >= maxLikes ? '+' : '' }}{{ likes.length }} Likes</span>
+		<span>{{ likes.length > maxLikes ? '+' + maxLikes : likes.length }} Likes</span>
 	</a>
 </div>
 <h3 class="replies-subtitle">Replies:</h3>

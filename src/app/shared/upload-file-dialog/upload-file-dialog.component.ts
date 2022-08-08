@@ -45,7 +45,7 @@ export class UploadFileDialogComponent implements OnInit, OnDestroy {
   constructor(
     private _dialogRef: MatDialogRef<UploadFileDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      type: 'text'|'image'|'audio'|'video'|'',
+      type: 'image'|'',
     },
     private _arweave: ArweaveService,
     private _userAuth: UserAuthService,
@@ -60,11 +60,11 @@ export class UploadFileDialogComponent implements OnInit, OnDestroy {
 
   }
 
-  close(res: { id: string, type: 'text'|'image'|'audio'|'video'|'' }|null|undefined) {
+  close(res: { id: string, type: 'image'|'' }|null|undefined = null) {
     this._dialogRef.close(res);
   }
 
-  dropFile(event: Event, type: 'text'|'image'|'audio'|'video'|'') {
+  dropFile(event: Event, type: 'image'|'') {
     event.preventDefault();
     this.errorMessage01 = '';
     try {
@@ -200,7 +200,7 @@ export class UploadFileDialogComponent implements OnInit, OnDestroy {
     return method;
   }
 
-  readFileFromInput(inputEvent: Event, type: 'text'|'image'|'audio'|'video'|'') {
+  readFileFromInput(inputEvent: Event, type: 'image'|'') {
     const target: HTMLInputElement = <HTMLInputElement>(inputEvent.target);
     const files: FileList = target.files!;
     const file = target && files.length ? 
@@ -223,7 +223,7 @@ export class UploadFileDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  preview(file: File, type: 'text'|'image'|'audio'|'video'|'') {
+  preview(file: File, type: 'image'|'') {
     this.errorMessage01 = '';
     this.uploadingFile = false;
     this.filePreview = true;
@@ -244,7 +244,7 @@ export class UploadFileDialogComponent implements OnInit, OnDestroy {
     });
   }
 
-  upload(type: 'text'|'image'|'audio'|'video'|'') {
+  upload(type: 'image'|'') {
     this.errorMessage01 = '';
     this.filePreview = false;
     this.uploadingFile = true;

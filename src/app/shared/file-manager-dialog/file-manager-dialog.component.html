@@ -1,11 +1,12 @@
 <h2 mat-dialog-title class="title-text">
-	File Manager <small *ngIf="data.type === 'image'">(Filter: Image)</small>
+	File Manager 
+	<small *ngIf="data.type === 'image'">(Filter: Image)</small>
 </h2>
 <div class="title-buttons">
 	<button
 		mat-icon-button
 		aria-label="Close window"
-		(click)="close()">
+		(click)="close(null)">
     <mat-icon>close</mat-icon>
   </button>
 </div>
@@ -15,11 +16,12 @@
 	<div class="user-address text-right">
 		<app-arweave-address [address]="data.address">User: </app-arweave-address>
 	</div>
-	<div class="images-grid">
+	<!-- Images -->
+	<div class="images-grid" *ngIf="data.type === 'image'">
 		<mat-spinner class="loader" color="accent" mode="indeterminate" *ngIf="loadingFiles"></mat-spinner>
 		<div
 			class="mat-card-container fadeIn"
-			(click)="close(file.id)"
+			(click)="close({ id: file.id, type: data.type })"
 			*ngFor="let file of files">
 			<mat-card>
 				<div class="card-img-container">

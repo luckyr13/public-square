@@ -49,6 +49,7 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { DonateDialogComponent } from './donate-dialog/donate-dialog.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
+import { ConfirmationDispatchDialogComponent } from './confirmation-dispatch-dialog/confirmation-dispatch-dialog.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { FormsModule } from '@angular/forms';
     RepostDialogComponent,
     FilterDialogComponent,
     PasswordDialogComponent,
-    ViewLikesDialogComponent
+    ViewLikesDialogComponent,
+    ConfirmationDispatchDialogComponent
   ],
   imports: [
     CommonModule,

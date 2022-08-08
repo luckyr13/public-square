@@ -1,0 +1,28 @@
+<mat-dialog-content
+	class="content border-right-special"
+	*ngIf="data.address">
+	<div >
+		<p class="text-center" *ngIf="data.msg">
+			{{ data.msg }}
+		</p>
+		<p class="text-right" *ngIf="dispatchAvailable" >
+			<mat-checkbox class="dispatch-chk" [formControl]="useDispatch">
+				Send tx for FREE (Dispatch method)
+			</mat-checkbox>
+		</p>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions 
+	align="start" 
+	*ngIf="data.address">
+  <button 
+  	mat-button
+  	cdkFocusInitial (click)="close(false, false)">Close</button>
+  <div class="spacer"></div>
+  <button
+  	mat-flat-button
+  	(click)="close(true, this.useDispatch.value)"
+  	color="accent">
+  	<span>Yes, create tx!</span> 
+  </button>
+</mat-dialog-actions>
