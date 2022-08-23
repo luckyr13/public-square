@@ -1,30 +1,71 @@
-h2, h4, p {
-	margin-bottom: 20px;
+h4, p {
+  margin-bottom: 20px;
 }
-.profile-header {
-  height: 180px;
-  background-image: none;
-  background-position: center !important; 
-  background-repeat: no-repeat !important; 
-  background-size: cover !important;
-}
-.profile-header.pacific-dream {
-  background: #34e89e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #0f3443, #34e89e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+h2 {
+  padding: 20px;
 }
 
 .action-panel{
   margin-top: 20px;
 }
 .action-panel button {
-	margin-left: 20px;
-	margin-bottom: 12px;
+  margin-left: 20px;
+  margin-bottom: 12px;
 }
 .profile-container {
-	padding: 20px;
+  padding: 20px;
 }
 
 .progress-bar-header {
+}
+.profile-image {
+  padding: 20px;
+  width: 100%;
+  float: left;
+  text-align: center;
+}
+.profile-form {
+  padding: 20px;
+  width: 100%;
+  float: left;
+}
+
+@media (min-width: 600px) {
+  .profile-image {
+    width: 30%;
+    float: left;
+  }
+  .profile-form {
+    width: 70%;
+    float: left;
+  }
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  border: 2px solid;
+}
+
+.profile-form {
+  padding: 40px;
+}
+
+.profile-field {
+  width: 100%;
+}
+
+.action-panel button span {
+  margin-left: 10px;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+}
+.addresses-container {
+  margin-bottom: 20px;
 }

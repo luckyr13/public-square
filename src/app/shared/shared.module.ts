@@ -50,6 +50,7 @@ import { DonateDialogComponent } from './donate-dialog/donate-dialog.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationDispatchDialogComponent } from './confirmation-dispatch-dialog/confirmation-dispatch-dialog.component';
+import { EditProfileBannerComponent } from '../users/edit-profile-banner/edit-profile-banner.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ConfirmationDispatchDialogComponent } from './confirmation-dispatch-dia
     FilterDialogComponent,
     PasswordDialogComponent,
     ViewLikesDialogComponent,
-    ConfirmationDispatchDialogComponent
+    ConfirmationDispatchDialogComponent,
+    EditProfileBannerComponent
   ],
   imports: [
     CommonModule,

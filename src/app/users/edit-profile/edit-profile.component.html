@@ -1,42 +1,55 @@
-<div class="profile-container" *ngIf="mainAddress">
-	<h2>Edit profile</h2>
-	<h4>Banner image</h4>
-	<p>The image at the top of your profile.</p>
-	<div class="profile-header mat-elevation-z2 pacific-dream"
-		[ngStyle]="{'background-image': bannerImage ? 'url(' + bannerImage + ')' : ''}"></div>
-	<mat-progress-bar 
-		*ngIf="loadingSavingNewBannerImage"
-		class="progress-bar-header" color="accent" mode="indeterminate"></mat-progress-bar>
-		
-	<p class="action-panel">
-		<button 
-			mat-flat-button
-			color="accent"
-			[disabled]="loadingSavingNewBannerImage"
-			(click)="uploadFile('image')"
-			type="button"><mat-icon class="material-icons-outlined">image</mat-icon> Upload file</button>
-		<button
-			mat-flat-button
-			color="accent"
-			[disabled]="loadingSavingNewBannerImage"
-			(click)="fileManager('image')"
-			type="button"><mat-icon>perm_media</mat-icon> File manager</button>
-		<button
-			mat-flat-button
-			color="warn"
-			[disabled]="loadingSavingNewBannerImage"
-			(click)="removeBannerImage()"
-			type="button"><mat-icon>delete</mat-icon> Remove image</button>
-		<button
-			mat-flat-button
-			color="accent"
-			[disabled]="!saveNewBannerImage || loadingSavingNewBannerImage"
-			(click)="saveBannerImage()"
-			type="button"><mat-icon>save</mat-icon> Save changes</button>
-	</p>
-	<h4>Profile image</h4>
-	<p>Your profile image.</p>
-</div>
+<h2>Edit profile</h2>
+<ng-container *ngIf="mainAddress">
+	<div class="profile-image" >
+		<h4>Profile image</h4>
+		<img
+			class="avatar border-same-as-background mat-elevation-z2"
+			mat-card-avatar [src]="profileImage">
+	</div>
+	<div class="profile-form">
+		<h4>Profile info</h4>
+		<form>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Username</mat-label>
+		    <input matInput placeholder="" value="" autocomplete="off">
+		  </mat-form-field>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Name</mat-label>
+		    <input matInput placeholder="" value="" autocomplete="off">
+		  </mat-form-field>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Bio</mat-label>
+		    <textarea matInput placeholder="" autocomplete="off"></textarea>
+		  </mat-form-field>
+		  <h3 class="subtitle">Addresses</h3>
+		  <div class="addresses-container">{{ mainAddress }}</div>
+		  <h3 class="subtitle">Links</h3>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Twitter</mat-label>
+		    <input matInput placeholder="Your Twitter username" value="" autocomplete="off">
+		  </mat-form-field>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Github</mat-label>
+		    <input matInput placeholder="Your Github username" value="" autocomplete="off">
+		  </mat-form-field>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Instagram</mat-label>
+		    <input matInput placeholder="Your Instagram username" value="" autocomplete="off">
+		  </mat-form-field>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Facebook</mat-label>
+		    <input matInput placeholder="Your Facebook username" value="" autocomplete="off">
+		  </mat-form-field>
+		  <div class="text-right action-panel">
+		  	<button color="accent" mat-flat-button >
+		  		<mat-icon>save</mat-icon>
+		  		<span>Submit</span>
+		  	</button>
+		  </div>
+		</form>
+	</div>	
+</ng-container>
+
 <div class="profile-container" *ngIf="!mainAddress">
 	Please login first.
 </div>

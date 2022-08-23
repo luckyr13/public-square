@@ -10,6 +10,7 @@ import { PendingComponent } from './pending/pending.component';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { EditProfileBannerComponent } from './edit-profile-banner/edit-profile-banner.component';
 
 const routes: Routes = [
 	{
@@ -36,6 +37,9 @@ const routes: Routes = [
 			},
 			{
 				path: 'edit', component: EditProfileComponent, resolve: {profile: ProfileResolverService}
+			},
+			{
+				path: 'edit-banner', component: EditProfileBannerComponent, resolve: {profile: ProfileResolverService}
 			},
 			{
 				path: ':storyId', component: PostComponent, resolve: {profile: ProfileResolverService}

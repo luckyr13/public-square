@@ -1,0 +1,30 @@
+h2, h4, p {
+	margin-bottom: 20px;
+}
+.profile-header {
+  height: 180px;
+  background-image: none;
+  background-position: center !important; 
+  background-repeat: no-repeat !important; 
+  background-size: cover !important;
+}
+.profile-header.pacific-dream {
+  background: #34e89e;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #0f3443, #34e89e);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.action-panel{
+  margin-top: 20px;
+}
+.action-panel button {
+	margin-left: 20px;
+	margin-bottom: 12px;
+}
+.profile-container {
+	padding: 20px;
+}
+
+.progress-bar-header {
+}

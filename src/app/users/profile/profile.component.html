@@ -1,7 +1,16 @@
 <div class="fadeIn">
 	<div
 		[ngStyle]="{'background-image': bannerImage ? 'url(' + bannerImage + ')' : ''}"
-		class="profile-header mat-elevation-z2 pacific-dream"></div>
+		class="profile-header mat-elevation-z2 pacific-dream text-right">	
+		<button 
+			mat-button
+			class="banner-img-btn"
+			*ngIf="editProfileFlag"
+			[routerLink]="['/', this.username || this.addressList[0], 'edit-banner']">
+			<mat-icon class="material-icons-outlined" color="accent">photo_camera</mat-icon>
+			<span>Edit banner</span>
+		</button>
+	</div>
 	<div class="profile-subheader">
 		<div class="profile-img ">
 			<img class="avatar border-same-as-background mat-elevation-z2" mat-card-avatar [src]="profileImage">
