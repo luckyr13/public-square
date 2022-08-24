@@ -488,4 +488,12 @@ export class ArweaveService {
   ): Observable<Transaction> {
     return from(this._generateSignedTx(fileBin, contentType, key, tags));
   }
+
+  getImageUrl(txId: string) {
+    let imgUrl = '';
+    if (txId && this.validateAddress(txId)) {
+      imgUrl = `${this.baseURL}${txId}`;
+    }
+    return imgUrl;
+  }
 }

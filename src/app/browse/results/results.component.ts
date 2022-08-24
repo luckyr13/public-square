@@ -211,10 +211,11 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   getImageUrl(txId: string) {
-    if (txId) {
-      return `${this._arweave.baseURL}${txId}`;
+    var imgUrl = this._arweave.getImageUrl(txId);
+    if (!imgUrl) {
+      imgUrl = this.defaultProfileImage;
     }
-    return this.defaultProfileImage;
+    return imgUrl;
   }
 
 

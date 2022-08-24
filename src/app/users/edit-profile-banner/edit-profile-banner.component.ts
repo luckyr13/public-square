@@ -173,10 +173,7 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
   }
 
   getImageUrl(txId: string) {
-    if (txId) {
-      return `${this._arweave.baseURL}${txId}`;
-    }
-    return '';
+    return this._arweave.getImageUrl(txId);
   }
 
   removeBannerImage() {

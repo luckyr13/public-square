@@ -237,12 +237,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._router.navigate(['/', this.username || this.addressList[0], 'edit']);
   }
 
-
   getImageUrl(txId: string) {
-    if (txId) {
-      return `${this._arweave.baseURL}${txId}`;
-    }
-    return '';
+    return this._arweave.getImageUrl(txId);
   }
   
   loadBannerImage(from: string|string[]) {
