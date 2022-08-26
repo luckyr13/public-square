@@ -1,5 +1,5 @@
-<div class="profile-container" *ngIf="mainAddress">
-	<h2>Edit banner</h2>
+<h2>Edit banner</h2>
+<div class="profile-container" *ngIf="mainAddress && isValidUser()">
 	<h4>Banner image</h4>
 	<p>The image at the top of your profile.</p>
 	<div class="profile-header mat-elevation-z2 pacific-dream"
@@ -37,4 +37,7 @@
 </div>
 <div class="profile-container" *ngIf="!mainAddress">
 	Please login first.
+</div>
+<div class="profile-container" *ngIf="!isValidUser() && mainAddress">
+	You don't have enough privileges for editing this profile.
 </div>

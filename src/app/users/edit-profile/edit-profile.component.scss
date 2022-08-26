@@ -52,7 +52,7 @@ h2 {
 }
 
 .profile-form {
-  padding: 40px;
+  padding: 20px 40px 20px 40px;
 }
 
 .profile-field {
@@ -68,4 +68,11 @@ h2 {
 }
 .addresses-container {
   margin-bottom: 20px;
+}
+.profile-image-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+.profile-image-actions button {
+  margin: 6px 0px 6px 6px;
 }

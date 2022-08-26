@@ -14,6 +14,8 @@ import { switchMap } from 'rxjs/operators';
 import { UtilsService } from '../../core/utils/utils.service';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
+import { UserInterface } from '@verto/js/dist/common/faces';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile-banner',
@@ -28,6 +30,8 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
   loadingSavingNewBannerImage = false;
   subscriptionSavingNewBannerImage = Subscription.EMPTY;
   private _profileSubscription = Subscription.EMPTY;
+  addressFromRoute = '';
+  profile: UserInterface|undefined = undefined;
 
   constructor(
     private _userSettings: UserSettingsService,
@@ -36,16 +40,32 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
     private _arweave: ArweaveService,
     private _appSettings: AppSettingsService,
     private _profile: ProfileService,
-    private _utils: UtilsService) { }
+    private _utils: UtilsService,
+    private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this._appSettings.scrollTo('ww-mat-sidenav-main-content', 400);
     this.mainAddress = this._auth.getMainAddressSnapshot();
+    this._route.data.subscribe((data) => {
+      const profileObj = data && Object.prototype.hasOwnProperty.call(data, 'profile') ?
+        data['profile'] : {};
+      const address = profileObj && profileObj.hasOwnProperty('address') ?
+        profileObj['address'] : '';
+      const profile = profileObj && profileObj.hasOwnProperty('profile') && 
+        profileObj['profile'] ?
+        profileObj['profile'] : {};
+
+      this.addressFromRoute = address;
+      this.profile = profile;
+      this.loadBannerImage(this.mainAddress);
+
+    });
     this._auth.account$.subscribe((account: string) => {
       this.mainAddress = account;
       this.loadBannerImage(this.mainAddress);
     });
-    this._appSettings.scrollTo('ww-mat-sidenav-main-content', 400);
-    this.loadBannerImage(this.mainAddress);
+    
+    
   }
 
   fileManager(type: string) {
@@ -223,6 +243,21 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
       }
     }
     return '';
+  }
+
+  isValidUser() {
+    let res = false;
+    const profileAddresses = this.profile && this.profile.addresses ?
+      this.profile.addresses : [];
+    const username = this.profile && this.profile.username ?
+      this.profile.username : '';
+    if (((this.addressFromRoute === username ||
+          profileAddresses.findIndex(v => v === this.addressFromRoute) >= 0) &&
+          profileAddresses.findIndex(v => v === this.mainAddress) >= 0) ||
+        this.addressFromRoute === this.mainAddress) {
+      res = true;
+    }
+    return res;
   }
 
 }

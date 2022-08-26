@@ -8,12 +8,16 @@ import { UserAuthService } from '../../core/services/user-auth.service';
 import { ArweaveService } from '../../core/services/arweave.service';
 import { AppSettingsService } from '../../core/services/app-settings.service';
 import { ConfirmationDispatchDialogComponent } from '../../shared/confirmation-dispatch-dialog/confirmation-dispatch-dialog.component';
-import { ProfileService } from '../../core/services/profile.service';
+import { VertoService } from '../../core/services/verto.service';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UtilsService } from '../../core/utils/utils.service';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { UserProfile } from '../../core/interfaces/user-profile';
+import { UserInterface } from '@verto/js/dist/common/faces';
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,13 +26,21 @@ import { TransactionMetadata } from '../../core/interfaces/transaction-metadata'
 })
 export class EditProfileComponent implements OnInit, OnDestroy {
   mainAddress = '';
-  bannerImage = '';
-  bannerTx = '';
-  saveNewBannerImage = false;
-  loadingSavingNewBannerImage = false;
-  subscriptionSavingNewBannerImage = Subscription.EMPTY;
-  private _profileSubscription = Subscription.EMPTY;
+  addressFromRoute = '';
+  profile: UserInterface|undefined = undefined;
+  private _loadingProfileSubscription = Subscription.EMPTY;
   profileImage = 'assets/images/blank-profile.jpg';
+  loadingSavingProfile = false;
+  private _savingProfileSubscription = Subscription.EMPTY;
+  profileFrm = new FormGroup({
+    'username': new FormControl('', [Validators.required]),
+    'name': new FormControl(''),
+    'bio': new FormControl(''),
+    'twitter': new FormControl(''),
+    'github': new FormControl(''),
+    'instagram': new FormControl(''),
+    'facebook': new FormControl('')
+  });
 
   constructor(
     private _userSettings: UserSettingsService,
@@ -36,19 +48,219 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     private _arweave: ArweaveService,
     private _appSettings: AppSettingsService,
-    private _profile: ProfileService,
-    private _utils: UtilsService) { }
+    private _vertoProfile: VertoService,
+    private _utils: UtilsService,
+    private _route: ActivatedRoute) { }
+
+  get username() {
+    return this.profileFrm.get('username')!;
+  }
+  get name() {
+    return this.profileFrm.get('name')!;
+  }
+  get bio() {
+    return this.profileFrm.get('bio')!;
+  }
+  get twitter() {
+    return this.profileFrm.get('twitter')!;
+  }
+  get facebook() {
+    return this.profileFrm.get('facebook')!;
+  }
+  get github() {
+    return this.profileFrm.get('github')!;
+  }
+  get instagram() {
+    return this.profileFrm.get('instagram')!;
+  }
 
   ngOnInit(): void {
+    this._appSettings.scrollTo('ww-mat-sidenav-main-content', 400);
     this.mainAddress = this._auth.getMainAddressSnapshot();
+    this._route.data.subscribe((data) => {
+      const profileObj = data && Object.prototype.hasOwnProperty.call(data, 'profile') ?
+        data['profile'] : {};
+      const address = profileObj && profileObj.hasOwnProperty('address') ?
+        profileObj['address'] : '';
+      const profile = profileObj && profileObj.hasOwnProperty('profile') && 
+        profileObj['profile'] ?
+        profileObj['profile'] : {};
+
+      this.addressFromRoute = address;
+      this.profile = profile;
+      this.fillProfileFrm(profile);
+
+    });
+
     this._auth.account$.subscribe((account: string) => {
       this.mainAddress = account;
+      this.loadProfile(this.mainAddress);
     });
-    this._appSettings.scrollTo('ww-mat-sidenav-main-content', 400);
+    
+  }
+
+  isValidUser() {
+    let res = false;
+    const profileAddresses = this.profile && this.profile.addresses ?
+      this.profile.addresses : [];
+    const username = this.profile && this.profile.username ?
+      this.profile.username : '';
+    if (((this.addressFromRoute === username ||
+          profileAddresses.findIndex(v => v === this.addressFromRoute) >= 0) &&
+          profileAddresses.findIndex(v => v === this.mainAddress) >= 0) ||
+        this.addressFromRoute === this.mainAddress) {
+      res = true;
+    }
+    return res;
   }
 
   ngOnDestroy() {
-    
+    this._loadingProfileSubscription.unsubscribe();
+    this._savingProfileSubscription.unsubscribe();
   }
-  
+
+  fileManager(type: string) {
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+
+    const dialogRef = this._dialog.open(
+      FileManagerDialogComponent,
+      {
+        restoreFocus: false,
+        autoFocus: false,
+        disableClose: true,
+        data: {
+          type: type,
+          address: this.mainAddress
+        },
+        direction: direction,
+        width: '800px'
+      });
+
+    // Manually restore focus to the menu trigger
+    dialogRef.afterClosed().subscribe((res: {id: string, type:'text'|'image'|'audio'|'video'|''}) => { 
+      if (res) {
+        const obj = {
+          id: res.id,
+          type: res.type,
+          content: ''
+        };
+
+        this.profileImage = this.getProfileImageUrl(obj.id);
+      }
+    });
+  }
+
+  uploadFile(type: string) {
+    const defLang = this._userSettings.getDefaultLang();
+    const defLangObj = this._userSettings.getLangObject(defLang);
+    let direction: Direction = defLangObj && defLangObj.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+
+    const dialogRef = this._dialog.open(
+      UploadFileDialogComponent,
+      {
+        restoreFocus: false,
+        autoFocus: true,
+        disableClose: true,
+        data: {
+          type: type,
+          address: this.mainAddress
+        },
+        direction: direction,
+        width: '800px'
+      }
+    );
+
+    // Manually restore focus to the menu trigger
+    dialogRef.afterClosed().subscribe((res: { id: string, type: 'text'|'image'|'audio'|'video'|'' }|null|undefined) => {
+      if (res) {
+        const obj = {
+          id: res.id,
+          type: res.type,
+          content: ''
+        };
+        this.profileImage = this.getProfileImageUrl(obj.id);
+      }
+    });
+  }
+
+  getProfileImageUrl(txId: string) {
+    let img = this._arweave.getImageUrl(txId)
+    if (!img) {
+      img = 'assets/images/blank-profile.jpg';
+    }
+    return img;
+  }
+
+  removeProfileImage() {
+    this.profileImage = 'assets/images/blank-profile.jpg';
+  }
+
+  resetFrmValues() {
+    this.removeProfileImage();
+    this.username.enable();
+    this.username.setValue('');
+    this.name.setValue('');
+    this.bio.setValue('');
+    this.twitter.setValue('');
+    this.facebook.setValue('');
+    this.github.setValue('');
+    this.instagram.setValue('');
+  }
+
+  loadProfile(from: string) {
+    this._loadingProfileSubscription = this._vertoProfile.getProfile(from).subscribe({
+      next: (profile) => {
+        this.fillProfileFrm(profile);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  submitProfile() {
+    alert(JSON.stringify(this.profileFrm.value))
+  }
+
+  validateUsername(username: string|null) {
+    username = username ? username.trim() : '';
+    alert(username)
+  }
+
+  fillProfileFrm(profile: UserInterface|undefined) {
+    this.resetFrmValues();
+    if (profile) {
+      const image = profile.image ? profile.image.trim() : '';
+      const username = profile.username ? profile.username.trim() : '';
+      const name = profile.name ? profile.name.trim() : '';
+      const bio = profile.bio ? profile.bio.trim() : '';
+      const addresses = profile.addresses ? profile.addresses : [];
+      const links = profile.links ? profile.links : {};
+      const twitter = links && Object.prototype.hasOwnProperty.call(links, 'twitter') ?
+        links['twitter'].trim() : '';
+      const facebook = links && Object.prototype.hasOwnProperty.call(links, 'facebook') ?
+        links['facebook'].trim() : '';
+      const github = links && Object.prototype.hasOwnProperty.call(links, 'github') ?
+        links['github'].trim() : '';
+      const instagram = links && Object.prototype.hasOwnProperty.call(links, 'instagram') ?
+        links['instagram'].trim() : '';
+
+      this.profileImage =  this.getProfileImageUrl(image);
+      this.username.setValue(username);
+      this.name.setValue(name);
+      this.bio.setValue(bio);
+      this.twitter.setValue(twitter);
+      this.facebook.setValue(facebook);
+      this.github.setValue(github);
+      this.instagram.setValue(instagram);
+
+      if (username) {
+        this.username.disable();
+      }
+    }
+  }
 }
