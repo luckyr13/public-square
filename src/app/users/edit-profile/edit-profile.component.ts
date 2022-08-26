@@ -85,7 +85,6 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       const profile = profileObj && profileObj.hasOwnProperty('profile') && 
         profileObj['profile'] ?
         profileObj['profile'] : {};
-
       this.addressFromRoute = address;
       this.profile = profile;
       this.fillProfileFrm(profile);
@@ -94,7 +93,11 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
     this._auth.account$.subscribe((account: string) => {
       this.mainAddress = account;
-      this.loadProfile(this.mainAddress);
+      if (account) {
+        this.loadProfile(this.mainAddress);
+      } else {
+        this.resetFrmValues();
+      }
     });
     
   }

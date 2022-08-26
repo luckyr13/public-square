@@ -62,7 +62,11 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
     });
     this._auth.account$.subscribe((account: string) => {
       this.mainAddress = account;
-      this.loadBannerImage(this.mainAddress);
+      if (account) {
+        this.loadBannerImage(this.mainAddress);
+      } else {
+        this.removeBannerImage();
+      }
     });
     
     
