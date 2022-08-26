@@ -40,6 +40,9 @@ h2 {
     width: 70%;
     float: left;
   }
+  .profile-image-actions {
+    text-align: left !important;
+  }
 }
 
 .avatar {
@@ -71,8 +74,10 @@ h2 {
 }
 .profile-image-actions {
   text-align: center;
+  width: 72%;
+  margin: 0 auto;
   margin-top: 20px;
 }
 .profile-image-actions button {
-  margin: 6px 0px 6px 6px;
+  margin: 6px 3px 6px 3px;
 }

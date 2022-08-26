@@ -7,19 +7,19 @@
 			mat-card-avatar [src]="profileImage">
 		<div class="profile-image-actions">
 			<button 
-				mat-flat-button
+				mat-stroked-button
 				color="accent"
 				[disabled]="loadingSavingProfile"
 				(click)="uploadFile('image')"
 				type="button"><mat-icon class="material-icons-outlined">image</mat-icon> Upload file</button>
 			<button
-				mat-flat-button
+				mat-stroked-button
 				color="accent"
 				[disabled]="loadingSavingProfile"
 				(click)="fileManager('image')"
 				type="button"><mat-icon>perm_media</mat-icon> File manager</button>
 			<button
-				mat-flat-button
+				mat-stroked-button
 				color="warn"
 				[disabled]="loadingSavingProfile"
 				(click)="removeProfileImage()"

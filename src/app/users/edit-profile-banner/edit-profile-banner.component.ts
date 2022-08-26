@@ -65,7 +65,7 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
       if (account) {
         this.loadBannerImage(this.mainAddress);
       } else {
-        this.removeBannerImage();
+        this.removeBannerImage(false);
       }
     });
     
@@ -200,10 +200,10 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
     return this._arweave.getImageUrl(txId);
   }
 
-  removeBannerImage() {
+  removeBannerImage(saveNewBannerImage: boolean) {
     this.bannerImage = '';
     this.bannerTx = '';
-    this.saveNewBannerImage = true;
+    this.saveNewBannerImage = saveNewBannerImage;
   }
 
   ngOnDestroy() {
@@ -213,6 +213,7 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
   
   loadBannerImage(from: string|string[]) {
     const limit = 10;
+    this.removeBannerImage(false);
     this._profileSubscription = this._arweave.getNetworkInfo().pipe(
       switchMap((info: NetworkInfoInterface) => {
         const currentHeight = info.height;

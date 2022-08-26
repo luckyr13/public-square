@@ -10,22 +10,22 @@
 		
 	<p class="action-panel">
 		<button 
-			mat-flat-button
+			mat-stroked-button
 			color="accent"
 			[disabled]="loadingSavingNewBannerImage"
 			(click)="uploadFile('image')"
 			type="button"><mat-icon class="material-icons-outlined">image</mat-icon> Upload file</button>
 		<button
-			mat-flat-button
+			mat-stroked-button
 			color="accent"
 			[disabled]="loadingSavingNewBannerImage"
 			(click)="fileManager('image')"
 			type="button"><mat-icon>perm_media</mat-icon> File manager</button>
 		<button
-			mat-flat-button
+			mat-stroked-button
 			color="warn"
 			[disabled]="loadingSavingNewBannerImage"
-			(click)="removeBannerImage()"
+			(click)="removeBannerImage(true)"
 			type="button"><mat-icon>delete</mat-icon> Remove image</button>
 		<button
 			mat-flat-button
