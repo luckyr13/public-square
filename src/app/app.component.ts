@@ -33,7 +33,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   loadAccountSubscription: Subscription = Subscription.EMPTY;
   loginSubscription: Subscription = Subscription.EMPTY;
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
-  menuPosition: 'end'|'start' = 'start';
 
   constructor(
     private _appSettings: AppSettingsService,
@@ -76,15 +75,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.consoleWelcomeMessage();
 
-    
-    this.updateWritingDirectionAndLoading(this._userSettings.getDefaultLang())
-    this._userSettings.currentLangStream.subscribe(this.updateWritingDirectionAndLoading)
   }
 
-  updateWritingDirectionAndLoading = (lang: string) => {
-    const langObj: LanguageObj|null = this._lang.getLangObject(lang);
-    this.menuPosition = langObj && langObj.writing_system == 'RTL' ? 'end' : 'start'
-  }
 
   ngOnDestroy() {
     this.loadAccountSubscription.unsubscribe();
@@ -135,7 +127,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   consoleWelcomeMessage() {
-    console.log('%c👋 Welcome to Narrative!', 'background: #FBD6D2; color: #330c62; font-size: 32px; padding: 10px; margin-bottom: 20px;');
+    console.log('%c👋🐘 Welcome to PublicSquare!', 'background: #6200ea; color: #FFFFFF; font-size: 32px; padding: 10px; margin-bottom: 20px;');
   
   }
 

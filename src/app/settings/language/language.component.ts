@@ -17,7 +17,6 @@ export class LanguageComponent implements OnInit {
     private _lang: LanguageService,
     private _utils: UtilsService) {
     this.currentLang = this._userSettings.getDefaultLang();
-
     this.langCodes = this._userSettings.langCodesList;
   }
 
@@ -26,12 +25,13 @@ export class LanguageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._userSettings.currentLangStream.subscribe(this.setLanguage);
+    
   }
 
   setLanguage(langCode: string) {
     this._userSettings.setDefaultLang(langCode);
     this.currentLang = langCode;
+    window.location.reload();
   }
 
 }

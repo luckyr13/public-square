@@ -22,8 +22,6 @@ export class UserSettingsService {
   private _storage = window.localStorage;
   private _currentThemeSource: Subject<string> = new Subject<string>();
   public currentThemeStream = this._currentThemeSource.asObservable();
-  private _currentLangSource = new Subject<string>();
-  public currentLangStream = this._currentLangSource.asObservable();
   public themes: Record<string, ThemeObject>;
   public languages: Record<string, LanguageObj>;
 
@@ -92,7 +90,6 @@ export class UserSettingsService {
       this._settings.lang = _lang;
       this._storage.setItem('settings', JSON.stringify(this._settings));
       this._translate.use(_lang.toLowerCase());
-      this._currentLangSource.next(_lang);
       const langObj = this._langService.getLangObject(_lang)!;
 
       // Update index.html
