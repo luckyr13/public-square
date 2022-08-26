@@ -41,9 +41,8 @@ export class FollowingComponent implements OnInit , OnDestroy {
     private _ngZone: NgZone) { }
 
   ngOnInit(): void {
-    this.route.data
+    this.route.parent!.data
       .subscribe(data => {
-
         const profile: UserProfile = data['profile'];
         const userAddressList = profile.profile ?
           profile.profile.addresses :

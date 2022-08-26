@@ -77,7 +77,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._appSettings.scrollTo('ww-mat-sidenav-main-content', 400);
     this.mainAddress = this._auth.getMainAddressSnapshot();
-    this._route.data.subscribe((data) => {
+    this._route.parent!.data.subscribe((data) => {
       const profileObj = data && Object.prototype.hasOwnProperty.call(data, 'profile') ?
         data['profile'] : {};
       const address = profileObj && profileObj.hasOwnProperty('address') ?

@@ -53,7 +53,7 @@ export class PostComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.route.data
+    this.route.parent!.data
       .subscribe((data: Data) => {
         const storyId = this.route.snapshot.paramMap.get('storyId')!;
         const profile: UserProfile = data['profile'];

@@ -21,28 +21,28 @@ const routes: Routes = [
 		},
 		children: [
 			{
-				path: 'replies', component: RepliesComponent, resolve: {profile: ProfileResolverService}
+				path: 'replies', component: RepliesComponent
 			},
 			{
-				path: 'likes', component: LikesComponent, resolve: {profile: ProfileResolverService}
+				path: 'likes', component: LikesComponent
 			},
 			{
-				path: 'pending', component: PendingComponent, resolve: {profile: ProfileResolverService}
+				path: 'pending', component: PendingComponent
 			},
 			{
-				path: 'followers', component: FollowersComponent, resolve: {profile: ProfileResolverService}
+				path: 'followers', component: FollowersComponent
 			},
 			{
-				path: 'following', component: FollowingComponent, resolve: {profile: ProfileResolverService}
+				path: 'following', component: FollowingComponent
 			},
 			{
-				path: 'edit', component: EditProfileComponent, resolve: {profile: ProfileResolverService}
+				path: 'edit', component: EditProfileComponent
 			},
 			{
-				path: 'edit-banner', component: EditProfileBannerComponent, resolve: {profile: ProfileResolverService}
+				path: 'edit-banner', component: EditProfileBannerComponent
 			},
 			{
-				path: ':storyId', component: PostComponent, resolve: {profile: ProfileResolverService}
+				path: ':storyId', component: PostComponent
 			},
 			{
 				path: '', component: LatestStoriesComponent, pathMatch: 'full'

@@ -35,7 +35,7 @@ export class PendingComponent implements OnInit, OnDestroy {
     private _profileResolver: ProfileResolverService) { }
 
   ngOnInit(): void {
-    this.route.data
+    this.route.parent!.data
       .subscribe(data => {
         const profile: UserProfile = data['profile'];
         const userAddressList = profile.profile ?

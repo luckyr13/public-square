@@ -41,7 +41,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
     private _ngZone: NgZone) { }
 
   ngOnInit(): void {
-    this.route.data
+    this.route.parent!.data
       .subscribe(data => {
 
         const profile: UserProfile = data['profile'];
