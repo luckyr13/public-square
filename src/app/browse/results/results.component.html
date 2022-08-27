@@ -7,11 +7,11 @@
 	  	[routerLink]="['/', profile.username]">
 	  	<img
 				matListAvatar 
-				[src]="getImageUrl(profile.image!)">
+				[src]="profile.avatarURL || defaultProfileImage">
 	  	<span matLine *ngIf="profile.name" class="ellipsis nowrap profile-name">
 	  		{{ profile.name }} (@{{ profile.username }})
 	  	</span>
-			<app-arweave-address matLine *ngFor="let addr of profile.addresses" [address]="addr"></app-arweave-address>
+			<app-arweave-address matLine [address]="profile.address"></app-arweave-address>
 	  </mat-list-item>
 	</mat-list>
 </div>

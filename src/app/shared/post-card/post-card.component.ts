@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
-import { VertoService } from '../../core/services/verto.service';
+import { ProfileService } from '../../core/services/profile.service';
 import { Subscription, Observable } from 'rxjs';
 import { UserAuthService } from '../../core/services/user-auth.service';
-import { UserInterface } from '@verto/js/dist/common/faces';
 import { ArweaveService } from '../../core/services/arweave.service';
 import { UserSettingsService } from '../../core/services/user-settings.service';
 import { UtilsService } from '../../core/utils/utils.service';
@@ -18,6 +17,7 @@ import { LikeDialogComponent } from '../like-dialog/like-dialog.component';
 import { RepostDialogComponent } from '../repost-dialog/repost-dialog.component';
 import { PostService } from '../../core/services/post.service';
 import { AppSettingsService } from '../../core/services/app-settings.service';
+import { UserProfile } from '../../core/interfaces/user-profile';
 
 @Component({
   selector: 'app-post-card',
@@ -34,7 +34,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
   profileImage = 'assets/images/blank-profile.png';
   profileSubscription = Subscription.EMPTY;
   contentSubscription = Subscription.EMPTY;
-  profile: UserInterface|null = null;
+  profile: UserProfile|null = null;
   content: string = '';
   originalRawContent: string = '';
   isDarkTheme = false;
@@ -61,7 +61,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private _verto: VertoService,
+    private _profile: ProfileService,
     private _auth: UserAuthService,
     private _arweave: ArweaveService,
     private _userSettings: UserSettingsService,
@@ -95,7 +95,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
   }
 
   loadData(recurLv = 0) {
-    this.loadVertoProfile();
+    this.loadProfile();
     this.loadContent(recurLv);
     if (this.post.blockTimestamp) {
       this.post.blockTimestamp = this._utils.dateFormat(this.post.blockTimestamp);
@@ -136,17 +136,17 @@ export class PostCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadVertoProfile() {
+  loadProfile() {
     const account = this.post.owner;
     this.loadingProfile = true;
     this.profile = null;
-    this.profileSubscription = this._verto.getProfile(account).subscribe({
-      next: (profile: UserInterface|undefined) => {
+    this.profileSubscription = this._profile.getProfileByAddress(account).subscribe({
+      next: (profile) => {
         this.profileImage = 'assets/images/blank-profile.jpg';
         
         if (profile) {
-          if (profile.image) {
-            this.profileImage = `${this._arweave.baseURL}${profile.image}`;
+          if (profile.avatarURL) {
+            this.profileImage = profile.avatarURL;
           }
           this.profile = profile;
         }

@@ -9,19 +9,19 @@
 			<button 
 				mat-stroked-button
 				color="accent"
-				[disabled]="loadingSavingProfile"
+				[disabled]="loadingSavingProfile || validatingUsername"
 				(click)="uploadFile('image')"
 				type="button"><mat-icon class="material-icons-outlined">image</mat-icon> Upload file</button>
 			<button
 				mat-stroked-button
 				color="accent"
-				[disabled]="loadingSavingProfile"
+				[disabled]="loadingSavingProfile || validatingUsername"
 				(click)="fileManager('image')"
 				type="button"><mat-icon>perm_media</mat-icon> File manager</button>
 			<button
 				mat-stroked-button
 				color="warn"
-				[disabled]="loadingSavingProfile"
+				[disabled]="loadingSavingProfile || validatingUsername"
 				(click)="removeProfileImage()"
 				type="button"><mat-icon>delete</mat-icon> Remove image</button>
 		</div>
@@ -31,8 +31,12 @@
 		<form [formGroup]="profileFrm" (ngSubmit)="submitProfile()">
 		  <mat-form-field class="profile-field" appearance="outline" color="accent">
 		    <mat-label>Username</mat-label>
-		    <input (blur)="validateUsername(username.value)" matInput placeholder="" autocomplete="off" formControlName="username">
-		    <mat-error *ngIf="username.invalid">*Please provide an username.</mat-error>
+		    <input
+		    	matInput
+		    	placeholder=""
+		    	autocomplete="off"
+		    	formControlName="username">
+		    <mat-error *ngIf="username.invalid">*Username already taken.</mat-error>
 		  </mat-form-field>
 		  <mat-form-field class="profile-field" appearance="outline" color="accent">
 		    <mat-label>Name</mat-label>
@@ -62,7 +66,7 @@
 		    <input matInput placeholder="Your Facebook username" value="" autocomplete="off"  formControlName="facebook">
 		  </mat-form-field>
 		  <div class="text-right action-panel">
-		  	<button [disabled]="!profileFrm.valid" color="accent" mat-flat-button >
+		  	<button [disabled]="!profileFrm.valid || loadingSavingProfile || validatingUsername" color="accent" mat-flat-button >
 		  		<mat-icon>save</mat-icon>
 		  		<span>Save profile</span>
 		  	</button>

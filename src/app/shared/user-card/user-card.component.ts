@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { VertoService } from '../../core/services/verto.service';
-import { UserInterface } from '@verto/js/dist/common/faces';
+import { ProfileService } from '../../core/services/profile.service';
 import { Subscription } from 'rxjs';
 import { ArweaveService } from '../../core/services/arweave.service';
+import { UserProfile } from '../../core/interfaces/user-profile';
 
 @Component({
   selector: 'app-user-card',
@@ -11,7 +11,7 @@ import { ArweaveService } from '../../core/services/arweave.service';
 })
 export class UserCardComponent implements OnInit, OnDestroy {
   @Input('address') address: string = '';
-  profile: UserInterface|null|undefined = null;
+  profile: UserProfile|null|undefined = null;
   private _profileSubscription = Subscription.EMPTY;
   defaultProfileImage = 'assets/images/blank-profile.jpg';
   loadingProfile = false;
@@ -19,13 +19,13 @@ export class UserCardComponent implements OnInit, OnDestroy {
   @Input('hideSecondaryAddressess') hideSecondaryAddressess = false;
 
   constructor(
-    private _verto: VertoService,
+    private _profile: ProfileService,
     private _arweave: ArweaveService
   ) { }
 
   ngOnInit(): void {
     this.loadingProfile = true;
-    this._profileSubscription = this._verto.getProfile(this.address).subscribe({
+    this._profileSubscription = this._profile.getProfileByAddress(this.address).subscribe({
       next: (profile) => {
         this.profile = profile;
         this.loadingProfile = false;

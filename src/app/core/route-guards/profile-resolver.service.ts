@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { VertoService } from '../services/verto.service';
+import { ProfileService } from '../services/profile.service';
 import { Subscription, tap, Observable, of, EMPTY} from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import {
@@ -8,17 +8,17 @@ import {
   RouterStateSnapshot } from '@angular/router';
 import { UtilsService } from '../../core/utils/utils.service';
 import { ArweaveService } from '../../core/services/arweave.service';
-import { UserProfile } from '../../core/interfaces/user-profile';
+import { UserProfileAddress } from '../../core/interfaces/user-profile-address';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileResolverService implements Resolve<UserProfile> {
-  public profile: UserProfile|null = null;
+export class ProfileResolverService implements Resolve<UserProfileAddress> {
+  public profileAddress: UserProfileAddress|null = null;
   public loading = false;
  
   constructor(
-    private _verto: VertoService,
+    private _profile: ProfileService,
     private _route: ActivatedRoute,
     private _utils: UtilsService,
     private _arweave: ArweaveService,
@@ -27,7 +27,7 @@ export class ProfileResolverService implements Resolve<UserProfile> {
 
   resolve(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<UserProfile> | Observable<never> {
+    state: RouterStateSnapshot): Observable<UserProfileAddress> | Observable<never> {
     const address = route.paramMap.get('address') ?
       route.paramMap.get('address') :
       (
@@ -35,12 +35,12 @@ export class ProfileResolverService implements Resolve<UserProfile> {
         route.parent.paramMap.get('address') : ''
       );
 
-    this.profile = null;
+    this.profileAddress = null;
     this.loading = true;
     
     return this.loadProfile(address!).pipe(
         tap((profile) => {
-          this.profile = profile;
+          this.profileAddress = profile;
           this.loading = false;
         }),
         catchError((error) => {
@@ -52,10 +52,10 @@ export class ProfileResolverService implements Resolve<UserProfile> {
       );
   }
 
-  loadProfile(address: string): Observable<UserProfile> {
-    return this._verto.getProfile(address).pipe(
+  loadProfile(address: string): Observable<UserProfileAddress> {
+    return this._profile.getProfileByAddress(address).pipe(
         switchMap((profile) => {
-          const newProfile: UserProfile = {
+          const newProfile: UserProfileAddress = {
             address: '',
             profile: null
           };

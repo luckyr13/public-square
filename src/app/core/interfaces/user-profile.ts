@@ -1,6 +1,11 @@
-import { UserInterface } from '@verto/js/dist/common/faces';
-
 export interface UserProfile {
+	username: string;
+	name: string;
+	bio: string;
 	address: string;
-	profile: UserInterface|null|undefined;
+	avatar: string;
+	banner: string;
+	avatarURL: string;
+	bannerURL: string;
+	links: Record<string, string>;
 }

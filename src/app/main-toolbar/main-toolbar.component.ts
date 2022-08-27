@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import { AppSettingsService } from '../core/services/app-settings.service';
 import { Subscription, Observable } from 'rxjs';
-import { VertoService } from '../core/services/verto.service';
+import { ProfileService } from '../core/services/profile.service';
 import { ArweaveService } from '../core/services/arweave.service';
-import { UserInterface } from '@verto/js/dist/common/faces';
+import { UserProfile } from '../core/interfaces/user-profile';
 import { UtilsService } from '../core/utils/utils.service';
 
 
@@ -26,7 +26,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
   method = '';
   appName: string;
   profileSubscription: Subscription = Subscription.EMPTY;
-  profile: UserInterface|null = null;
+  profile: UserProfile|null = null;
   profileImage: string = 'assets/images/blank-profile.jpg';
   showThemeSelector = false;
   showSettingsSelector = true;
@@ -37,7 +37,7 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _auth: UserAuthService,
     private _appSettings: AppSettingsService,
-    private _verto: VertoService,
+    private _profile: ProfileService,
     private _arweave: ArweaveService,
     private _utils: UtilsService) {
     this.appName = this._appSettings.appName;
@@ -53,12 +53,12 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
       if (address != '') {
         this.account = address;
         this.method = this._auth.loginMethod;
-        this.profileSubscription = this._verto.getProfile(this.account).subscribe({
-          next: (profile: UserInterface|undefined) => {
+        this.profileSubscription = this._profile.getProfileByAddress(this.account).subscribe({
+          next: (profile) => {
             if (profile) {
               this.profile = profile;
-              if (profile.image) {
-                this.profileImage = `${this._arweave.baseURL}${profile.image}`;
+              if (profile.avatarURL) {
+                this.profileImage = profile.avatarURL;
               }
             } else {
               this.profile = null;

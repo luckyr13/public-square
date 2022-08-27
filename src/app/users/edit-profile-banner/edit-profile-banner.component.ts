@@ -14,8 +14,9 @@ import { switchMap } from 'rxjs/operators';
 import { UtilsService } from '../../core/utils/utils.service';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
-import { UserInterface } from '@verto/js/dist/common/faces';
 import { ActivatedRoute } from '@angular/router';
+import { UserProfile } from '../../core/interfaces/user-profile';
+
 
 @Component({
   selector: 'app-edit-profile-banner',
@@ -31,7 +32,7 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
   subscriptionSavingNewBannerImage = Subscription.EMPTY;
   private _profileSubscription = Subscription.EMPTY;
   addressFromRoute = '';
-  profile: UserInterface|undefined = undefined;
+  profile: UserProfile|undefined = undefined;
 
   constructor(
     private _userSettings: UserSettingsService,
@@ -252,8 +253,8 @@ export class EditProfileBannerComponent implements OnInit , OnDestroy {
 
   isValidUser() {
     let res = false;
-    const profileAddresses = this.profile && this.profile.addresses ?
-      this.profile.addresses : [];
+    const profileAddresses = this.profile && this.profile.address ?
+      [this.profile.address] : [];
     const username = this.profile && this.profile.username ?
       this.profile.username : '';
     if (((this.addressFromRoute === username ||

@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ArweaveService } from '../../core/services/arweave.service';
-import { VertoService } from '../../core/services/verto.service';
-import { UserInterface } from '@verto/js/dist/common/faces';
 import { Router, ActivatedRoute, ParamMap, Params, Data } from '@angular/router';
 import { Subscription, tap, Observable, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -9,7 +7,7 @@ import { PostService } from '../../core/services/post.service';
 import { UtilsService } from '../../core/utils/utils.service';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
 import { NetworkInfoInterface } from 'arweave/web/network';
-import { UserProfile } from '../../core/interfaces/user-profile';
+import { UserProfileAddress } from '../../core/interfaces/user-profile-address';
 import { ReplyService } from '../../core/services/reply.service';
 import { LikeService } from '../../core/services/like.service';
 import { ViewLikesDialogComponent } from '../../shared/view-likes-dialog/view-likes-dialog.component'; 
@@ -43,7 +41,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private _verto: VertoService,
     private _arweave: ArweaveService,
     private _post: PostService,
     private _utils: UtilsService,
@@ -56,9 +53,9 @@ export class PostComponent implements OnInit, OnDestroy {
     this.route.parent!.data
       .subscribe((data: Data) => {
         const storyId = this.route.snapshot.paramMap.get('storyId')!;
-        const profile: UserProfile = data['profile'];
+        const profile: UserProfileAddress = data['profile'];
         const userAddressList = profile.profile ?
-          profile.profile.addresses :
+          [profile.profile.address] :
           [profile.address];
         this.loadPost(userAddressList, storyId);
         this.loadReplies(storyId);

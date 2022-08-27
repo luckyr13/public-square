@@ -7,7 +7,7 @@ import { UtilsService } from '../../core/utils/utils.service';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { ReplyService } from '../../core/services/reply.service';
-import { UserProfile } from '../../core/interfaces/user-profile';
+import { UserProfileAddress } from '../../core/interfaces/user-profile-address';
 import { AppSettingsService } from '../../core/services/app-settings.service';
 
 @Component({
@@ -37,9 +37,9 @@ export class RepliesComponent implements OnInit, OnDestroy {
     this.route.parent!.data
       .subscribe((data: Data) => {
         const storyId = this.route.snapshot.paramMap.get('storyId')!;
-        const profile: UserProfile = data['profile'];
-        const userAddressList = profile.profile && profile.profile.addresses ?
-          profile.profile.addresses :
+        const profile: UserProfileAddress = data['profile'];
+        const userAddressList = profile.profile && profile.profile.address ?
+          [profile.profile.address] :
           [profile.address];
         this.mainUsername = profile.profile && profile.profile.username ?
           profile.profile.username : profile.address;

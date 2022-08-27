@@ -8,16 +8,17 @@ import { UserAuthService } from '../../core/services/user-auth.service';
 import { ArweaveService } from '../../core/services/arweave.service';
 import { AppSettingsService } from '../../core/services/app-settings.service';
 import { ConfirmationDispatchDialogComponent } from '../../shared/confirmation-dispatch-dialog/confirmation-dispatch-dialog.component';
-import { VertoService } from '../../core/services/verto.service';
+import { ProfileService } from '../../core/services/profile.service';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UtilsService } from '../../core/utils/utils.service';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { 
+  FormGroup, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { UsernameValidatorService } from '../../core/utils/forms/username-validator.service';
 import { UserProfile } from '../../core/interfaces/user-profile';
-import { UserInterface } from '@verto/js/dist/common/faces';
 
 @Component({
   selector: 'app-edit-profile',
@@ -27,13 +28,20 @@ import { UserInterface } from '@verto/js/dist/common/faces';
 export class EditProfileComponent implements OnInit, OnDestroy {
   mainAddress = '';
   addressFromRoute = '';
-  profile: UserInterface|undefined = undefined;
+  validatingUsername = false;
+  errorMsgUsername = '';
+  profile: UserProfile|undefined = undefined;
   private _loadingProfileSubscription = Subscription.EMPTY;
   profileImage = 'assets/images/blank-profile.jpg';
   loadingSavingProfile = false;
   private _savingProfileSubscription = Subscription.EMPTY;
+  private _userExistsSubscription = Subscription.EMPTY;
   profileFrm = new FormGroup({
-    'username': new FormControl('', [Validators.required]),
+    'username': new FormControl('', {
+      validators: [Validators.required],
+      asyncValidators: [this._usernameValidator.validate.bind(this._usernameValidator)],
+      updateOn: 'blur',
+    }),
     'name': new FormControl(''),
     'bio': new FormControl(''),
     'twitter': new FormControl(''),
@@ -48,9 +56,10 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     private _arweave: ArweaveService,
     private _appSettings: AppSettingsService,
-    private _vertoProfile: VertoService,
+    private _profile: ProfileService,
     private _utils: UtilsService,
-    private _route: ActivatedRoute) { }
+    private _route: ActivatedRoute,
+    private _usernameValidator: UsernameValidatorService) { }
 
   get username() {
     return this.profileFrm.get('username')!;
@@ -104,8 +113,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
   isValidUser() {
     let res = false;
-    const profileAddresses = this.profile && this.profile.addresses ?
-      this.profile.addresses : [];
+    const profileAddresses = this.profile && this.profile.address ?
+      [this.profile.address] : [];
     const username = this.profile && this.profile.username ?
       this.profile.username : '';
     if (((this.addressFromRoute === username ||
@@ -120,6 +129,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._loadingProfileSubscription.unsubscribe();
     this._savingProfileSubscription.unsubscribe();
+    this._userExistsSubscription.unsubscribe();
   }
 
   fileManager(type: string) {
@@ -215,7 +225,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   loadProfile(from: string) {
-    this._loadingProfileSubscription = this._vertoProfile.getProfile(from).subscribe({
+    this._loadingProfileSubscription = this._profile.getProfileByAddress(from).subscribe({
       next: (profile) => {
         this.fillProfileFrm(profile);
       },
@@ -229,19 +239,14 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     alert(JSON.stringify(this.profileFrm.value))
   }
 
-  validateUsername(username: string|null) {
-    username = username ? username.trim() : '';
-    alert(username)
-  }
-
-  fillProfileFrm(profile: UserInterface|undefined) {
+  fillProfileFrm(profile: UserProfile|undefined|null) {
     this.resetFrmValues();
     if (profile) {
-      const image = profile.image ? profile.image.trim() : '';
+      const image = profile.avatarURL ? profile.avatarURL.trim() : '';
       const username = profile.username ? profile.username.trim() : '';
       const name = profile.name ? profile.name.trim() : '';
       const bio = profile.bio ? profile.bio.trim() : '';
-      const addresses = profile.addresses ? profile.addresses : [];
+      const addresses = profile.address ? [profile.address] : [];
       const links = profile.links ? profile.links : {};
       const twitter = links && Object.prototype.hasOwnProperty.call(links, 'twitter') ?
         links['twitter'].trim() : '';

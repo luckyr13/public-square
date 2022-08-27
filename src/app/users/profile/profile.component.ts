@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserProfile } from '../../core/interfaces/user-profile';
+import { UserProfileAddress } from '../../core/interfaces/user-profile-address';
 import { ArweaveService } from '../../core/services/arweave.service';
 import { UserAuthService } from '../../core/services/user-auth.service';
 import { FollowDialogComponent } from '../../shared/follow-dialog/follow-dialog.component'; 
@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     // Profile already loaded
     this._route.data
     .subscribe(data => {
-      const profile: UserProfile = data['profile'];
+      const profile: UserProfileAddress = data['profile'];
       this.profileImage = 'assets/images/blank-profile.jpg';
       this.username = '';
       this.bio = '';
@@ -64,13 +64,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.name = '';
 
       if (profile.profile) {
-        if (profile.profile.image) {
-          this.profileImage = `${this._arweave.baseURL}${profile.profile.image}`;
+        if (profile.profile.avatarURL) {
+          this.profileImage = profile.profile.avatarURL;
         }
         this.name = profile.profile.name;
         this.username = profile.profile.username;
         this.bio = profile.profile.bio!;
-        this.addressList = profile.profile.addresses;
+        this.addressList = [profile.profile.address];
       } else if (profile.address) {
         this.addressList = [profile.address];
       }

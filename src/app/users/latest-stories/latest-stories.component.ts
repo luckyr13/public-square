@@ -2,8 +2,6 @@ import {
   Component, OnInit, OnDestroy, Input,
   ViewChild, ElementRef, NgZone } from '@angular/core';
 import { ArweaveService } from '../../core/services/arweave.service';
-import { VertoService } from '../../core/services/verto.service';
-import { UserInterface } from '@verto/js/dist/common/faces';
 import { Router, ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { Subscription, tap, Observable, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -11,7 +9,7 @@ import { PostService } from '../../core/services/post.service';
 import { UtilsService } from '../../core/utils/utils.service';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
 import { ProfileResolverService } from '../../core/route-guards/profile-resolver.service';
-import { UserProfile } from '../../core/interfaces/user-profile';
+import { UserProfileAddress } from '../../core/interfaces/user-profile-address';
 import { NetworkInfoInterface } from 'arweave/web/network';
 import { AppSettingsService } from '../../core/services/app-settings.service';
 
@@ -32,7 +30,6 @@ export class LatestStoriesComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private _verto: VertoService,
     private _arweave: ArweaveService,
     private _post: PostService,
     private _utils: UtilsService,
@@ -43,9 +40,9 @@ export class LatestStoriesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.data
       .subscribe(data => {
-        const profile: UserProfile = data['profile'];
-        const userAddressList = profile.profile ?
-          profile.profile.addresses :
+        const profile: UserProfileAddress = data['profile'];
+        const userAddressList = profile.profile && profile.profile.address ?
+          [profile.profile.address] :
           [profile.address];
         this.loadPosts(userAddressList);
       });

@@ -3,19 +3,13 @@
 	[routerLink]="disableNavigateToProfile ? [] : ['/', address]">
 	<mat-progress-bar mode="buffer" color="accent" *ngIf="loadingProfile"></mat-progress-bar>
 	<mat-card-header *ngIf="profile">
-  	<img mat-card-avatar [src]="getImageUrl(profile.image!)">
+  	<img mat-card-avatar [src]="profile.avatarURL || defaultProfileImage">
     <mat-card-title *ngIf="profile.name">{{ profile.name }}</mat-card-title>
     <mat-card-subtitle *ngIf="profile.username">{{ profile.username }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
   	<img class="default-img" mat-card-avatar *ngIf="!profile" [src]="getImageUrl('')">
 		<app-arweave-address matLine [address]="address"></app-arweave-address>
-		<ng-container 
-			*ngIf="profile && profile.addresses && !hideSecondaryAddressess">
-			<app-arweave-address
-				*ngFor="let wallet of profile.addresses; index as i" 
-				matLine [address]="wallet">Wallet {{ i + 1 }}: </app-arweave-address>
-		</ng-container>
   </mat-card-content>
 </mat-card>
 	

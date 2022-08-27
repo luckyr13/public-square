@@ -5,20 +5,24 @@ import { TransactionMetadata } from '../interfaces/transaction-metadata';
 import { UserAuthService } from './user-auth.service';
 import { AppSettingsService } from './app-settings.service';
 import { UtilsService } from '../utils/utils.service';
-import { Observable, map, from } from 'rxjs';
+import { Observable, map, from, of, tap } from 'rxjs';
 import ArdbTransaction from 'ardb/lib/models/transaction';
+import { UserProfile } from '../interfaces/user-profile';
+import { ArweaveAccountService } from './arweave-account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
   private _ardb: ArdbWrapper;
+  public profiles: Record<string, UserProfile> = {};
 
   constructor(
     private _arweave: ArweaveService,
     private _userAuth: UserAuthService,
     private _appSettings: AppSettingsService,
-    private _utils: UtilsService) {
+    private _utils: UtilsService,
+    private _account: ArweaveAccountService) {
     this._ardb = new ArdbWrapper(this._arweave.arweave);
   }
 
@@ -88,24 +92,57 @@ export class ProfileService {
 
   next(): Observable<TransactionMetadata[]> {
     return from(this._ardb.next()).pipe(
-        map((_posts: ArdbTransaction[]) => {
-          const res = _posts && _posts.length ? _posts.map((tx) => {
-            const post: TransactionMetadata = {
-              id: tx.id,
-              owner: tx.owner.address,
-              blockId: tx.block && tx.block.id ? tx.block.id : '',
-              blockHeight: tx.block && tx.block.height ? tx.block.height : 0,
-              dataSize: tx.data ? tx.data.size : undefined,
-              dataType: tx.data ? tx.data.type : undefined,
-              blockTimestamp: tx.block && tx.block.timestamp ? tx.block.timestamp : undefined,
-              tags: tx.tags
-            }
-            return post;
-          }) : [];
-          return res;
-        })
-      );
+      map((_posts: ArdbTransaction[]) => {
+        const res = _posts && _posts.length ? _posts.map((tx) => {
+          const post: TransactionMetadata = {
+            id: tx.id,
+            owner: tx.owner.address,
+            blockId: tx.block && tx.block.id ? tx.block.id : '',
+            blockHeight: tx.block && tx.block.height ? tx.block.height : 0,
+            dataSize: tx.data ? tx.data.size : undefined,
+            dataType: tx.data ? tx.data.type : undefined,
+            blockTimestamp: tx.block && tx.block.timestamp ? tx.block.timestamp : undefined,
+            tags: tx.tags
+          }
+          return post;
+        }) : [];
+        return res;
+      })
+    );
   }
 
-  
+  public getProfileByAddress(address: string): Observable<UserProfile|null|undefined> {    
+    if (this.profiles[address]) {
+      return of(this.profiles[address]);
+    }
+    return from(this._account.getProfile(address)).pipe(
+      tap((profile) => {
+        if (profile) {
+          this.profiles[address] = profile;
+        }
+      })
+    );
+  }
+
+  public getProfileByHandle(handle: string): Observable<UserProfile[]|null|undefined> {    
+    return from(this._account.searchProfile(handle)).pipe(
+      tap((profiles) => {
+        for (const p of profiles) {
+          if (p && p.address) {
+            this.profiles[p.address] = p;
+          }
+        }
+      })
+    );
+  }
+
+  public getProfileByHandleUniqueID(handleUniqID: string): Observable<UserProfile|null|undefined> {    
+    return from(this._account.findProfile(handleUniqID)).pipe(
+      tap((profile) => {
+        if (profile && profile.address) {
+          this.profiles[profile.address] = profile;
+        }
+      })
+    );
+  }
 }

@@ -7,8 +7,8 @@ import { UtilsService } from '../../core/utils/utils.service';
 import { ArweaveService } from '../../core/services/arweave.service';
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
 import { NetworkInfoInterface } from 'arweave/web/network';
-import { VertoService } from '../../core/services/verto.service';
-import { UserInterface } from '@verto/js/dist/common/faces';
+import { ProfileService } from '../../core/services/profile.service';
+import { UserProfile } from '../../core/interfaces/user-profile';
 
 @Component({
   selector: 'app-results',
@@ -23,9 +23,9 @@ export class ResultsComponent implements OnInit, OnDestroy {
   moreResultsAvailable = true;
   private _postSubscription: Subscription = Subscription.EMPTY;
   private _nextResultsSubscription: Subscription = Subscription.EMPTY;
-  private _vertoProfileSubscription: Subscription = Subscription.EMPTY;
+  private _profileSubscription: Subscription = Subscription.EMPTY;
   private maxPosts: number = 10;
-  profiles: UserInterface[] = [];
+  profiles: UserProfile[] = [];
   defaultProfileImage = 'assets/images/blank-profile.jpg';
 
   constructor(
@@ -34,7 +34,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     private _search: SearchService,
     private _arweave: ArweaveService,
     private _post: PostService,
-    private _verto: VertoService) { }
+    private _profile: ProfileService) { }
 
   ngOnInit(): void {
 
@@ -179,7 +179,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._postSubscription.unsubscribe();
     this._nextResultsSubscription.unsubscribe();
-    this._vertoProfileSubscription.unsubscribe();
+    this._profileSubscription.unsubscribe();
   }
 
   loadProfiles(mentions: string[], fromAddr: string[]) {
@@ -197,9 +197,9 @@ export class ResultsComponent implements OnInit, OnDestroy {
         fQuery.push(q);
       }
     }
-    this._vertoProfileSubscription = from(fQuery).pipe(
+    this._profileSubscription = from(fQuery).pipe(
       mergeMap((addr: string) => {
-        return this._verto.getProfile(addr);
+        return this._profile.getProfileByAddress(addr);
       }),
     ).subscribe({
       next: (profile) => {
