@@ -1,32 +1,49 @@
-# PublicSquare
+<p align="center">
+  <img src="https://arweave.net:443/LVwEkJDnH6G_BJUNTPg9ltjfpcP75yCBcbxF_mcaYeQ" width="200">
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
+# PublicSquare v2
+A decentralized Social Media platform based on the PublicSquare protocol.
 
-This version of PublicSquare is based on the @DanMacDonald tutorial. To learn more please visit: https://github.com/DanMacDonald/public-square-app
+PublicSquare v2 is an Arweave dapp, a web3 website that lives on the permaweb. All our data is hosted on the Arweave blockchain. So yeah, it's kinda like a decentralized Twitter.
 
-## Development server
+## Our platform
+You can try PublicSquare v2 through the following links: 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Demo: https://publicsquare.social
+- Landing page: https://publicsquare.arweave.dev
 
-## Code scaffolding
+## Feedback, comments and help
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Please visit our Discord channel for further support, comments or feedback: https://discord.gg/hUzqVaW7nx
 
-## Build
+## Installation (for developers only)
+PublicSquare v2 is made in Angular framework so you will need to have Node installed on your machine. For installing on your own environment just follow the next steps:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Clone the project
+- Run `npm install` from your command line
+- And that's it!
 
-## Running unit tests
+## Development server (for developers only)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng serve` or `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Running end-to-end tests
+## Build (for developers only)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `ng build` or `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## About
-PublicSquare is an open protocol created by Sam Williams. You can check the original version on this gist: https://gist.github.com/samcamwilliams/811537f0a52b39057af1def9e61756b2
+PublicSquare is an open protocol created by Sam Williams. You can check the original design on this gist: https://gist.github.com/samcamwilliams/811537f0a52b39057af1def9e61756b2
+
+This version of PublicSquare is inspired on the @DanMacDonald tutorial. For more information on how to build *permaweb apps* and start enjoying the benefits of using Arweave please check the next links.
+
+- **Public Square App by [@DanMacDonald](https://github.com/DanMacDonald):** https://arweave.net/S3Y9JkOAXRgFexoDvPkdhYfVNBJPb9hCUEkbMOy1MVE
+- **Public Square App code:** https://github.com/DanMacDonald/public-square-app
+- **What is Arweave?:** https://arwiki.wiki/#/en/Arweave
+- **What is the permaweb?:** https://arwiki.wiki/#/en/the-permaweb
+- **Public Square Tutorial: Creating a Permaweb App with Arweave + React:** https://arwiki.wiki/#/en/creating-a-dapp
+- **Public Square Tutorial: Querying Arweave:** https://arwiki.wiki/#/en/creating-a-dapp-01
+- **Public Square Tutorial: Integrating Arweave-js:** https://arwiki.wiki/#/en/creating-a-dapp-02
+- **Public Square Tutorial: Posting Transactions:** https://arwiki.wiki/#/en/creating-a-dapp-03
+- **Public Square Tutorial: Polishing and Deploying:** https://arwiki.wiki/#/en/creating-a-dapp-04
