@@ -13,6 +13,7 @@ import { SubtleCryptoService } from '../../core/utils/subtle-crypto.service';
 import * as b64 from 'base64-js';
 import { UserSettingsService } from '../../core/services/user-settings.service';
 import { Direction } from '@angular/cdk/bidi';
+import { JWKInterface } from 'arweave/web/lib/wallet';
 
 @Component({
   selector: 'app-bottom-sheet-login',
@@ -117,10 +118,10 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
         this.encryptSubscription = this._crypto.encrypt(password, data).subscribe({
           next: (c) => {
             const encodedKey = b64.fromByteArray(new Uint8Array(c.c));
-
+            const key: JWKInterface = JSON.parse(JSON.stringify(tmpAddress.key));
             this._auth.setAccount(
               tmpAddress.address,
-              tmpAddress.key,
+              key,
               this.stayLoggedIn,
               'pkFile',
               encodedKey);

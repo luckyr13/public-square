@@ -9,4 +9,6 @@ export interface UserProfile {
 	avatarURL: string;
 	bannerURL: string;
 	links: Record<string, string>;
+	wallets: Record<string, string>;
+	email: string;
 }

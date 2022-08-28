@@ -16,7 +16,7 @@ export class UsernameValidatorService implements AsyncValidator {
       map(profiles => {
         console.log('profiles', profiles)
         return (profiles && profiles.length ?
-                  { uniqueUsername: true } :
+                  { uniqueUsername: false } :
                   null
                 )
       }),

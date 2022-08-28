@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import Account from 'arweave-account'
 import { ArAccount, ArProfile } from 'arweave-account';
-import { from, Observable, map } from 'rxjs';
+import { from, Observable, map, of } from 'rxjs';
 import { UserProfile } from '../interfaces/user-profile';
+import Transaction from 'arweave/web/lib/transaction';
+import { JWKInterface } from 'arweave/web/lib/wallet';
 
 /*
 * Arweave Account
@@ -14,12 +16,13 @@ import { UserProfile } from '../interfaces/user-profile';
 })
 export class ArweaveAccountService {
   private readonly _account: Account;
+  defaultProfileImage = 'assets/images/blank-profile.jpg';
 
   constructor() {
     const props = {
-      cacheIsActivated: true,
-      cacheSize: 100,
-      cacheTime: 60000,
+      cacheIsActivated: false,
+      // cacheSize: 100,
+      // cacheTime: 60000,
       gateway: {
         host: 'arweave.net', // Hostname or IP address for a Arweave host
         port: 443, // Port
@@ -43,9 +46,14 @@ export class ArweaveAccountService {
         const bio = profile && profile.bio ? profile.bio : '';
         const avatar = profile && profile.avatar ? profile.avatar : '';
         const banner = profile && profile.banner ? profile.banner : '';
-        const avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
         const bannerURL = profile && profile.bannerURL ? profile.bannerURL : '';
         const links = profile && profile.links ? profile.links : {};
+        let avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
+        if (avatarURL === 'https://arweave.net/OrG-ZG2WN3wdcwvpjz1ihPe4MI24QBJUpsJGIdL85wA') {
+          avatarURL = this.defaultProfileImage;
+        }
+        const wallets = profile && profile.wallets ? profile.wallets : {};
+        const email = profile && profile.email ? profile.email : '';
 
         let newProfile: UserProfile|null = null;
         if (username) {
@@ -59,7 +67,9 @@ export class ArweaveAccountService {
             banner,
             avatarURL,
             bannerURL,
-            links
+            links,
+            wallets,
+            email
           };
         }
         return newProfile;
@@ -81,9 +91,14 @@ export class ArweaveAccountService {
           const bio = profile && profile.bio ? profile.bio : '';
           const avatar = profile && profile.avatar ? profile.avatar : '';
           const banner = profile && profile.banner ? profile.banner : '';
-          const avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
           const bannerURL = profile && profile.bannerURL ? profile.bannerURL : '';
           const links = profile && profile.links ? profile.links : {};
+          let avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
+          if (avatarURL === 'https://arweave.net/OrG-ZG2WN3wdcwvpjz1ihPe4MI24QBJUpsJGIdL85wA') {
+            avatarURL = this.defaultProfileImage;
+          }
+          const wallets = profile && profile.wallets ? profile.wallets : {};
+          const email = profile && profile.email ? profile.email : '';
           
           let newProfile: UserProfile|null = null;
           if (username) {
@@ -97,7 +112,9 @@ export class ArweaveAccountService {
               banner,
               avatarURL,
               bannerURL,
-              links
+              links,
+              wallets,
+              email
             };
             profiles.push(newProfile);
           }
@@ -120,9 +137,14 @@ export class ArweaveAccountService {
         const bio = profile && profile.bio ? profile.bio : '';
         const avatar = profile && profile.avatar ? profile.avatar : '';
         const banner = profile && profile.banner ? profile.banner : '';
-        const avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
         const bannerURL = profile && profile.bannerURL ? profile.bannerURL : '';
         const links = profile && profile.links ? profile.links : {};
+        let avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
+        if (avatarURL === 'https://arweave.net/OrG-ZG2WN3wdcwvpjz1ihPe4MI24QBJUpsJGIdL85wA') {
+          avatarURL = this.defaultProfileImage;
+        }
+        const wallets = profile && profile.wallets ? profile.wallets : {};
+        const email = profile && profile.email ? profile.email : '';
 
         let newProfile: UserProfile|null = null;
         if (username) {
@@ -136,11 +158,27 @@ export class ArweaveAccountService {
             banner,
             avatarURL,
             bannerURL,
-            links
+            links,
+            wallets,
+            email
           };
         }
         return newProfile;
       })
     );
-  } 
+  }
+
+  public updateProfile(
+    profile: ArProfile,
+    jwk?: JWKInterface|"use_wallet"|undefined): Observable<Transaction> {
+    return from(this._updateProfileHelper(profile, jwk));
+  }
+
+  private async _updateProfileHelper(
+    profile: ArProfile,
+    jwk?: JWKInterface|"use_wallet"|undefined): Promise<Transaction> {
+    await this._account.connect(jwk);
+    const tx = await this._account.updateProfile(profile);
+    return tx;
+  }
 }

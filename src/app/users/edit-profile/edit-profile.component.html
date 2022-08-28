@@ -1,5 +1,5 @@
 <h2>Edit profile</h2>
-<ng-container *ngIf="mainAddress && isValidUser()">
+<ng-container *ngIf="mainAddress && isValidUser() && loginMethod !== 'pkFile'">
 	<div class="profile-image" >
 		<h4>Profile image</h4>
 		<img
@@ -29,14 +29,19 @@
 	<div class="profile-form">
 		<h4>Profile info</h4>
 		<form [formGroup]="profileFrm" (ngSubmit)="submitProfile()">
+			<div class="addresses-container">
+			  <app-arweave-address class="main-address" [address]="mainAddress">
+			  	Wallet: 
+			  </app-arweave-address>
+			</div>
 		  <mat-form-field class="profile-field" appearance="outline" color="accent">
-		    <mat-label>Username</mat-label>
+		    <mat-label>Handle</mat-label>
 		    <input
 		    	matInput
 		    	placeholder=""
 		    	autocomplete="off"
 		    	formControlName="username">
-		    <mat-error *ngIf="username.invalid">*Username already taken.</mat-error>
+		    <mat-error *ngIf="username.invalid">*Please write your handle name.</mat-error>
 		  </mat-form-field>
 		  <mat-form-field class="profile-field" appearance="outline" color="accent">
 		    <mat-label>Name</mat-label>
@@ -46,12 +51,15 @@
 		    <mat-label>Bio</mat-label>
 		    <textarea rows="5" matInput placeholder="" autocomplete="off" formControlName="bio"></textarea>
 		  </mat-form-field>
-		  <h3 class="subtitle">Addresses</h3>
-		  <div class="addresses-container">{{ mainAddress }}</div>
+		  
 		  <h3 class="subtitle">Links</h3>
 		  <mat-form-field class="profile-field" appearance="outline" color="accent">
 		    <mat-label>Twitter</mat-label>
 		    <input matInput placeholder="Your Twitter username" value="" autocomplete="off"  formControlName="twitter">
+		  </mat-form-field>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>YouTube</mat-label>
+		    <input matInput placeholder="Your YouTube username" value="" autocomplete="off"  formControlName="youtube">
 		  </mat-form-field>
 		  <mat-form-field class="profile-field" appearance="outline" color="accent">
 		    <mat-label>Github</mat-label>
@@ -64,6 +72,10 @@
 		  <mat-form-field class="profile-field" appearance="outline" color="accent">
 		    <mat-label>Facebook</mat-label>
 		    <input matInput placeholder="Your Facebook username" value="" autocomplete="off"  formControlName="facebook">
+		  </mat-form-field>
+		  <mat-form-field class="profile-field" appearance="outline" color="accent">
+		    <mat-label>Discord</mat-label>
+		    <input matInput placeholder="Your Discord handle" value="" autocomplete="off"  formControlName="discord">
 		  </mat-form-field>
 		  <div class="text-right action-panel">
 		  	<button [disabled]="!profileFrm.valid || loadingSavingProfile || validatingUsername" color="accent" mat-flat-button >
@@ -81,4 +93,8 @@
 
 <div class="profile-container" *ngIf="!isValidUser() && mainAddress">
 	You don't have enough privileges for editing this profile.
+</div>
+
+<div class="profile-container" *ngIf="loginMethod === 'pkFile'">
+	Login method not supported. Please try using Arweave.app wallet or ArConnect.
 </div>

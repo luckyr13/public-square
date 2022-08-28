@@ -4,6 +4,7 @@ import { Observable, EMPTY, of, throwError, Subject, from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AddressKey } from '../../core/interfaces/address-key';
+import { JWKInterface } from 'arweave/web/lib/wallet';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UserAuthService {
   // Observable string streams
   public account$: Observable<string>;
   // User's private key
-  private _arKey: any = null;
+  private _arKey: JWKInterface|'use_wallet'|undefined = undefined;
   // User's arweave public address
   private _mainAddress: string = '';
   // Login method 
@@ -77,17 +78,17 @@ export class UserAuthService {
 
   public setAccount(
     mainAddress: string,
-    arKey: any = null,
+    arKey: JWKInterface|'use_wallet'|undefined = undefined,
     stayLoggedIn: boolean = false,
     method='',
-    arKeyEncrypted: any = null) {
+    arKeyEncrypted: string = '') {
     const storage = stayLoggedIn ? window.localStorage : window.sessionStorage;
     this._mainAddress = mainAddress;
     this._method = method;
     storage.setItem('METHOD', method);
     storage.setItem('STAY_LOGGED_IN', stayLoggedIn ? '1' : '');
     if (arKey) {
-      this._arKey = arKey
+      this._arKey = arKey;
       storage.setItem('ARKEY', arKeyEncrypted)
     }
     this._account.next(mainAddress);
@@ -100,7 +101,7 @@ export class UserAuthService {
       }
       window.addEventListener('walletSwitch', (e) => {
         if (this._mainAddress !== e.detail.address) {
-          this.setAccount(e.detail.address, null, stayLoggedIn, method);
+          this.setAccount(e.detail.address, undefined, stayLoggedIn, method);
         }
       });
 
@@ -110,7 +111,7 @@ export class UserAuthService {
       }
 
       this._arweave.arweaveWebWallet.on('connect', (address) => {
-        this.setAccount(address, null, stayLoggedIn, method);
+        this.setAccount(address, undefined, stayLoggedIn, method);
       });
       this._arweave.arweaveWebWallet.on('disconnect', () => {
         //this.logout()
@@ -122,7 +123,7 @@ export class UserAuthService {
     this._account.next('');
     this._mainAddress = '';
     this._method = '';
-    this._arKey = null;
+    this._arKey = undefined;
     for (let key of ['MAINADDRESS', 'ARKEY', 'METHOD', 'STAY_LOGGED_IN', 'CRYPTO_CTR']) {
       window.sessionStorage.removeItem(key)
       window.localStorage.removeItem(key)
@@ -163,7 +164,7 @@ export class UserAuthService {
         method = this._arweave.getAccount(walletOption).pipe(
             tap( (_account: string) => {
               this.removeAccount();
-              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
+              this.setAccount(_account.toString(), undefined, stayLoggedIn, walletOption);
               this.addressChangeListener(_account.toString(), stayLoggedIn, walletOption);
             })
           );
@@ -172,7 +173,7 @@ export class UserAuthService {
         method = this._arweave.getAccount(walletOption).pipe(
             tap( (_account: string) => {
               this.removeAccount();
-              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
+              this.setAccount(_account.toString(), undefined, stayLoggedIn, walletOption);
               this.addressChangeListener(_account.toString(), stayLoggedIn, walletOption);
             })
           );
@@ -181,7 +182,7 @@ export class UserAuthService {
         method = this._arweave.getAccount(walletOption).pipe(
             tap( (_account: string) => {
               this.removeAccount();
-              this.setAccount(_account.toString(), null, stayLoggedIn, walletOption);
+              this.setAccount(_account.toString(), undefined, stayLoggedIn, walletOption);
             })
           );
       break;

@@ -9,6 +9,9 @@ import { Observable, map, from, of, tap } from 'rxjs';
 import ArdbTransaction from 'ardb/lib/models/transaction';
 import { UserProfile } from '../interfaces/user-profile';
 import { ArweaveAccountService } from './arweave-account.service';
+import { ArProfile } from 'arweave-account';
+import Transaction from 'arweave/web/lib/transaction';
+import { JWKInterface } from 'arweave/web/lib/wallet';
 
 @Injectable({
   providedIn: 'root'
@@ -144,5 +147,11 @@ export class ProfileService {
         }
       })
     );
+  }
+
+  public updateProfile(
+    profile: ArProfile,
+    jwk?: JWKInterface|"use_wallet"|undefined): Observable<Transaction> {
+    return this._account.updateProfile(profile, jwk);
   }
 }
