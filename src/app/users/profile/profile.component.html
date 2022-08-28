@@ -6,7 +6,7 @@
 			mat-button
 			class="banner-img-btn"
 			*ngIf="editProfileFlag"
-			[routerLink]="['/', this.username || this.addressList[0], 'edit-banner']">
+			[routerLink]="['/', addressList[0], 'edit-banner']">
 			<mat-icon class="material-icons-outlined" color="accent">photo_camera</mat-icon>
 			<span>Edit banner</span>
 		</button>
@@ -17,20 +17,16 @@
 		</div>
 		<div class="profile-info">
 			<h2 *ngIf="name">{{ name }}</h2>
-			<a [routerLink]="['/', username]" 
-          *ngIf="username" class="small-username user-link">@{{ username }}</a>
+			<a *ngIf="username"
+				[routerLink]="['/', addressList[0]]" 
+        class="small-username user-link">
+      	{{ username }}
+      </a>
 			<app-arweave-address
 				*ngFor="let address of addressList"
-				[address]="address" class="small-username address"></app-arweave-address>
-			<ng-container *ngIf="username" >
-				<a [routerLink]="['/', username, 'followers']" 
-          class="small-username user-link">
-        	{{ numFollowers > maxFollowers ? '+' + maxFollowers : numFollowers }} Followers</a>
-        <a [routerLink]="['/', username, 'following']" 
-          class="small-username user-link">
-          {{ numFollowing > maxFollowing ? '+' + maxFollowing : numFollowing }} Following</a>
-			</ng-container>
-			<ng-container *ngIf="!username && addressList[0]" >
+				[routerLink]="['/', address]" 
+				[address]="address" class="small-username address user-link"></app-arweave-address>
+			<ng-container *ngIf="addressList[0]" >
 				<a [routerLink]="['/', addressList[0], 'followers']" 
           class="small-username user-link">
           {{ numFollowers > maxFollowers ? '+' + maxFollowers : numFollowers }} Followers</a>

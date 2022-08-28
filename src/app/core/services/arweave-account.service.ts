@@ -36,19 +36,30 @@ export class ArweaveAccountService {
     return from(this._account.get(walletAddr)).pipe(
       map((account: ArAccount) => {
         const profile = account && account.profile ? account.profile : null;
-        const username = profile && profile.handleName ? profile.handleName : '';
+        const address = account && account.addr ? account.addr : '';
+        const handleName = profile && profile.handleName ? profile.handleName : '';
+        const username = account && account.handle && handleName ? account.handle : '';
+        const name = profile && profile.name ? profile.name : '';
+        const bio = profile && profile.bio ? profile.bio : '';
+        const avatar = profile && profile.avatar ? profile.avatar : '';
+        const banner = profile && profile.banner ? profile.banner : '';
+        const avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
+        const bannerURL = profile && profile.bannerURL ? profile.bannerURL : '';
+        const links = profile && profile.links ? profile.links : {};
+
         let newProfile: UserProfile|null = null;
         if (username) {
           newProfile = {
-            username: username,
-            name: '',
-            bio: '',
-            address: '',
-            avatar: '',
-            banner: '',
-            avatarURL: '',
-            bannerURL: '',
-            links: {}
+            username,
+            handleName,
+            name,
+            bio,
+            address,
+            avatar,
+            banner,
+            avatarURL,
+            bannerURL,
+            links
           };
         }
         return newProfile;
@@ -63,18 +74,34 @@ export class ArweaveAccountService {
         const profiles: UserProfile[] = [];
         for (let account of accounts) {
           const profile = account && account.profile ? account.profile : null;
-          const username = profile && profile.handleName ? profile.handleName : '';
-          profiles.push({
-            username: username,
-            name: '',
-            bio: '',
-            address: '',
-            avatar: '',
-            banner: '',
-            avatarURL: '',
-            bannerURL: '',
-            links: {}
-          });
+          const address = account && account.addr ? account.addr : '';
+          const handleName = profile && profile.handleName ? profile.handleName : '';
+          const username = account && account.handle && handleName ? account.handle : '';
+          const name = profile && profile.name ? profile.name : '';
+          const bio = profile && profile.bio ? profile.bio : '';
+          const avatar = profile && profile.avatar ? profile.avatar : '';
+          const banner = profile && profile.banner ? profile.banner : '';
+          const avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
+          const bannerURL = profile && profile.bannerURL ? profile.bannerURL : '';
+          const links = profile && profile.links ? profile.links : {};
+          
+          let newProfile: UserProfile|null = null;
+          if (username) {
+            newProfile = {
+              username,
+              handleName,
+              name,
+              bio,
+              address,
+              avatar,
+              banner,
+              avatarURL,
+              bannerURL,
+              links
+            };
+            profiles.push(newProfile);
+          }
+          
         }
         return profiles;
       })
@@ -86,19 +113,30 @@ export class ArweaveAccountService {
     return from(this._account.find(handleUniqID)).pipe(
       map((account: ArAccount|null) => {
         const profile = account && account.profile ? account.profile : null;
-        const username = profile && profile.handleName ? profile.handleName : '';
+        const address = account && account.addr ? account.addr : '';
+        const handleName = profile && profile.handleName ? profile.handleName : '';
+        const username = account && account.handle && handleName ? account.handle : '';
+        const name = profile && profile.name ? profile.name : '';
+        const bio = profile && profile.bio ? profile.bio : '';
+        const avatar = profile && profile.avatar ? profile.avatar : '';
+        const banner = profile && profile.banner ? profile.banner : '';
+        const avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
+        const bannerURL = profile && profile.bannerURL ? profile.bannerURL : '';
+        const links = profile && profile.links ? profile.links : {};
+
         let newProfile: UserProfile|null = null;
         if (username) {
           newProfile = {
-            username: username,
-            name: '',
-            bio: '',
-            address: '',
-            avatar: '',
-            banner: '',
-            avatarURL: '',
-            bannerURL: '',
-            links: {}
+            username,
+            handleName,
+            name,
+            bio,
+            address,
+            avatar,
+            banner,
+            avatarURL,
+            bannerURL,
+            links
           };
         }
         return newProfile;

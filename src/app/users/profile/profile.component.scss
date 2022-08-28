@@ -142,6 +142,11 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
   text-decoration: none;
   margin-bottom: 6px;
   display: block;
+  cursor: pointer;
+}
+
+.user-link:hover {
+  filter: brightness(160%);
 }
 
 .active {

@@ -5,7 +5,7 @@
 <mat-card
 	class="post-card fadeIn mat-elevation-z0"
 	*ngIf="post"
-	[routerLink]="['/', profile && profile.username ? profile.username : post.owner, post.id]">
+	[routerLink]="['/', post.owner, post.id]">
 	<mat-card-content>
 		<div [ngClass]="{ 'card-content': !fullMode } ">
 			<div class="avatar-container" *ngIf="!fullMode">
@@ -18,7 +18,7 @@
 			  	class="avatar"
 			  	*ngIf="!loadingProfile"
 			  	(click)="$event.stopPropagation()"
-			  	[routerLink]="['/', profile ? profile.username : post.owner]"
+			  	[routerLink]="['/', post.owner]"
 			  	mat-card-avatar
 			  	[src]="profileImage">
 			</div>
@@ -33,7 +33,7 @@
 			  	class="avatar-fullmode-main"
 			  	*ngIf="!loadingProfile"
 			  	(click)="$event.stopPropagation()"
-			  	[routerLink]="['/', profile ? profile.username : post.owner]"
+			  	[routerLink]="['/', post.owner]"
 			  	mat-card-avatar
 			  	[src]="profileImage">
 			  
@@ -49,7 +49,7 @@
 				  	class="avatar-fullmode"
 				  	*ngIf="!loadingProfile && fullMode"
 				  	(click)="$event.stopPropagation()"
-				  	[routerLink]="['/', profile ? profile.username : post.owner]"
+				  	[routerLink]="['/', post.owner]"
 				  	mat-card-avatar
 				  	[src]="profileImage">
 
@@ -57,7 +57,7 @@
 						class="profile-name-container"
 						*ngIf="!loadingProfile"
 						(click)="$event.stopPropagation()"
-						[routerLink]="['/', profile ? profile.username : post.owner]">
+						[routerLink]="['/', post.owner]">
 						<span
 							*ngIf="profile && profile.name"
 							[ngClass]=" {'fullmode': fullMode }"
@@ -66,7 +66,7 @@
 							*ngIf="profile && profile.username"
 							class="profile-username"
 							[ngClass]=" {'fullmode': fullMode }">
-							@{{ profile.username }}
+							{{ profile.username }}
 						</small>
 						<small
 							*ngIf="post"

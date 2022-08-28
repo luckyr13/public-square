@@ -107,7 +107,7 @@
           <div matLine>
             <a [routerLink]="[profile.username]" 
               *ngIf="profile && profile.username" class="small-username-2 user-link">
-              <strong>@{{ profile.username }}</strong>
+              <strong>{{ profile.username }}</strong>
             </a>
             <app-arweave-address
               [address]="account"

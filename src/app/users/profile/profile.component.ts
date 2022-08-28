@@ -234,7 +234,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   scrollToEditPage() {
-    this._router.navigate(['/', this.username || this.addressList[0], 'edit']);
+    this._router.navigate(['/', this.addressList[0], 'edit']);
   }
 
   getImageUrl(txId: string) {
