@@ -78,8 +78,8 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
         const username = profile && profile.username ?
           profile.username :
           '';
-        this.loadFollowers(username, userAddressList);
-        this.loadFollowing(username, userAddressList);
+        this.loadFollowers(userAddressList);
+        this.loadFollowing(userAddressList);
           
       },
       error: (err) => {
@@ -92,13 +92,13 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
     this._dialogRef.close(addressList);
   }
 
-  loadFollowers(username: string, wallets: string[]) {
+  loadFollowers(wallets: string[]) {
     this.loadingFollowers = true;
     this.followers.clear();
     this._followersSubscription = this._arweave.getNetworkInfo().pipe(
       switchMap((info: NetworkInfoInterface) => {
         const currentHeight = info.height;
-        return this._follow.getFollowers(username, wallets, this.maxFollowers, currentHeight);
+        return this._follow.getFollowers(wallets, this.maxFollowers, currentHeight);
       })
     ).subscribe({
       next: (followers) => {
@@ -151,7 +151,7 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
     this._nextResultsFollowingSubscription.unsubscribe();
   }
 
-  loadFollowing(username: string, wallets: string[]) {
+  loadFollowing(wallets: string[]) {
     this.loadingFollowing = true;
     this.following.clear();
     this._followingSubscription = this._arweave.getNetworkInfo().pipe(

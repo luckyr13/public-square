@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.isLoggedIn = !!currentAddress;
       this.validateCurrentAddress(currentAddress);
 
-      this.loadFollowers(this.username, this.addressList);
+      this.loadFollowers(this.addressList);
       this.loadFollowing(this.addressList);
       this.loadBannerImage(this.addressList);
       
@@ -132,12 +132,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadFollowers(username: string, wallets: string|string[]) {
+  loadFollowers(wallets: string|string[]) {
     this.numFollowers = 0;
     this._followersSubscription = this._arweave.getNetworkInfo().pipe(
       switchMap((info: NetworkInfoInterface) => {
         const currentHeight = info.height;
-        return this._follow.getFollowers(username, wallets, this.maxFollowersQuery, currentHeight);
+        return this._follow.getFollowers(wallets, this.maxFollowersQuery, currentHeight);
       }),
     ).subscribe({
       next: (followers) => {

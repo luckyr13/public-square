@@ -37,7 +37,6 @@ export class FollowDialogComponent implements OnInit, OnDestroy {
     const disableDispatch = !this.useDispatch.value;
     this.loadingFollow = true;
     this.followSubscription = this._follow.follow(
-      this.data.username,
       this.data.wallets,
       disableDispatch
     ).subscribe({

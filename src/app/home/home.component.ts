@@ -50,9 +50,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this._auth.account$.subscribe((account) => {
       this.account = account;
-
       this._pendingPostsSubscription = this._pendingPosts.getPendingPosts(
-        [this.account], undefined, undefined
+        [this.account]
       ).subscribe((pendingPosts) => {
         const res = Array.isArray(pendingPosts) && pendingPosts.length ? 
           pendingPosts.filter((v) => {
@@ -68,10 +67,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.loadPosts();
-
-    this._auth.account$.subscribe((_account) => {
-      this.account = _account;
-    });
 
 
     this._appSettings.scrollTopStream.subscribe((scroll) => {
@@ -103,8 +98,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (!this.account) {
           return of(latestPosts);
         }
+        const tmpAddressList = addressList.length ? addressList : [this.account];
         return this._pendingPosts.getPendingPosts(
-          addressList, undefined, undefined
+          tmpAddressList
         ).pipe(
           map((pendingPosts) => {
             const res = pendingPosts.filter((v) => {

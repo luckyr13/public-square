@@ -48,7 +48,7 @@ export class FollowersComponent implements OnInit, OnDestroy {
         const username = profile.profile ?
           profile.profile.username :
           '';
-        this.loadFollowers(username, userAddressList);
+        this.loadFollowers(userAddressList);
       });
 
     this._appSettings.scrollTopStream.subscribe((scroll) => {
@@ -71,13 +71,13 @@ export class FollowersComponent implements OnInit, OnDestroy {
     this._nextResultsSubscription.unsubscribe();
   }
 
-  loadFollowers(username: string, wallets: string[]) {
+  loadFollowers(wallets: string[]) {
     this.loadingFollowers = true;
     this.followers.clear();
     this._followersSubscription = this._arweave.getNetworkInfo().pipe(
       switchMap((info: NetworkInfoInterface) => {
         const currentHeight = info.height;
-        return this._follow.getFollowers(username, wallets, this.maxFollowers, currentHeight);
+        return this._follow.getFollowers(wallets, this.maxFollowers, currentHeight);
       }),
     ).subscribe({
       next: (followers) => {
