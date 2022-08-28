@@ -286,10 +286,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
       'ltr' : 'rtl';
     const tmpContent = this._utils.sanitizeFull(this.originalRawContent);
     const limit = 200;
-    const user = this.profile && this.profile.username ? 
-      this.profile.username :
-      this.post.owner;
-
+    const user = this.post.owner;
 
     this._bottomSheetShare.open(BottomSheetShareComponent, {
       data: {
