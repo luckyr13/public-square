@@ -81,7 +81,8 @@ export class PostComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.loadingPost = false;
-        this._utils.message(error, 'error');
+        // this._utils.message(error, 'error');
+        console.error('postLoadPost', error);
       }
     })
   }
