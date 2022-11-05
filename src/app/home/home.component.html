@@ -12,7 +12,9 @@
   			mat-flat-button
   			(click)="openFilterDialog()"
   			*ngIf="account">
-    		<mat-icon class="material-icons-outlined">tune</mat-icon>
+    		<mat-icon
+    			[color]="filterList.length ? 'accent' : 'warn'"
+    			class="material-icons-outlined">tune</mat-icon>
     		<span>Filter</span>
   		</button>
 	  </mat-toolbar>

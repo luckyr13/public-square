@@ -39,7 +39,8 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
     private _utils: UtilsService,
     private _dialogRef: MatDialogRef<FilterDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      address: string
+      address: string,
+      filterList: string[]
     },
     private _profile: ProfileService,
     private _fb: FormBuilder) {
@@ -57,16 +58,16 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
     return this.filterForm.get('following')!.get('aliases') as FormArray;
   }
 
-  addAliasFollowing(s: string) {
-    this.aliasesFollowing.push(this._fb.control(s));
+  addAliasFollowing(v: boolean) {
+    this.aliasesFollowing.push(this._fb.control(v));
   }
 
   get aliasesFollowers() {
     return this.filterForm.get('followers')!.get('aliases') as FormArray;
   }
 
-  addAliasFollowers(s: string) {
-    this.aliasesFollowers.push(this._fb.control(s));
+  addAliasFollowers(v: boolean) {
+    this.aliasesFollowers.push(this._fb.control(v));
   }
 
   ngOnInit(): void {
@@ -107,7 +108,11 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
         }
         for (const f of followers) {
           if (!this.followers.has(f.owner)) {
-            this.addAliasFollowers('');
+            if (this.data.filterList.indexOf(f.owner) >= 0) {
+              this.addAliasFollowers(true);
+            } else {
+              this.addAliasFollowers(false);
+            }
           }
           this.followers.add(f.owner);
         }
@@ -130,7 +135,11 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
         }
         for (const f of followers) {
           if (!this.followers.has(f.owner)) {
-            this.addAliasFollowers('');
+            if (this.data.filterList.indexOf(f.owner) >= 0) {
+              this.addAliasFollowers(true);
+            } else {
+              this.addAliasFollowers(false);
+            }
           }
           this.followers.add(f.owner);
         }
@@ -170,7 +179,11 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
             if (t.name === 'Wallet') {
               if (this._arweave.validateAddress(t.value)) {
                 if (!this.following.has(t.value)) {
-                  this.addAliasFollowing('');
+                  if (this.data.filterList.indexOf(t.value) >= 0) {
+                    this.addAliasFollowing(true);
+                  } else {
+                    this.addAliasFollowing(false);
+                  }
                 }
                 this.following.add(t.value);
               } else {
@@ -202,7 +215,11 @@ export class FilterDialogComponent implements OnInit, OnDestroy {
             if (t.name === 'Wallet') {
               if (this._arweave.validateAddress(t.value)) {
                 if (!this.following.has(t.value)) {
-                  this.addAliasFollowing('');
+                  if (this.data.filterList.indexOf(t.value) >= 0) {
+                    this.addAliasFollowing(true);
+                  } else {
+                    this.addAliasFollowing(false);
+                  }
                 }
                 this.following.add(t.value);
               } else {

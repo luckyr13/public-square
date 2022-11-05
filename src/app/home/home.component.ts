@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   version: string = '';
   moreResultsAvailable = true;
   @ViewChild('moreResultsCard', { read: ElementRef }) moreResultsCard!: ElementRef;
+  filterList: string[] = [];
 
   constructor(
     private _post: PostService,
@@ -177,15 +178,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         autoFocus: false,
         disableClose: false,
         data: {
-          address: this.account
+          address: this.account,
+          filterList: this.filterList
         },
         direction: direction,
-        width: '420px'
+        width: '480px'
       });
 
     dialogRef.afterClosed().subscribe((addressList: string[]) => {
       if (addressList && addressList.length) {
+        this.filterList = addressList;
         this.loadPosts(addressList);
+      } else {
+        this.filterList = [];
+        this.loadPosts();
       }
     });
   }
