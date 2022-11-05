@@ -19,14 +19,14 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 export class FilterDialogComponent implements OnInit, OnDestroy {
   private _profileSubscription = Subscription.EMPTY;
   public followers: Set<string> = new Set([]);
-  private maxFollowers: number = 2;
+  private maxFollowers: number = 10;
   public loadingFollowers = false;
   private _followersSubscription = Subscription.EMPTY;
   private _nextResultsFollowersSubscription = Subscription.EMPTY;
   public addressList: Set<string> = new Set([]);
   public moreResultsAvailableFollowers = true;
   public following: Set<string> = new Set([]);
-  private maxFollowing: number = 2;
+  private maxFollowing: number = 10;
   public loadingFollowing = false;
   private _followingSubscription = Subscription.EMPTY;
   private _nextResultsFollowingSubscription = Subscription.EMPTY;
