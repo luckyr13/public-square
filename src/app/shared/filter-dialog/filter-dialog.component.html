@@ -8,11 +8,11 @@
 							<section class="text-center">
 					      <mat-checkbox
 					      	[formControlName]="i"
-					      	(change)="followingChange($event, i, f)"></mat-checkbox>
+					      	(change)="followingChange($event.checked, i, f, true)"></mat-checkbox>
 					    </section>
 						</div>
 				  	<app-user-card 
-				  		(click)="aliasesFollowing.controls[i].setValue(aliasesFollowing.controls[i].value ? '' : f)"
+				  		(click)="aliasesFollowing.controls[i].value ? followingChange(false, i, f, true) : followingChange(true, i, f, true)"
 				  		[disableNavigateToProfile]="true"
 				  		[hideSecondaryAddressess]="true"
 				  		[address]="f"
@@ -42,11 +42,11 @@
 							<section class="text-center">
 					      <mat-checkbox
 					      	[formControlName]="j"
-					      	(change)="followersChange($event, j, follower)"></mat-checkbox>
+					      	(change)="followersChange($event.checked, j, follower, true)"></mat-checkbox>
 					    </section>
 						</div>
 				  	<app-user-card 
-				  		(click)="aliasesFollowers.controls[j].setValue(aliasesFollowers.controls[j].value ? '' : follower)"
+				  		(click)="aliasesFollowers.controls[j].value ? followersChange(false, j, follower, true) : followersChange(true, j, follower, true)"
 				  		[address]="follower"
 				  		[disableNavigateToProfile]="true"
 				  		class="col-user-card"></app-user-card>
