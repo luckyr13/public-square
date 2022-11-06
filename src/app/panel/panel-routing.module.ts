@@ -12,7 +12,6 @@ const routes: Routes = [
 	{
 		path: 'squares', loadChildren: () => import('../squares/squares.module').then(m => m.SquaresModule)
 	},
-	{ path: 'votes', loadChildren: () => import('../votes/votes.module').then(m => m.VotesModule) },
 	{
 		path: 'logout', component: LogoutComponent
 	},

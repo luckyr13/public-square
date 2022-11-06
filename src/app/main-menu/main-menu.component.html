@@ -35,17 +35,6 @@
   </a>
   <a mat-list-item
     matRipple
-    [routerLink]="['votes']" 
-    [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaVotes="routerLinkActive">
-    <mat-icon
-      mat-list-icon
-      [class]="{ 'material-icons-outlined': !rlaVotes.isActive }" 
-      [color]="rlaVotes.isActive ? 'accent' : 'default'">how_to_vote</mat-icon>
-    <div mat-line>Votes</div>
-  </a>
-  <a mat-list-item
-    matRipple
     [routerLink]="['squares']" 
     [routerLinkActive]="['active', 'border-color-theme']"
     #rlaSquares="routerLinkActive">
