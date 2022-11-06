@@ -31,6 +31,8 @@ export class ComposedCreatePostDialogComponent implements OnInit, OnDestroy {
     });
     if (this.account) {
       this.openCreatePostDialog();
+    } else {
+      this.close();
     }
   }
 

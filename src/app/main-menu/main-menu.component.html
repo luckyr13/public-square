@@ -50,25 +50,25 @@
   <a mat-list-item
     matRipple
     [routerLink]="['squares']" 
+    [ngClass]="{active: rlaSquares.isActive && !activeDialogFlag, 'border-color-theme': rlaSquares.isActive && !activeDialogFlag}"
     [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
-    #rlaSquares="routerLinkActive"
-    [routerLinkActiveOptions]="{exact: true}">
+    #rlaSquares="routerLinkActive">
     <mat-icon
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSquares.isActive }" 
-      [color]="rlaSquares.isActive ? 'accent' : 'default'">groups</mat-icon>
+      [color]="rlaSquares.isActive && !activeDialogFlag ? 'accent' : 'default'">groups</mat-icon>
     <div mat-line>Squares</div>
   </a>
   <a mat-list-item
     matRipple
     [routerLink]="['settings']" 
+    [ngClass]="{active: rlaSettings.isActive && !activeDialogFlag, 'border-color-theme': rlaSettings.isActive && !activeDialogFlag}"
     [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
-    #rlaSettings="routerLinkActive"
-    [routerLinkActiveOptions]="{exact: true}">
+    #rlaSettings="routerLinkActive">
     <mat-icon
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSettings.isActive }" 
-      [color]="rlaSettings.isActive ? 'accent' : 'default'">settings</mat-icon>
+      [color]="rlaSettings.isActive && !activeDialogFlag ? 'accent' : 'default'">settings</mat-icon>
     <div mat-line>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
   </a>
 </mat-nav-list>
