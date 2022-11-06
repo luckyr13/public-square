@@ -38,7 +38,7 @@ PublicSquare is an open protocol created by Sam Williams. You can check the orig
 
 This version of PublicSquare is inspired on the @DanMacDonald tutorial. For more information on how to build *permaweb apps* and start enjoying the benefits of using Arweave please check the next links.
 
-- **Public Square App by [@DanMacDonald](https://github.com/DanMacDonald):** https://arweave.net/S3Y9JkOAXRgFexoDvPkdhYfVNBJPb9hCUEkbMOy1MVE
+- **Public Square App by [@DanMacDonald](https://github.com/DanMacDonald):** https://public-square.arweave.dev
 - **Public Square App code:** https://github.com/DanMacDonald/public-square-app
 - **What is Arweave?:** https://arwiki.wiki/#/en/Arweave
 - **What is the permaweb?:** https://arwiki.wiki/#/en/the-permaweb

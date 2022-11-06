@@ -7,7 +7,7 @@ declare const document: any;
   providedIn: 'root'
 })
 export class AppSettingsService {
-  appName = '🐘 Public Square';
+  appName = 'Public Square';
   appVersion = '0.2.7';
 
   // Dev protocol

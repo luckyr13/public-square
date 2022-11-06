@@ -15,21 +15,24 @@ mat-toolbar {
 	font-weight: bold;
 	letter-spacing: 6px;
 	cursor: pointer;
-	font-size: 22px;
+	font-size: 20px;
 	margin-left: 10px;
-	display: none;
 }
 
 .logo2{
 	cursor: pointer;
 	font-size: 36px;
 	margin-left: 10px;
+	width: 42px;
+	height: 36px;
+}
+.logo2 img {
+	width: 100%;
 }
 @media (min-width: 800px) {
 	.logo {
 		font-size: 24px;
 		margin-right: 4px;
-		display: block;
 	}
 	.logo2{
 		display: none;
