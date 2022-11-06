@@ -3,13 +3,14 @@
     mat-list-item
     matRipple
     [routerLink]="['home']" 
-    [routerLinkActive]="['active', 'border-color-theme']"
+    [ngClass]="{active: rlaHome.isActive && !activeDialogFlag, 'border-color-theme': rlaHome.isActive && !activeDialogFlag}"
+    [routerLinkActive]="[]"
     #rlaHome="routerLinkActive"
     [routerLinkActiveOptions]="{exact: true}">
     <mat-icon 
       mat-list-icon 
       [class]="{ 'material-icons-outlined': !rlaHome.isActive }" 
-      [color]="rlaHome.isActive ? 'accent' : 'default'">home</mat-icon>
+      [color]="rlaHome.isActive && !activeDialogFlag ? 'accent' : 'default'">home</mat-icon>
     <div mat-line>{{ 'MAIN_MENU.HOME' | translate }}</div>
   </a>
   <a mat-list-item
@@ -39,7 +40,7 @@
     matRipple
     [routerLink]="account" 
     [ngClass]="{active: rlaProfile.isActive && !activeDialogFlag, 'border-color-theme': rlaProfile.isActive && !activeDialogFlag}"
-    [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
+    [routerLinkActive]="[]"
     #rlaProfile="routerLinkActive">
     <mat-icon
       mat-list-icon
@@ -51,7 +52,7 @@
     matRipple
     [routerLink]="['squares']" 
     [ngClass]="{active: rlaSquares.isActive && !activeDialogFlag, 'border-color-theme': rlaSquares.isActive && !activeDialogFlag}"
-    [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
+    [routerLinkActive]="[]"
     #rlaSquares="routerLinkActive">
     <mat-icon
       mat-list-icon
@@ -63,7 +64,7 @@
     matRipple
     [routerLink]="['settings']" 
     [ngClass]="{active: rlaSettings.isActive && !activeDialogFlag, 'border-color-theme': rlaSettings.isActive && !activeDialogFlag}"
-    [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
+    [routerLinkActive]="[]"
     #rlaSettings="routerLinkActive">
     <mat-icon
       mat-list-icon
@@ -91,8 +92,7 @@
     matRipple
     [routerLink]="['settings']" 
     [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
-    #rlaSettings2="routerLinkActive"
-    [routerLinkActiveOptions]="{exact: true}">
+    #rlaSettings2="routerLinkActive">
     <mat-icon
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSettings2.isActive }" 
