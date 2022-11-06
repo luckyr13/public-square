@@ -4,7 +4,8 @@
     matRipple
     [routerLink]="['home']" 
     [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaHome="routerLinkActive">
+    #rlaHome="routerLinkActive"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon 
       mat-list-icon 
       [class]="{ 'material-icons-outlined': !rlaHome.isActive }" 
@@ -13,31 +14,45 @@
   </a>
   <a mat-list-item
     matRipple
-    [routerLink]="['browse']" 
+    [routerLink]="[{ outlets: { popup: ['create-post'] } }]" 
     [routerLinkActive]="['active', 'border-color-theme']"
+    #rlaPost="routerLinkActive">
+    <mat-icon 
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaPost.isActive }" 
+      [color]="rlaPost.isActive ? 'accent' : 'default'">post_add</mat-icon>
+    <div mat-line>Create Post</div>
+  </a>
+  <a mat-list-item
+    matRipple
+    [routerLink]="['browse']" 
+    [ngClass]="{active: rlaSearch.isActive && !activeDialogFlag, 'border-color-theme': rlaSearch.isActive && !activeDialogFlag}"
+    [routerLinkActive]="[]"
     #rlaSearch="routerLinkActive">
     <mat-icon 
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSearch.isActive }" 
-      [color]="rlaSearch.isActive ? 'accent' : 'default'">tag</mat-icon>
+      [color]="rlaSearch.isActive && !activeDialogFlag ? 'accent' : 'default'">tag</mat-icon>
     <div mat-line>Browse</div>
   </a>
   <a mat-list-item
     matRipple
     [routerLink]="account" 
-    [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
+    [ngClass]="{active: rlaProfile.isActive && !activeDialogFlag, 'border-color-theme': rlaProfile.isActive && !activeDialogFlag}"
+    [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
     #rlaProfile="routerLinkActive">
     <mat-icon
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaProfile.isActive }" 
-      [color]="rlaProfile.isActive ? 'accent' : 'default'">person</mat-icon>
+      [color]="rlaProfile.isActive && !activeDialogFlag ? 'accent' : 'default'">person</mat-icon>
     <div mat-line>{{ 'MAIN_MENU.PROFILE' | translate }}</div>
   </a>
   <a mat-list-item
     matRipple
     [routerLink]="['squares']" 
-    [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaSquares="routerLinkActive">
+    [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
+    #rlaSquares="routerLinkActive"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSquares.isActive }" 
@@ -47,8 +62,9 @@
   <a mat-list-item
     matRipple
     [routerLink]="['settings']" 
-    [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaSettings="routerLinkActive">
+    [routerLinkActive]="!activeDialogFlag ? ['active', 'border-color-theme'] : ''"
+    #rlaSettings="routerLinkActive"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSettings.isActive }" 
@@ -63,7 +79,8 @@
     matRipple
     [routerLink]="['home']" 
     [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
-    #rlaHome2="routerLinkActive">
+    #rlaHome2="routerLinkActive"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon 
       mat-list-icon 
       [class]="{ 'material-icons-outlined': !rlaHome2.isActive }" 
@@ -74,7 +91,8 @@
     matRipple
     [routerLink]="['settings']" 
     [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
-    #rlaSettings2="routerLinkActive">
+    #rlaSettings2="routerLinkActive"
+    [routerLinkActiveOptions]="{exact: true}">
     <mat-icon
       mat-list-icon
       [class]="{ 'material-icons-outlined': !rlaSettings2.isActive }" 
