@@ -9,7 +9,7 @@
     [routerLinkActiveOptions]="{exact: true}">
     <mat-icon 
       mat-list-icon 
-      [class]="{ 'material-icons-outlined': !rlaHome.isActive }" 
+      [class]="{ 'material-icons-outlined': !rlaHome.isActive || activeDialogFlag }" 
       [color]="rlaHome.isActive && !activeDialogFlag ? 'accent' : 'default'">home</mat-icon>
     <div mat-line>{{ 'MAIN_MENU.HOME' | translate }}</div>
   </a>
@@ -32,7 +32,7 @@
     #rlaSearch="routerLinkActive">
     <mat-icon 
       mat-list-icon
-      [class]="{ 'material-icons-outlined': !rlaSearch.isActive }" 
+      [class]="{ 'material-icons-outlined': !rlaSearch.isActive || activeDialogFlag }" 
       [color]="rlaSearch.isActive && !activeDialogFlag ? 'accent' : 'default'">tag</mat-icon>
     <div mat-line>Browse</div>
   </a>
@@ -44,7 +44,7 @@
     #rlaProfile="routerLinkActive">
     <mat-icon
       mat-list-icon
-      [class]="{ 'material-icons-outlined': !rlaProfile.isActive }" 
+      [class]="{ 'material-icons-outlined': !rlaProfile.isActive || activeDialogFlag }" 
       [color]="rlaProfile.isActive && !activeDialogFlag ? 'accent' : 'default'">person</mat-icon>
     <div mat-line>{{ 'MAIN_MENU.PROFILE' | translate }}</div>
   </a>
@@ -56,7 +56,7 @@
     #rlaSquares="routerLinkActive">
     <mat-icon
       mat-list-icon
-      [class]="{ 'material-icons-outlined': !rlaSquares.isActive }" 
+      [class]="{ 'material-icons-outlined': !rlaSquares.isActive || activeDialogFlag }" 
       [color]="rlaSquares.isActive && !activeDialogFlag ? 'accent' : 'default'">groups</mat-icon>
     <div mat-line>Squares</div>
   </a>
@@ -68,7 +68,7 @@
     #rlaSettings="routerLinkActive">
     <mat-icon
       mat-list-icon
-      [class]="{ 'material-icons-outlined': !rlaSettings.isActive }" 
+      [class]="{ 'material-icons-outlined': !rlaSettings.isActive || activeDialogFlag }" 
       [color]="rlaSettings.isActive && !activeDialogFlag ? 'accent' : 'default'">settings</mat-icon>
     <div mat-line>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
   </a>
