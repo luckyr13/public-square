@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserAuthService } from '../core/services/user-auth.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { ActiveDialogsService } from '../core/services/active-dialogs.service';
 
 @Component({
@@ -16,7 +15,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private _auth: UserAuthService,
-    private _route: ActivatedRoute,
     private _activeDialogs: ActiveDialogsService) { }
 
   ngOnInit(): void {
