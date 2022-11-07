@@ -1,0 +1,72 @@
+{
+	"MAIN_MENU": {
+		"HOME": "Home",
+		"SEARCH": "Search",
+		"PROFILE": "Profile",
+		"FRIENDS": "Friends",
+		"SETTINGS": "Settings"
+	},
+	"GENERAL": {
+		"BUTTONS": {
+			"GO_BACK": "Go back",
+			"OPEN_VIEWBLOCK": "Open in Viewblock",
+			"COPY_ADDRESS": "Copy address",
+			"COPY_ID": "Copy Id",
+			"TIP_AUTHOR": "Tip the author",
+			"CONNECT": "Connect",
+			"POST": "Post",
+			"ADD_SUBSTORY": "Add substory"
+		},
+		"LABELS": {
+			"NO_RESULTS": "No results",
+			"MORE_RESULTS": "More results",
+			"PROFILE": "Profile",
+			"LOGOUT_COMPOSED": "Log out {{ value }}",
+			"LOGOUT": "Log out",
+			"METHOD": "Method",
+			"SHOW_OLDER_RESULTS": "Show older results"
+		},
+		"CREATE_STORY": {
+			"TXTAREA_LABEL": "What's on your mind {{value}}?",
+			"EMOJI_LABEL": "Insert emoji",
+			"ADD_SUBSTORY_LABEL": "Add substory",
+			"ADD_IMAGE_LABEL": "Add image",
+			"ADD_VIDEO_LABEL": "Add video",
+			"ADD_AUDIO_LABEL": "Add audio",
+			"CREATE_SUBSTORY": "Create substory",
+			"SEARCH_SUBSTORY": "Search substory",
+			"UPLOAD_FILE": "Upload file",
+			"FILE_MANAGER": "File manager"
+		},
+		"STORY": {
+			"TX_INFO": "TX info",
+			"ID": "Id",
+			"COMMENT": "Comment",
+			"REPOST": "Repost",
+			"LIKE": "Like",
+			"SHARE": "Share",
+			"REPLY": "Reply"
+		}
+	},
+	"SETTINGS": {
+		"APP_INFO": "App Info",
+		"NETWORK": "Network",
+		"WALLET": "Wallet",
+		"APPEARANCE": "Appeareance",
+		"LANGUAGE": "Language"
+	},
+	"DIALOGS": {
+		"SHARE": {
+			"TITLE": "Share in social media",
+			"FACEBOOK": "Share in a Facebook post",
+			"TWITTER": "Share in a tweet",
+			"WHATSAPP": "Share in a WhatsApp message",
+			"COPY": "Copy link to clipboard"
+		},
+		"RESUME_SESSION": {
+			"MESSAGE": "Resume Arweave Web Wallet session?",
+			"CONFIRM": "Resume session",
+			"DISMISS": "Dismiss"
+		}
+  }
+}
