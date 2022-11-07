@@ -4,9 +4,12 @@
 		<span>{{ prependSymbol && isAddress ? prependSymbol : '' }}</span>{{ ellipsis ? applyEllipsis(address) : address }} 
 	</div>
 	<a 
-		matTooltip="Verified user!"
-		*ngIf="verified && showVerifiedBtn">
-		<mat-icon class="green">verified</mat-icon>
+		class="icon-btn-sp"
+		matTooltip="Vouched user!"
+		target="_blank" 
+		href="https://vouchdao.xyz/"
+		*ngIf="vouched && showVouchedBtn">
+		<mat-icon class="blue-tick">verified_user</mat-icon>
 	</a>
 	<a 
 		matTooltip="{{ 'GENERAL.BUTTONS.OPEN_VIEWBLOCK' | translate }}"

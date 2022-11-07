@@ -28,7 +28,6 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "ardb": "^1.1.10",
-    "arverify": "^0.0.11",
     "arweave": "^1.11.4",
     "arweave-account": "^1.3.4",
     "arweave-wallet-connector": "^0.0.31",
@@ -41,6 +40,7 @@
     "ngx-skeleton-loader": "^6.0.0",
     "rxjs": "^7.5.7",
     "tslib": "^2.4.1",
+    "vouchdao": "^0.2.2",
     "warp-contracts": "^1.2.13",
     "zone.js": "^0.11.7"
   },
