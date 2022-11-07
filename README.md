@@ -5,13 +5,15 @@
 # PublicSquare v2
 A decentralized Social Media platform based on the PublicSquare protocol.
 
-PublicSquare v2 is an Arweave dapp, a web3 website that lives on the permaweb. All our data is hosted on the Arweave blockchain. So yeah, it's kinda like a decentralized Twitter.
+Public Square is a decentralized app that is possible thanks to blockchain. We use the Arweave blockchain. The Public Square platform is hosted in Arweave. Our app lives independently inside the permaweb and is governed purely by their own code, answering to no person or higher authority. Any post in Public Square cannot be modified by anyone and can be used by everyone, permissionlessly.
+
+Public Square is a decentralized social media platform whose pourpose is to help the crowd to discern the truth.
 
 ## Our platform
-You can try PublicSquare v2 through the following links: 
+You can try PublicSquare v2 from the next links: 
 
-- Demo: https://publicsquare.social
-- Landing page: https://publicsquare.arweave.dev
+- https://publicsquare.social
+- https://publicsquare.arweave.dev
 
 ## Feedback, comments and help
 
