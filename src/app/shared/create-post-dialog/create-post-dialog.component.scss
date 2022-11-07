@@ -1,0 +1,35 @@
+.mat-dialog-title button {
+	float: right;
+	margin-top: -6px;
+}
+.title-text {
+	float: left;
+	width: 70%;
+	font-weight: bold;
+}
+
+.title-buttons {
+	float: left;
+	width: 30%;
+	text-align: right;
+	margin-top: -6px;
+}
+.mat-dialog-content {
+	border-top: 1px solid;
+	display: flex;
+  flex-direction: column;
+}
+
+.content {
+	padding-top: 12px;
+	min-height: 180px;
+	overflow-y: auto;
+}
+
+@media (min-width: 600px) {
+	.content {
+		padding-top: 18px;
+		min-height: 180px;
+		overflow-y: auto;
+	}
+}

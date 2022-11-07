@@ -1,1 +1,17 @@
-<p>create-post-dialog works!</p>
+<h2 mat-dialog-title class="title-text">
+	Create a Post
+</h2>
+<div class="title-buttons">
+	<button
+		mat-icon-button
+		aria-label="Close window"
+		(click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="clear-both"></div>
+<div mat-dialog-content *ngIf="data.account" class="content border-right-special">
+	<app-create-post-card
+		[account]="data.account"
+		(newStoryEvent)="newStoryCreated($event)"></app-create-post-card>
+</div>

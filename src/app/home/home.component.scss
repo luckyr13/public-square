@@ -30,6 +30,11 @@
     display: block;
   }
 
+  .post-card-container {
+    margin-left: 52px !important;
+    margin-right: 52px !important;
+  }
+
 }
 
 .col-side-features mat-card {
@@ -43,6 +48,8 @@ mat-divider {
 
 .post-card-container {
   margin: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .more-results {
