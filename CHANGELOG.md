@@ -12,3 +12,6 @@ Backup (2022-11-06): https://arweave.net/FjYGnQla01MPCyIRI7-4T0prURy1PK655_B7nek
 
 ## 0.2.6
 Backup (2022-10-27): https://arweave.net/OYBaRNORvBPGdE4MvDXy_uWOESbCRQUOHVTaDeirXUI
+
+## 0.2.0
+Backup (2022-06-21): https://arweave.net/ZHxtbL00RxwIYfvykSeyFX1xGESAivdeVe4HLTQiTPQ
