@@ -43,6 +43,11 @@
 	    	mat-stroked-button
 	    	(click)="scrollToEditPage()">
 	    	<mat-icon color="accent">edit</mat-icon> Edit Profile</button>
+	    <button 
+	    	mat-stroked-button (click)="share($event)">
+	    	<mat-icon color="accent">share</mat-icon>
+	    	Share
+	    </button>
 		</div>
 		<div class="profile-actions" *ngIf="!editProfileFlag && isLoggedIn">
 	    <button mat-stroked-button (click)="confirmFollowDialog(username, addressList)">
@@ -52,6 +57,16 @@
 	    <button mat-stroked-button (click)="donate()">
 	    	<mat-icon class="material-icons-outlined" color="accent">monetization_on</mat-icon>
 	    	Donate
+	    </button>
+	    <button mat-stroked-button (click)="share($event)">
+	    	<mat-icon color="accent">share</mat-icon>
+	    	Share
+	    </button>
+		</div>
+		<div class="extra-actions" *ngIf="!(!editProfileFlag && isLoggedIn) && !editProfileFlag">
+	    <button mat-stroked-button (click)="share($event)">
+	    	<mat-icon color="accent">share</mat-icon>
+	    	Share
 	    </button>
 		</div>
 	</div>

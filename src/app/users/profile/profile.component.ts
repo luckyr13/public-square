@@ -14,6 +14,8 @@ import { DonateDialogComponent } from '../../shared/donate-dialog/donate-dialog.
 import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
 import { ProfileService } from '../../core/services/profile.service';
 import { UtilsService } from '../../core/utils/utils.service';
+import { BottomSheetShareComponent } from '../../shared/bottom-sheet-share/bottom-sheet-share.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-profile',
@@ -50,7 +52,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _userSettings: UserSettingsService,
     private _router: Router,
     private _profile: ProfileService,
-    private _utils: UtilsService) { }
+    private _utils: UtilsService,
+    private _bottomSheetShare: MatBottomSheet,) { }
 
   ngOnInit(): void {
     // Profile already loaded
@@ -280,5 +283,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return '';
   }
   
+  share(event: MouseEvent) {
+    event.stopPropagation();
+    const defLang = this._userSettings.getDefaultLang();
+    // defLang.writing_system
+    const defLangWritingSystem = 'LTR';
+    let direction: Direction = defLangWritingSystem === 'LTR' ? 
+      'ltr' : 'rtl';
+    const user = this.addressList[0];
+    const msg = `Profile ${user}`;
+    const tmpContent = this._utils.sanitizeFull(msg);
+    const limit = 200;
 
+    this._bottomSheetShare.open(BottomSheetShareComponent, {
+      data: {
+        title: 'Public Square',
+        content: this._utils.sanitizeFull(`${tmpContent} ...`.substr(0, limit)),
+        img: '',
+        fullURL: `${this._utils.getBaseURL()}#/${user}`
+      },
+      direction: direction,
+      ariaLabel: 'Share on social media'
+    });
+
+  }
 }

@@ -85,13 +85,15 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
 .profile-info h2 {
   margin-bottom: 6px;
 }
-.profile-actions {
+.profile-actions, .extra-actions {
   width: 100%;
   text-align: center;
   padding-top: 4px;
 }
 .profile-actions .mat-stroked-button,
-.profile-actions .mat-flat-button {
+.profile-actions .mat-flat-button,
+.extra-actions .mat-stroked-button,
+.extra-actions .mat-flat-button {
   margin-left: 10px;
   margin-bottom: 6px;
 }
@@ -115,13 +117,17 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
     padding-top: 60px;
     padding-left: 10px;
   }
-  .profile-actions {
+  .profile-actions, .extra-actions {
     width: 40%;
     float: left;
     padding-top: 60px;
+    text-align: right;
   }
   .address {
     justify-content: left !important;
+  }
+  .extra-actions {
+    text-align: right;
   }
 }
 
