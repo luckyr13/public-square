@@ -11,13 +11,11 @@ import { VouchDaoService } from '../../core/services/vouch-dao.service';
   styleUrls: ['./arweave-address.component.scss']
 })
 export class ArweaveAddressComponent implements OnInit, OnDestroy {
-  public verified: boolean = false;
   public vouched: boolean = false;
   @Input() address: string = '';
   @Input() isAddress: boolean = true;
   @Input() showOpenVieblockBtn: boolean = true;
   @Input() showCopyBtn: boolean = true;
-  @Input() showVerifiedBtn: boolean = true;
   @Input() ellipsis: boolean = true;
   @Input() prependSymbol: string = '';
   @Input() showVouchedBtn: boolean = true;

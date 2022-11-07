@@ -7,7 +7,6 @@ import { UserAuthService } from '../core/services/user-auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActiveDialogsService } from '../core/services/active-dialogs.service';
-import { UtilsService } from '../core/utils/utils.service';
 
 @Component({
   selector: 'app-composed-create-post-dialog',
@@ -23,8 +22,7 @@ export class ComposedCreatePostDialogComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     private _userSettings: UserSettingsService,
     private _router: Router,
-    private _activeDialogs: ActiveDialogsService,
-    private _utils: UtilsService) { }
+    private _activeDialogs: ActiveDialogsService) { }
 
   ngOnInit(): void {
     this.account = this._auth.getMainAddressSnapshot();
