@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://arweave.net/GTLpBqRwQxL-yxqA-K5Yc87ygfz4vJv9J8nTy83u1jI" style="max-width: 100%">
+  <img src="https://arweave.net/xBKUsJIlwx0JCy7SY1FA1qd-e-mdSbRwmjFlEd2Yx9w" style="max-width: 100%">
 </p>
 
 # PublicSquare v2
