@@ -1,5 +1,11 @@
 # Public Square deployed versions
 
+## 0.2.8
+Backup (2022-11-06): 
+- ArVerify replaced with Vouch Dao.
+- Create Post Dialog added.
+- Search menu in main toolbar added.
+
 ## 0.2.7
 - Address Filter updated.
 - Fixed bug on profile tabs.
