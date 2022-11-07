@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { TransactionMetadata } from '../../core/interfaces/transaction-metadata';
 
 @Component({
   selector: 'app-create-post-dialog',
@@ -18,17 +17,12 @@ export class CreatePostDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   newStoryCreated(tx: string) {
-    const txMeta: TransactionMetadata = {
-      id: tx,
-      owner: this.data.account
-    };
-    this.close();
+    this.close(tx);
   }
 
-  close() {
-    this._dialogRef.close(null);
+  close(tx: string|null = null) {
+    this._dialogRef.close(tx);
   }
 
 }

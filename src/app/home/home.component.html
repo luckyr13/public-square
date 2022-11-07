@@ -13,8 +13,13 @@
   			(click)="openFilterDialog()"
   			*ngIf="account">
     		<mat-icon
-    			[color]="filterList.length ? 'accent' : 'warn'"
-    			class="material-icons-outlined">tune</mat-icon>
+    			*ngIf="filterList.length"
+    			color="accent"
+    			class="material-icons-outlined">filter_list</mat-icon>
+    		<mat-icon
+    			*ngIf="!filterList.length"
+    			color="warn"
+    			class="material-icons-outlined">filter_list_off</mat-icon>
     		<span>Filter</span>
   		</button>
 	  </mat-toolbar>
