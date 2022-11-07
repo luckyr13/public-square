@@ -92,6 +92,17 @@
   </a>
   <a mat-list-item
     matRipple
+    [routerLink]="['browse']" 
+    [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
+    #rlaSearch2="routerLinkActive">
+    <mat-icon 
+      mat-list-icon
+      [class]="{ 'material-icons-outlined': !rlaSearch2.isActive }" 
+      [color]="rlaSearch2.isActive ? 'accent' : 'default'">tag</mat-icon>
+    <div mat-line>Browse</div>
+  </a>
+  <a mat-list-item
+    matRipple
     [routerLink]="['settings']" 
     [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
     #rlaSettings2="routerLinkActive">

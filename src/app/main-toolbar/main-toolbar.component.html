@@ -33,6 +33,29 @@
       </mat-radio-group>
     </mat-menu>
     <button 
+      [matMenuTriggerFor]="searchMenu"
+      mat-icon-button 
+      class="hide-xs"
+      matTooltip="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+    <mat-menu #searchMenu="matMenu" >
+      <form [formGroup]="frmSearch" (ngSubmit)="onSearch()">
+        <mat-form-field
+          (click)="$event.stopPropagation();"
+          color="accent"
+          class="search-container theme-text-color">
+          <mat-label>Search</mat-label>
+          <input  formControlName="searchQry" matInput autocomplete="off" placeholder="">
+        </mat-form-field>
+      </form>
+      <div class="browse-link-c">
+        <a [routerLink]="['/', 'browse']" class="theme-text-color">
+         Browse
+        </a>
+      </div>
+    </mat-menu>
+    <button 
       class="hide-xs" 
       mat-icon-button aria-label="Settings" 
       *ngIf="showSettingsSelector"

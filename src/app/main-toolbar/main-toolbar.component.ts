@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
 import { UserSettingsService } from '../core/services/user-settings.service';
 import { UserAuthService } from '../core/services/user-auth.service';
 import { BottomSheetLoginComponent } from '../shared/bottom-sheet-login/bottom-sheet-login.component';
@@ -12,6 +11,7 @@ import { ProfileService } from '../core/services/profile.service';
 import { ArweaveService } from '../core/services/arweave.service';
 import { UserProfile } from '../core/interfaces/user-profile';
 import { UtilsService } from '../core/utils/utils.service';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -30,6 +30,12 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
   profileImage: string = 'assets/images/blank-profile.jpg';
   showThemeSelector = false;
   showSettingsSelector = true;
+  frmSearch: UntypedFormGroup = new UntypedFormGroup({
+    'searchQry': new UntypedFormControl('', [Validators.required])
+  });
+  get searchQry() {
+    return this.frmSearch.get('searchQry');
+  }
 
   constructor(
     private _userSettings: UserSettingsService,
@@ -126,5 +132,11 @@ export class MainToolbarComponent implements OnInit, OnDestroy {
     );
   }
 
-
+  onSearch() {
+    const qry = this.searchQry!.value;
+    if (!qry) {
+      return;
+    }
+    this._router.navigate(['browse', qry]);
+  }
 }
