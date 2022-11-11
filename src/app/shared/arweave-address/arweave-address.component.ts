@@ -19,7 +19,6 @@ export class ArweaveAddressComponent implements OnInit, OnDestroy {
   @Input() ellipsis: boolean = true;
   @Input() prependSymbol: string = '';
   @Input() showVouchedBtn: boolean = true;
-  verificationSubscription = Subscription.EMPTY;
   vouchedSubscription = Subscription.EMPTY;
 
   constructor(
@@ -50,7 +49,7 @@ export class ArweaveAddressComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.verificationSubscription.unsubscribe();
+    this.vouchedSubscription.unsubscribe();
   }
   
   applyEllipsis(s: string) {
