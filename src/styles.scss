@@ -537,9 +537,15 @@ body {
 .hide-sm {
   display: none !important;
 }
+.show-sm {
+  display: inline !important;
+}
 @media (min-width: 800px) {
   .hide-sm {
     display: inline !important;
+  }
+  .show-sm {
+    display: none !important;
   }
 }
 

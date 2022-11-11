@@ -104,15 +104,24 @@
         <span>{{ 'SETTINGS.LANGUAGE' | translate }}</span>
       </button>
     </mat-menu>
-    <button
-      mat-button
-      class="btn-connect"
-      aria-label="Log in"
-      (click)="login()"
-      *ngIf="!account">
-      <mat-icon>login</mat-icon>
-      <span class="hide-sm">{{ 'GENERAL.BUTTONS.CONNECT' | translate }}</span>
-    </button>
+    <ng-container *ngIf="!account" >
+      <button
+        mat-icon-button
+        class="btn-connect show-sm"
+        aria-label="Log in"
+        (click)="login()"
+        >
+        <mat-icon>login</mat-icon>
+      </button>
+      <button
+        mat-button
+        class="btn-connect hide-sm"
+        aria-label="Log in"
+        (click)="login()">
+        <mat-icon>login</mat-icon>
+        <span>{{ 'GENERAL.BUTTONS.CONNECT' | translate }}</span>
+      </button>
+    </ng-container>
     <button 
       mat-icon-button
       aria-label="User menu"
