@@ -155,7 +155,7 @@ $dark-blue-gray-theme: mat.define-dark-theme((
     background-color: #FFF;
   }
   .theme-text-color {
-    color: #FFF;
+    color: #000;
   }
 }
 .dark-theme {
@@ -189,7 +189,7 @@ $dark-blue-gray-theme: mat.define-dark-theme((
     box-shadow: 0px 3px 3px -2px rgb(253 253 253 / 20%), 0px 3px 4px 0px rgb(253 253 253 / 14%), 0px 1px 8px 0px rgb(253 253 253 / 12%) !important;
   }
   .theme-text-color {
-    color: #000;
+    color: #FFF;
   }
 }
 .light-pink-theme {
@@ -222,7 +222,7 @@ $dark-blue-gray-theme: mat.define-dark-theme((
     background-color: #FFF;
   }
   .theme-text-color {
-    color: #FFF;
+    color: #000;
   }
 }
 .dark-deep-purple-theme {
@@ -256,7 +256,7 @@ $dark-blue-gray-theme: mat.define-dark-theme((
     box-shadow: 0px 3px 3px -2px rgb(253 253 253 / 20%), 0px 3px 4px 0px rgb(253 253 253 / 14%), 0px 1px 8px 0px rgb(253 253 253 / 12%) !important;
   }
   .theme-text-color {
-    color: #000;
+    color: #FFF;
   }
 }
 
