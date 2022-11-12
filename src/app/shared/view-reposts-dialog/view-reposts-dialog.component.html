@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Reposts</h1>
+<mat-dialog-content
+	class="content border-right-special">
+	<ng-container *ngFor="let tx of repostsList">
+		<app-user-card
+		(click)="close()"
+		[address]="tx.owner"></app-user-card>
+		<div class="list-number text-right">{{ timestampToDate(tx.blockTimestamp) }}</div>
+		<mat-divider></mat-divider>
+	</ng-container>
+	<div class="more-results-container">
+		<mat-spinner *ngIf="loadingReposts" color="accent" diameter="32"></mat-spinner>
+		<div class="no-results" *ngIf="!repostsList.length && !loadingReposts">
+			No results.
+		</div>
+		<mat-card class="more-results-card mat-elevation-z0" matRipple *ngIf="!loadingReposts && moreResultsAvailable" (click)="moreResults()" >
+		  <mat-card-content class="more-results text-center">
+				Show more
+		  </mat-card-content>
+		</mat-card>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions 
+	align="end" >
+  <button 
+  	mat-button
+  	cdkFocusInitial (click)="close()">Close</button>
+</mat-dialog-actions>

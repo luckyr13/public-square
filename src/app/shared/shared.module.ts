@@ -52,6 +52,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationDispatchDialogComponent } from './confirmation-dispatch-dialog/confirmation-dispatch-dialog.component';
 import { EditProfileBannerComponent } from '../users/edit-profile-banner/edit-profile-banner.component';
 import { CreatePostDialogComponent } from './create-post-dialog/create-post-dialog.component';
+import { ViewRepostsDialogComponent } from './view-reposts-dialog/view-reposts-dialog.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { CreatePostDialogComponent } from './create-post-dialog/create-post-dial
     ViewLikesDialogComponent,
     ConfirmationDispatchDialogComponent,
     EditProfileBannerComponent,
-    CreatePostDialogComponent
+    CreatePostDialogComponent,
+    ViewRepostsDialogComponent
   ],
   imports: [
     CommonModule,
