@@ -4,15 +4,34 @@
 </div>
 <div class="text-center">
 	<a 
+		(click)="viewReposts()"
+		mat-button
+		class="likes-subtitle"
+		*ngIf="!loadingPost && !loadingLikes">
+		<mat-icon aria-label="Reposts" class="green">repeat</mat-icon>
+		<span>
+			{{ reposts.length > maxReposts ? '+' + maxReposts : reposts.length + ' ' }}
+			{{ reposts.length === 1 ? 'repost' : 'reposts' }}
+		</span>
+	</a>
+	<a 
 		(click)="viewLikes()"
 		mat-button 
 		class="likes-subtitle"
 		*ngIf="!loadingPost && !loadingLikes">
 		<mat-icon aria-label="Likes" color="warn">favorite</mat-icon>
-		<span>{{ likes.length > maxLikes ? '+' + maxLikes : likes.length }} Likes</span>
+		<span>
+			{{ likes.length > maxLikes ? '+' + maxLikes : likes.length + ' ' }}
+			{{ likes.length === 1 ? 'like' : 'likes' }}
+		</span>
 	</a>
 </div>
-<h3 class="replies-subtitle">Replies:</h3>
+<h3 class="replies-subtitle">
+	<mat-icon aria-label="Reposts" class="blue" [inline]="true">reply</mat-icon>
+	{{ replies.length && moreResultsAvailable ? '+' : '' }}
+	{{ replies.length }}
+	{{ replies.length === 1 ? 'reply:' : 'replies:' }}
+</h3>
 <div class="post-list-container" *ngIf="post && !loadingPost">
 	<app-post-card
 		*ngFor="let reply of replies"
