@@ -162,25 +162,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }),
     ).subscribe({
       next: (following) => {
-        const followingTmp: string[] = [];
-        
-        for (const f of following) {
-          const infoAddresses = this.extractTagsFromTx(f);
-          if (infoAddresses.username &&
-              followingTmp.indexOf(infoAddresses.username) < 0) {
-            followingTmp.push(infoAddresses.username);
-            this.numFollowing++;
-          } else if (!infoAddresses.username) {
-            let flagWalletFound = false;
-            for (const w of infoAddresses.wallets) {
-              if (followingTmp.indexOf(w) < 0 && !flagWalletFound) {
-                this.numFollowing++;
-                flagWalletFound = true;
-              }
-              followingTmp.push(w);
+        this.numFollowing = 0;
+        if (following && following.length) {
+          const followingSet = (new Set(following.map(f => {
+            const v = this.extractTagsFromTx(f); 
+            if (v && v.wallets && v.wallets.length) {
+              return v.wallets[0];
             }
-
-          }
+            return '';
+          })));
+          followingSet.forEach((w) => {
+            if (w) {
+              this.numFollowing++;
+            }
+          });
         }
 
       },

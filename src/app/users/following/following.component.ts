@@ -19,7 +19,7 @@ import { FollowService } from '../../core/services/follow.service';
   styleUrls: ['./following.component.scss']
 })
 export class FollowingComponent implements OnInit , OnDestroy {
-  public following: {username: string, wallets: string[]}[] = [];
+  public following: {wallets: string[]}[] = [];
   private maxFollowers: number = 10;
   public loadingFollowing = false;
   private _followingSubscription: Subscription = Subscription.EMPTY;
@@ -120,7 +120,7 @@ export class FollowingComponent implements OnInit , OnDestroy {
 
   extractTagsFromTx(tx: TransactionMetadata) {
     const tags = tx && tx.tags ? tx.tags : [];
-    const res: {username: string, wallets: string[]} = { username: '', wallets: []};
+    const res: { wallets: string[]} = { wallets: []};
     for (const t of tags) {
       if (t.name === 'Wallet') {
         if (this._arweave.validateAddress(t.value)) {
@@ -128,12 +128,10 @@ export class FollowingComponent implements OnInit , OnDestroy {
         } else {
           console.error('Invalid wallet tag', t);
         }
-      } else if (t.name === 'Username') {
-        res.username = t.value.trim();
       }
     }
 
-    if (res.username || res.wallets.length) {
+    if (res.wallets.length && this.following.findIndex((f) => { return f.wallets[0] == res.wallets[0]; }) < 0) {
       this.following.push(res);
     }    
   }
