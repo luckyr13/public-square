@@ -77,6 +77,7 @@ export class PostComponent implements OnInit, OnDestroy {
     this._repliesSubscription.unsubscribe();
     this._nextRepliesSubscription.unsubscribe();
     this._likesSubscription.unsubscribe();
+    this._repostsSubscription.unsubscribe();
   }
 
   loadPost(from: string|string[], storyId: string) {
