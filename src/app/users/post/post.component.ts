@@ -46,6 +46,8 @@ export class PostComponent implements OnInit, OnDestroy {
   public maxReposts = 9;
   public maxRepostsQuery = 20;
 
+  private _userAddressList: string[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private _arweave: ArweaveService,
@@ -65,11 +67,33 @@ export class PostComponent implements OnInit, OnDestroy {
         const userAddressList = profile.profile ?
           [profile.profile.address] :
           [profile.address];
-        this.loadPost(userAddressList, storyId);
-        this.loadReplies(storyId);
-        this.loadLikes(storyId);
-        this.loadReposts(storyId);
+
+        if (this._userAddressList.length) {
+          this._userAddressList = userAddressList;
+          if (storyId) {
+            this.loadPost(this._userAddressList, storyId);
+            this.loadReplies(storyId);
+            this.loadLikes(storyId);
+            this.loadReposts(storyId);
+          }
+        } else {
+          this._userAddressList = userAddressList;
+        }
+        
       });
+
+    setTimeout(() => {
+      this.route.paramMap.subscribe(params => {
+        const storyId = params.get('storyId');
+        if (storyId) {
+          this.loadPost(this._userAddressList, storyId);
+          this.loadReplies(storyId);
+          this.loadLikes(storyId);
+          this.loadReposts(storyId);
+        }
+      });
+    }, 500);
+      
   }
 
   ngOnDestroy() {
