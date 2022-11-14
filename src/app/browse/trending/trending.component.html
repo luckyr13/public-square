@@ -5,7 +5,7 @@
 		<div class="trending-container">
 			<div *ngFor="let ht of getTrendingHashtags()">
 				<a (click)="navigate(removeInitialSymbol(ht.hashtag, '#'), 'browse')">
-					{{ ht.hashtag }}
+					{{ substr(ht.hashtag, maxLengthTagText) }}
 				</a> ({{ ht.qty }})
 			</div>
 		</div>
@@ -14,7 +14,9 @@
 		<h2>Trending mentions</h2>
 		<div class="trending-container">
 			<div *ngFor="let mention of getTrendingMentions()">
-				<a (click)="navigate(removeInitialSymbol(mention.mention, '@'), 'browse')">{{ mention.mention }}</a> ({{ mention.qty }})
+				<a (click)="navigate(removeInitialSymbol(mention.mention, '@'), 'browse')">
+					{{ substr(mention.mention, maxLengthTagText) }}
+				</a> ({{ mention.qty }})
 			</div>
 		</div>
 	</div>

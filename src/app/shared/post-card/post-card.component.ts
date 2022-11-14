@@ -58,6 +58,7 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
   repostId: string = '';
   isReposted = false;
+  maxLengthTagText = 120;
 
 
   constructor(
@@ -478,6 +479,11 @@ export class PostCardComponent implements OnInit, OnDestroy {
 
   goBack() {
     this._location.back();
+  }
+
+  substr2(s: string, length: number) {
+    const ellipsis = length <= this.maxPreviewSize && length < s.length ? '...' : '';
+    return (this._utils.sanitizeFull(s.substr(0, length)) + ellipsis);
   }
 
 }

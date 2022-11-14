@@ -23,6 +23,8 @@ export class TrendingComponent implements OnInit, OnDestroy {
   loadingResults = false;
   hashtags: Record<string, {hashtag: string, qty: number, txs: string[]}> = {};
   mentions: Record<string, {mention: string, qty: number, txs: string[]}> = {};
+  maxLengthTagText = 100;
+  maxLengthTagTextSecure = 150;
 
   constructor(
     private _trending: TrendingService,
@@ -48,6 +50,11 @@ export class TrendingComponent implements OnInit, OnDestroy {
             const tagName = t.name.toLowerCase();
             if (tagName === 'hashtag') {
               const hashtagValue = t.value;
+              if (hashtagValue &&
+                  hashtagValue.length &&
+                  hashtagValue.length >= this.maxLengthTagTextSecure) {
+                continue;
+              }
               if (Object.prototype.hasOwnProperty.call(this.hashtags, hashtagValue) &&
                 this.hashtags[hashtagValue].txs.indexOf(v.owner) < 0) {
                 this.hashtags[hashtagValue].qty += 1;
@@ -56,8 +63,12 @@ export class TrendingComponent implements OnInit, OnDestroy {
               }
               hasHashtagsAndMentions = true;
             } else if (tagName === 'mention') {
-
               const mentionValue = t.value;
+              if (mentionValue &&
+                  mentionValue.length &&
+                  mentionValue.length >= this.maxLengthTagTextSecure) {
+                continue;
+              }
               if (Object.prototype.hasOwnProperty.call(this.mentions, mentionValue) &&
                 this.mentions[mentionValue].txs.indexOf(v.owner) < 0) {
                 this.mentions[mentionValue].qty += 1;
@@ -133,6 +144,11 @@ export class TrendingComponent implements OnInit, OnDestroy {
               const tagName = t.name.toLowerCase();
               if (tagName === 'hashtag') {
                 const hashtagValue = t.value;
+                if (hashtagValue &&
+                  hashtagValue.length &&
+                  hashtagValue.length >= this.maxLengthTagTextSecure) {
+                  continue;
+                }
                 if (Object.prototype.hasOwnProperty.call(this.hashtags, hashtagValue) &&
                   this.hashtags[hashtagValue].txs.indexOf(v.owner) < 0) {
                   this.hashtags[hashtagValue].qty += 1;
@@ -141,8 +157,12 @@ export class TrendingComponent implements OnInit, OnDestroy {
                 }
                 hasHashtagsAndMentions = true;
               } else if (tagName === 'mention') {
-
                 const mentionValue = t.value;
+                if (mentionValue &&
+                  mentionValue.length &&
+                  mentionValue.length >= this.maxLengthTagTextSecure) {
+                  continue;
+                }
                 if (Object.prototype.hasOwnProperty.call(this.mentions, mentionValue) &&
                   this.mentions[mentionValue].txs.indexOf(v.owner) < 0) {
                   this.mentions[mentionValue].qty += 1;
@@ -182,5 +202,9 @@ export class TrendingComponent implements OnInit, OnDestroy {
     this._router.navigate(route);
   }
 
+  substr(s: string, length: number) {
+    const ellipsis = length < s.length ? '...' : '';
+    return (this._utils.sanitizeFull(s.substr(0, length)) + ellipsis);
+  }
 
 }

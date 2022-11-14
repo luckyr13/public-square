@@ -61,12 +61,12 @@
 						<span
 							*ngIf="profile && profile.name"
 							[ngClass]=" {'fullmode': fullMode }"
-							class="ellipsis profile-name word-break">{{ profile.name }}</span>
+							class="ellipsis profile-name word-break">{{ substr2(profile.name, maxLengthTagText) }}</span>
 						<small
 							*ngIf="profile && profile.username"
 							class="profile-username"
 							[ngClass]=" {'fullmode': fullMode }">
-							{{ profile.username }}
+							{{ substr2(profile.username, maxLengthTagText) }}
 						</small>
 						<small
 							*ngIf="post"
@@ -119,13 +119,13 @@
 				        	class="tx-metadata-chips"
 				        	*ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0))">
 						  		<h4 class="meta" matLine>Tx metadata:</h4>
-						  		<span matLine *ngIf="application">Application: {{ application }} </span>
-									<span matLine *ngIf="appName" >App-Name: {{ appName }}</span>
-									<span matLine *ngIf="service">Service: {{ service }} </span>
-									<span matLine *ngIf="postType" >Post type: {{ postType }}</span>
-									<span matLine *ngIf="postContentType" >Content type: {{ postContentType }}</span>
-									<span matLine *ngIf="owner" >Owner: {{ owner }}</span>
-									<span matLine *ngIf="postVersion" >Version: {{ postVersion }}</span>
+						  		<span matLine *ngIf="application">Application: {{ substr2(application, maxLengthTagText) }} </span>
+									<span matLine *ngIf="appName" >App-Name: {{ substr2(appName, maxLengthTagText) }}</span>
+									<span matLine *ngIf="service">Service: {{ substr2(service, maxLengthTagText) }} </span>
+									<span matLine *ngIf="postType" >Post type: {{ substr2(postType, maxLengthTagText) }}</span>
+									<span matLine *ngIf="postContentType" >Content type: {{ substr2(postContentType, maxLengthTagText) }}</span>
+									<span matLine *ngIf="owner" >Owner: {{ substr2(owner, maxLengthTagText) }}</span>
+									<span matLine *ngIf="postVersion" >Version: {{ substr2(postVersion, maxLengthTagText) }}</span>
 				        </mat-list-item>
 				      </mat-list>
 						</mat-menu>
