@@ -22,7 +22,7 @@ import { PostService } from '../../core/services/post.service';
 })
 export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
   substoryContent: { 
-    type: string, loading: boolean, content: string|SafeResourceUrl, error: string, raw: string
+    type: string, loading: boolean, content: string, error: string, raw: string
   } = {
     type: '',
     loading: true,
@@ -275,7 +275,7 @@ export class StoryPlayerSubstoryComponent implements OnInit, OnDestroy {
     this.substoryContent.error = '';
     this.substoryContent.type = 'youtube';
     this.substoryContent.loading = false;
-    this.substoryContent.content = this._utils.youtubeVideoURLSecure(youtubeId);
+    this.substoryContent.content = this._utils.youtubeVideoURLFull(youtubeId);
     this.loadingSubstoryEvent.emit(false);
   }
 }

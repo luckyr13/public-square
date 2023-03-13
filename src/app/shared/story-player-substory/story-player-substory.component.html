@@ -80,10 +80,9 @@
 		<div
 			class="youtube-container fadeIn"
 			*ngIf="substoryContent.content && !substoryContent.error">
-			<iframe
-				[src]="substoryContent.content" title="YouTube video player"
-				frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<a mat-button (click)="openLink($event, substoryContent.content)">
+				<mat-icon>open_in_new</mat-icon> {{ substoryContent.content }}
+			</a>
 		</div>
 	</div>
 

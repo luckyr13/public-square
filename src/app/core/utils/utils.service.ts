@@ -188,6 +188,12 @@ export class UtilsService {
     return youtubeUrl;
   }
 
+  youtubeVideoURLFull(id: string) {
+    id = this.sanitizeFull(id);
+    const youtubeUrl = `https://youtu.be/${id}`;
+    return youtubeUrl;
+  }
+
   removeInitialSymbol(hashtag: string, symbol: string = '#') {
     const hasht = hashtag.length && (hashtag[0] === symbol) ?
       hashtag.substr(1, hashtag.length) :
