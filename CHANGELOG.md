@@ -1,7 +1,7 @@
 # Public Square deployed versions
 
 ## 0.3.0
-
+Backup (2023-03-13): https://arweave.net/OOGb925m3Lv5jLUCxIDwyDN7jZfpDr6yZISaw4Mpcgg
 - Replace YouTube player for a link
 
 ## 0.2.9
