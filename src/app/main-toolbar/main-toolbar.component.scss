@@ -54,7 +54,13 @@ mat-toolbar {
 	border-radius: 50px;
 }
 
+.btn-connect span {
+	margin-left: 0px;
+}
 
+.avatar-container {
+	padding: 0px;
+}
 .avatar {
 	width: 32px;
 	height: 32px;
@@ -115,4 +121,7 @@ mat-toolbar {
 	padding: 0px 12px 12px 12px;
 	font-size: 12px;
 	text-align: right;
+}
+.small-username-2 {
+	margin-top: 0px;
 }

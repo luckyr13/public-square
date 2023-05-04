@@ -10,7 +10,7 @@
     <mat-icon 
       matListItemIcon 
       [class]="{ 'material-icons-outlined': !rlaHome.isActive || activeDialogFlag }" 
-      [color]="rlaHome.isActive && !activeDialogFlag ? 'accent' : 'default'">home</mat-icon>
+      [color]="rlaHome.isActive && !activeDialogFlag ? 'accent' : ''">home</mat-icon>
     <div matListItemTitle>{{ 'MAIN_MENU.HOME' | translate }}</div>
   </a>
   <a mat-list-item
@@ -21,7 +21,7 @@
     <mat-icon 
       matListItemIcon
       [class]="{ 'material-icons-outlined': !rlaPost.isActive }" 
-      [color]="rlaPost.isActive ? 'accent' : 'default'">post_add</mat-icon>
+      [color]="rlaPost.isActive ? 'accent' : ''">post_add</mat-icon>
     <div matListItemTitle>Create Post</div>
   </a>
   <a mat-list-item
@@ -33,7 +33,7 @@
     <mat-icon 
       matListItemIcon
       [class]="{ 'material-icons-outlined': !rlaSearch.isActive || activeDialogFlag }" 
-      [color]="rlaSearch.isActive && !activeDialogFlag ? 'accent' : 'default'">tag</mat-icon>
+      [color]="rlaSearch.isActive && !activeDialogFlag ? 'accent' : ''">tag</mat-icon>
     <div matListItemTitle>Browse</div>
   </a>
   <a mat-list-item
@@ -45,7 +45,7 @@
     <mat-icon
       matListItemIcon
       [class]="{ 'material-icons-outlined': !rlaProfile.isActive || activeDialogFlag }" 
-      [color]="rlaProfile.isActive && !activeDialogFlag ? 'accent' : 'default'">person</mat-icon>
+      [color]="rlaProfile.isActive && !activeDialogFlag ? 'accent' : ''">person</mat-icon>
     <div matListItemTitle>{{ 'MAIN_MENU.PROFILE' | translate }}</div>
   </a>
   <!--
@@ -58,7 +58,7 @@
     <mat-icon
       matListItemIcon
       [class]="{ 'material-icons-outlined': !rlaSquares.isActive || activeDialogFlag }" 
-      [color]="rlaSquares.isActive && !activeDialogFlag ? 'accent' : 'default'">groups</mat-icon>
+      [color]="rlaSquares.isActive && !activeDialogFlag ? 'accent' : ''">groups</mat-icon>
     <div matListItemTitle>Squares</div>
   </a>
   -->
@@ -71,7 +71,7 @@
     <mat-icon
       matListItemIcon
       [class]="{ 'material-icons-outlined': !rlaSettings.isActive || activeDialogFlag }" 
-      [color]="rlaSettings.isActive && !activeDialogFlag ? 'accent' : 'default'">settings</mat-icon>
+      [color]="rlaSettings.isActive && !activeDialogFlag ? 'accent' : ''">settings</mat-icon>
     <div matListItemTitle>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
   </a>
 </mat-nav-list>
@@ -87,7 +87,7 @@
     <mat-icon 
       matListItemIcon 
       [class]="{ 'material-icons-outlined': !rlaHome2.isActive }" 
-      [color]="rlaHome2.isActive ? 'accent' : 'default'">house</mat-icon>
+      [color]="rlaHome2.isActive ? 'accent' : ''">house</mat-icon>
     <div matListItemTitle>{{ 'MAIN_MENU.HOME' | translate }}</div>
   </a>
   <a mat-list-item
@@ -98,7 +98,7 @@
     <mat-icon 
       matListItemIcon
       [class]="{ 'material-icons-outlined': !rlaSearch2.isActive }" 
-      [color]="rlaSearch2.isActive ? 'accent' : 'default'">tag</mat-icon>
+      [color]="rlaSearch2.isActive ? 'accent' : ''">tag</mat-icon>
     <div matListItemTitle>Browse</div>
   </a>
   <a mat-list-item
@@ -109,7 +109,7 @@
     <mat-icon
       matListItemIcon
       [class]="{ 'material-icons-outlined': !rlaSettings2.isActive }" 
-      [color]="rlaSettings2.isActive ? 'accent' : 'default'">settings</mat-icon>
+      [color]="rlaSettings2.isActive ? 'accent' : ''">settings</mat-icon>
     <div matListItemTitle>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
   </a>
 </mat-nav-list>

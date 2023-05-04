@@ -129,7 +129,8 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .background-color-theme {
     background-color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
   }
-  .color-accent-theme {
+  .color-accent-theme,
+  .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
     color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
   }
 
@@ -166,7 +167,8 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .background-color-theme {
     background-color: mat.get-color-from-palette($light-theme-accent, 'default') !important;
   }
-  .color-accent-theme {
+  .color-accent-theme,
+  .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
     color: mat.get-color-from-palette($light-theme-primary, 'default') !important;
   }
   .mat-drawer-container{
@@ -200,7 +202,8 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .background-color-theme {
     background-color: mat.get-color-from-palette($light-pink-accent, 'default') !important;
   }
-  .color-accent-theme {
+  .color-accent-theme,
+  .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
     color: mat.get-color-from-palette($light-pink-accent, 'default') !important;
   }
   .mat-drawer-container {
@@ -233,7 +236,8 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .background-color-theme {
     background-color: mat.get-color-from-palette($dark-deep-purple-accent, 'default') !important;
   }
-  .color-accent-theme {
+  .color-accent-theme,
+  .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
     color: mat.get-color-from-palette($dark-deep-purple-accent, 'default') !important;
   }
   .mat-drawer-container {
@@ -268,7 +272,8 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .background-color-theme {
     background-color: mat.get-color-from-palette($dark-pink-accent, 'default') !important;
   }
-  .color-accent-theme {
+  .color-accent-theme,
+  .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
     color: mat.get-color-from-palette($dark-pink-accent, 'default') !important;
   }
   .mat-drawer-container {
@@ -302,7 +307,8 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .background-color-theme {
     background-color: mat.get-color-from-palette($light-blue-accent, 'default') !important;
   }
-  .color-accent-theme {
+  .color-accent-theme,
+  .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
     color: mat.get-color-from-palette($light-blue-accent, 'default') !important;
   }
   .mat-drawer-container {
@@ -336,7 +342,8 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .background-color-theme {
     background-color: mat.get-color-from-palette($dark-blue-gray-accent, 'default') !important;
   }
-  .color-accent-theme {
+  .color-accent-theme,
+  .mdc-list-item--with-leading-icon:hover .mdc-list-item__start {
     color: mat.get-color-from-palette($dark-blue-gray-accent, 'default') !important;
   }
   .mat-drawer-container {
@@ -623,4 +630,22 @@ a {
     max-width: 350px !important;
   }
 
+}
+/* FIX FORM */
+.mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+  padding-top: 24px;
+  padding-bottom: 8px;
+}
+.mdc-text-field--filled {
+  background-color: inherit !important;
+}
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+/*
+* FIX TEXTAREA LABEL
+*/
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 28px !important;
 }
