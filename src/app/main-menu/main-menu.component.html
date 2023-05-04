@@ -1,115 +1,170 @@
-<mat-nav-list *ngIf="account">
-  <a 
-    mat-list-item
-    matRipple
-    [routerLink]="['home']" 
-    [ngClass]="{active: rlaHome.isActive && !activeDialogFlag, 'border-color-theme': rlaHome.isActive && !activeDialogFlag}"
-    [routerLinkActive]="[]"
-    #rlaHome="routerLinkActive"
-    [routerLinkActiveOptions]="{exact: true}">
-    <mat-icon 
-      matListItemIcon 
-      [class]="{ 'material-icons-outlined': !rlaHome.isActive || activeDialogFlag }" 
-      [color]="rlaHome.isActive && !activeDialogFlag ? 'accent' : ''">home</mat-icon>
-    <div matListItemTitle>{{ 'MAIN_MENU.HOME' | translate }}</div>
-  </a>
-  <a mat-list-item
-    matRipple
-    [routerLink]="[{ outlets: { popup: ['create-post'] } }]" 
-    [routerLinkActive]="['active', 'border-color-theme']"
-    #rlaPost="routerLinkActive">
-    <mat-icon 
-      matListItemIcon
-      [class]="{ 'material-icons-outlined': !rlaPost.isActive }" 
-      [color]="rlaPost.isActive ? 'accent' : ''">post_add</mat-icon>
-    <div matListItemTitle>Create Post</div>
-  </a>
-  <a mat-list-item
-    matRipple
-    [routerLink]="['browse']" 
-    [ngClass]="{active: rlaSearch.isActive && !activeDialogFlag, 'border-color-theme': rlaSearch.isActive && !activeDialogFlag}"
-    [routerLinkActive]="[]"
-    #rlaSearch="routerLinkActive">
-    <mat-icon 
-      matListItemIcon
-      [class]="{ 'material-icons-outlined': !rlaSearch.isActive || activeDialogFlag }" 
-      [color]="rlaSearch.isActive && !activeDialogFlag ? 'accent' : ''">tag</mat-icon>
-    <div matListItemTitle>Browse</div>
-  </a>
-  <a mat-list-item
-    matRipple
-    [routerLink]="account" 
-    [ngClass]="{active: rlaProfile.isActive && !activeDialogFlag, 'border-color-theme': rlaProfile.isActive && !activeDialogFlag}"
-    [routerLinkActive]="[]"
-    #rlaProfile="routerLinkActive">
-    <mat-icon
-      matListItemIcon
-      [class]="{ 'material-icons-outlined': !rlaProfile.isActive || activeDialogFlag }" 
-      [color]="rlaProfile.isActive && !activeDialogFlag ? 'accent' : ''">person</mat-icon>
-    <div matListItemTitle>{{ 'MAIN_MENU.PROFILE' | translate }}</div>
-  </a>
-  <!--
-  <a mat-list-item
-    matRipple
-    [routerLink]="['squares']" 
-    [ngClass]="{active: rlaSquares.isActive && !activeDialogFlag, 'border-color-theme': rlaSquares.isActive && !activeDialogFlag}"
-    [routerLinkActive]="[]"
-    #rlaSquares="routerLinkActive">
-    <mat-icon
-      matListItemIcon
-      [class]="{ 'material-icons-outlined': !rlaSquares.isActive || activeDialogFlag }" 
-      [color]="rlaSquares.isActive && !activeDialogFlag ? 'accent' : ''">groups</mat-icon>
-    <div matListItemTitle>Squares</div>
-  </a>
-  -->
-  <a mat-list-item
-    matRipple
-    [routerLink]="['settings']" 
-    [ngClass]="{active: rlaSettings.isActive && !activeDialogFlag, 'border-color-theme': rlaSettings.isActive && !activeDialogFlag}"
-    [routerLinkActive]="[]"
-    #rlaSettings="routerLinkActive">
-    <mat-icon
-      matListItemIcon
-      [class]="{ 'material-icons-outlined': !rlaSettings.isActive || activeDialogFlag }" 
-      [color]="rlaSettings.isActive && !activeDialogFlag ? 'accent' : ''">settings</mat-icon>
-    <div matListItemTitle>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
-  </a>
-</mat-nav-list>
+<div class="menu-container">
+  <mat-nav-list *ngIf="account">
+    <a 
+      mat-list-item
+      matRipple
+      [routerLink]="['home']" 
+      [ngClass]="{active: rlaHome.isActive && !activeDialogFlag, 'border-color-theme': rlaHome.isActive && !activeDialogFlag}"
+      [routerLinkActive]="[]"
+      #rlaHome="routerLinkActive"
+      [routerLinkActiveOptions]="{exact: true}">
+      <mat-icon 
+        matListItemIcon 
+        [class]="{ 'material-icons-outlined': !rlaHome.isActive || activeDialogFlag }" 
+        [color]="rlaHome.isActive && !activeDialogFlag ? 'accent' : ''">home</mat-icon>
+      <div matListItemTitle>{{ 'MAIN_MENU.HOME' | translate }}</div>
+    </a>
+    <a mat-list-item
+      matRipple
+      [routerLink]="[{ outlets: { popup: ['create-post'] } }]" 
+      [routerLinkActive]="['active', 'border-color-theme']"
+      #rlaPost="routerLinkActive">
+      <mat-icon 
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': !rlaPost.isActive }" 
+        [color]="rlaPost.isActive ? 'accent' : ''">post_add</mat-icon>
+      <div matListItemTitle>Create Post</div>
+    </a>
+    <a mat-list-item
+      matRipple
+      [routerLink]="['browse']" 
+      [ngClass]="{active: rlaSearch.isActive && !activeDialogFlag, 'border-color-theme': rlaSearch.isActive && !activeDialogFlag}"
+      [routerLinkActive]="[]"
+      #rlaSearch="routerLinkActive">
+      <mat-icon 
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': !rlaSearch.isActive || activeDialogFlag }" 
+        [color]="rlaSearch.isActive && !activeDialogFlag ? 'accent' : ''">tag</mat-icon>
+      <div matListItemTitle>Browse</div>
+    </a>
+    <a mat-list-item
+      matRipple
+      [routerLink]="account" 
+      [ngClass]="{active: rlaProfile.isActive && !activeDialogFlag, 'border-color-theme': rlaProfile.isActive && !activeDialogFlag}"
+      [routerLinkActive]="[]"
+      #rlaProfile="routerLinkActive">
+      <mat-icon
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': !rlaProfile.isActive || activeDialogFlag }" 
+        [color]="rlaProfile.isActive && !activeDialogFlag ? 'accent' : ''">person</mat-icon>
+      <div matListItemTitle>{{ 'MAIN_MENU.PROFILE' | translate }}</div>
+    </a>
+    <!--
+    <a mat-list-item
+      matRipple
+      [routerLink]="['squares']" 
+      [ngClass]="{active: rlaSquares.isActive && !activeDialogFlag, 'border-color-theme': rlaSquares.isActive && !activeDialogFlag}"
+      [routerLinkActive]="[]"
+      #rlaSquares="routerLinkActive">
+      <mat-icon
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': !rlaSquares.isActive || activeDialogFlag }" 
+        [color]="rlaSquares.isActive && !activeDialogFlag ? 'accent' : ''">groups</mat-icon>
+      <div matListItemTitle>Squares</div>
+    </a>
+    -->
+    <a mat-list-item
+      matRipple
+      [routerLink]="['settings']" 
+      [ngClass]="{active: rlaSettings.isActive && !activeDialogFlag, 'border-color-theme': rlaSettings.isActive && !activeDialogFlag}"
+      [routerLinkActive]="[]"
+      #rlaSettings="routerLinkActive">
+      <mat-icon
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': !rlaSettings.isActive || activeDialogFlag }" 
+        [color]="rlaSettings.isActive && !activeDialogFlag ? 'accent' : ''">settings</mat-icon>
+      <div matListItemTitle>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
+    </a>
+  </mat-nav-list>
 
-<mat-nav-list *ngIf="!account">
-  <a 
-    mat-list-item
-    matRipple
-    [routerLink]="['home']" 
-    [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
-    #rlaHome2="routerLinkActive"
-    [routerLinkActiveOptions]="{exact: true}">
-    <mat-icon 
-      matListItemIcon 
-      [class]="{ 'material-icons-outlined': !rlaHome2.isActive }" 
-      [color]="rlaHome2.isActive ? 'accent' : ''">house</mat-icon>
-    <div matListItemTitle>{{ 'MAIN_MENU.HOME' | translate }}</div>
-  </a>
-  <a mat-list-item
-    matRipple
-    [routerLink]="['browse']" 
-    [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
-    #rlaSearch2="routerLinkActive">
-    <mat-icon 
-      matListItemIcon
-      [class]="{ 'material-icons-outlined': !rlaSearch2.isActive }" 
-      [color]="rlaSearch2.isActive ? 'accent' : ''">tag</mat-icon>
-    <div matListItemTitle>Browse</div>
-  </a>
-  <a mat-list-item
-    matRipple
-    [routerLink]="['settings']" 
-    [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
-    #rlaSettings2="routerLinkActive">
-    <mat-icon
-      matListItemIcon
-      [class]="{ 'material-icons-outlined': !rlaSettings2.isActive }" 
-      [color]="rlaSettings2.isActive ? 'accent' : ''">settings</mat-icon>
-    <div matListItemTitle>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
-  </a>
-</mat-nav-list>
+  <mat-nav-list *ngIf="!account">
+    <a 
+      mat-list-item
+      matRipple
+      [routerLink]="['home']" 
+      [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
+      #rlaHome2="routerLinkActive"
+      [routerLinkActiveOptions]="{exact: true}">
+      <mat-icon 
+        matListItemIcon 
+        [class]="{ 'material-icons-outlined': !rlaHome2.isActive }" 
+        [color]="rlaHome2.isActive ? 'accent' : ''">house</mat-icon>
+      <div matListItemTitle>{{ 'MAIN_MENU.HOME' | translate }}</div>
+    </a>
+    <a mat-list-item
+      matRipple
+      [routerLink]="['browse']" 
+      [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
+      #rlaSearch2="routerLinkActive">
+      <mat-icon 
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': !rlaSearch2.isActive }" 
+        [color]="rlaSearch2.isActive ? 'accent' : ''">tag</mat-icon>
+      <div matListItemTitle>Browse</div>
+    </a>
+    <a mat-list-item
+      matRipple
+      [routerLink]="['settings']" 
+      [routerLinkActive]="['active', 'border-color-theme', 'color-accent-theme']"
+      #rlaSettings2="routerLinkActive">
+      <mat-icon
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': !rlaSettings2.isActive }" 
+        [color]="rlaSettings2.isActive ? 'accent' : ''">settings</mat-icon>
+      <div matListItemTitle>{{ 'MAIN_MENU.SETTINGS' | translate }}</div>
+    </a>
+  </mat-nav-list>
+
+  <mat-nav-list class="bottom-menu-list">
+    <a mat-list-item
+      matRipple
+      [matMenuTriggerFor]="menuPolicies"
+      [ngClass]="{
+        'active': (rlaPrivacyPolicy.isActive || rlaCookiePolicy.isActive) &&
+          !activeDialogFlag,
+        'border-color-theme': (rlaPrivacyPolicy.isActive ||
+        rlaCookiePolicy.isActive) && !activeDialogFlag}">
+      <mat-icon 
+        matListItemIcon
+        [class]="{ 'material-icons-outlined': (!rlaPrivacyPolicy.isActive && !rlaCookiePolicy.isActive) || activeDialogFlag }" 
+        [color]="(rlaPrivacyPolicy.isActive || rlaCookiePolicy.isActive) && !activeDialogFlag ? 'accent' : ''">policy</mat-icon>
+      <div matListItemTitle class="small-text">{{ 'MAIN_MENU.POLICIES' | translate }}</div>
+      <span matListItemMeta>
+        <mat-icon class="small-text" [inline]="true">chevron_right</mat-icon>
+      </span>
+    </a>
+
+
+    <mat-menu
+      #menuPolicies="matMenu" 
+      xPosition="before" direction="right">
+      <a mat-menu-item
+        matRipple
+        [routerLink]="['about', 'privacy-policy']" 
+        [ngClass]="{active: rlaPrivacyPolicy.isActive && !activeDialogFlag, 'border-color-theme': rlaPrivacyPolicy.isActive && !activeDialogFlag}"
+        [routerLinkActive]="[]"
+        #rlaPrivacyPolicy="routerLinkActive">
+        <mat-icon 
+          matListItemIcon
+          [class]="{ 'material-icons-outlined': !rlaPrivacyPolicy.isActive || activeDialogFlag }" 
+          [color]="rlaPrivacyPolicy.isActive && !activeDialogFlag ? 'accent' : ''">policy</mat-icon>
+        <div matListItemTitle class="small-text">{{ 'MAIN_MENU.PRIVACY_POLICY' | translate }}</div>
+
+      </a>
+      <a mat-menu-item
+        matRipple
+        [routerLink]="['about', 'cookie-policy']" 
+        [ngClass]="{active: rlaCookiePolicy.isActive && !activeDialogFlag, 'border-color-theme': rlaCookiePolicy.isActive && !activeDialogFlag}"
+        [routerLinkActive]="[]"
+        #rlaCookiePolicy="routerLinkActive">
+        <mat-icon 
+          matListItemIcon
+          [class]="{ 'material-icons-outlined': !rlaCookiePolicy.isActive || activeDialogFlag }" 
+          [color]="rlaCookiePolicy.isActive && !activeDialogFlag ? 'accent' : ''">cookie</mat-icon>
+        <div matListItemTitle class="small-text">{{ 'MAIN_MENU.COOKIE_POLICY' | translate }}</div>
+      </a>
+    </mat-menu>
+
+    
+  </mat-nav-list>
+</div>

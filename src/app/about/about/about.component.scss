@@ -1,0 +1,35 @@
+.active {
+  
+  opacity: 1;
+}
+
+
+.action-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.action-btn-wrapper div,
+.action-btn-wrapper .mat-icon,
+ {
+  
+}
+.action-btn-wrapper div {
+  font-size: 10px;
+  padding: 4px;
+  font-weight: bold;
+  line-height: 10px;
+}
+.mat-mdc-tab-link {
+  height: 66px;
+}
+.action-btn-label {
+  display: none;
+  font-weight: normal !important;
+  letter-spacing: 1px;
+ }
+@media (min-width: 600px) {
+  .action-btn-label {
+    margin-top: 2px;
+    display: block;
+  }
+}

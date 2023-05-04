@@ -1,0 +1,39 @@
+@@ -0,0 +1,38 @@
+<div>
+  <p>
+    <mat-toolbar class="secondary-toolbar" color="primary">
+      <button mat-icon-button>
+        <mat-icon>info</mat-icon>
+      </button>
+      <span>About</span>
+    </mat-toolbar>
+  </p>
+  <nav 
+    mat-tab-nav-bar 
+    class="mat-elevation-z1"
+    color="accent" [tabPanel]="tabPanel">
+    <a 
+      class="action-btn-wrapper"
+      mat-tab-link 
+      [routerLink]="['/', 'about', 'privacy-policy']"
+      routerLinkActive="active"
+      #rlPrivacyPolicy="routerLinkActive"
+      [active]="rlPrivacyPolicy.isActive"> 
+      <mat-icon
+        [class]="{ 'material-icons-outlined': !rlPrivacyPolicy.isActive }">policy</mat-icon>
+      <div class="action-btn-label">Privacy Policy</div>
+    </a>
+    <a
+      class="action-btn-wrapper"
+      mat-tab-link 
+      [routerLink]="['/', 'about', 'cookie-policy']"
+      routerLinkActive="active"
+      #rlCookiePolicy="routerLinkActive"
+      [active]="rlCookiePolicy.isActive">
+      <mat-icon
+        [class]="{ 'material-icons-outlined': !rlCookiePolicy.isActive }">cookies</mat-icon>
+      <div class="action-btn-label">Cookie Policy</div>
+    </a>
+  </nav>
+  <mat-tab-nav-panel #tabPanel><router-outlet></router-outlet></mat-tab-nav-panel>
+</div>

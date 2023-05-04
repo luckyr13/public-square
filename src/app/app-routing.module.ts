@@ -20,6 +20,7 @@ const routes: Routes = [
 	  component: ComposedCreatePostDialogComponent,
 	  outlet: 'popup'
 	},
+	{ path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
 	{
 		path: '',
 		canActivateChild: [InitPlatformGuard],
