@@ -208,18 +208,25 @@ h2 {
 .story-actions .mat-icon {
 	font-size: 22px;
 }
-.story-actions .action-btn-wrapper {
+.action-btn-wrapper {
 	flex-grow: 1;
-  flex-wrap: wrap;
 	text-align: center;
-
+	display: flex;
+	flex-direction: column;
+	padding: 12px;
+	height: 100%;
 }
-.story-actions .action-btn-wrapper div {
+.action-btn-wrapper span {
 	font-size: 10px;
 	margin-bottom: 10px;
 	font-weight: normal;
 	text-align: center;
 	line-height: 10px;
+	margin-top: 6px;
+}
+
+.action-btn-wrapper .mat-icon {
+	margin-right: 0px;
 }
 
 .pending {

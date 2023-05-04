@@ -3,7 +3,7 @@
 	Reposted:
 </h4>
 <mat-card
-	appearance="outlined"
+	appearance="raised"
 	class="post-card fadeIn mat-elevation-z0"
 	*ngIf="post"
 	[routerLink]="['/', post.owner, post.id]">
@@ -106,10 +106,10 @@
 		        <mat-menu #moreOptionsMenu="matMenu">
 		        	<mat-list class="tx-info-container">
 				        <mat-list-item>
-				        	<h3 matLine>
+				        	<h3 matListItemLine>
 				            TX Info
 				          </h3>
-				          <div matLine>
+				          <div matListItemLine>
 				            <app-arweave-address
 				              [address]="post.id"
 				              [isAddress]="false"
@@ -119,14 +119,14 @@
 				        <mat-list-item 
 				        	class="tx-metadata-chips"
 				        	*ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0))">
-						  		<h4 class="meta" matLine>Tx metadata:</h4>
-						  		<span matLine *ngIf="application">Application: {{ substr2(application, maxLengthTagText) }} </span>
-									<span matLine *ngIf="appName" >App-Name: {{ substr2(appName, maxLengthTagText) }}</span>
-									<span matLine *ngIf="service">Service: {{ substr2(service, maxLengthTagText) }} </span>
-									<span matLine *ngIf="postType" >Post type: {{ substr2(postType, maxLengthTagText) }}</span>
-									<span matLine *ngIf="postContentType" >Content type: {{ substr2(postContentType, maxLengthTagText) }}</span>
-									<span matLine *ngIf="owner" >Owner: {{ substr2(owner, maxLengthTagText) }}</span>
-									<span matLine *ngIf="postVersion" >Version: {{ substr2(postVersion, maxLengthTagText) }}</span>
+						  		<h4 class="meta" matListItemLine>Tx metadata:</h4>
+						  		<span matListItemLine *ngIf="application">Application: {{ substr2(application, maxLengthTagText) }} </span>
+									<span matListItemLine *ngIf="appName" >App-Name: {{ substr2(appName, maxLengthTagText) }}</span>
+									<span matListItemLine *ngIf="service">Service: {{ substr2(service, maxLengthTagText) }} </span>
+									<span matListItemLine *ngIf="postType" >Post type: {{ substr2(postType, maxLengthTagText) }}</span>
+									<span matListItemLine *ngIf="postContentType" >Content type: {{ substr2(postContentType, maxLengthTagText) }}</span>
+									<span matListItemLine *ngIf="owner" >Owner: {{ substr2(owner, maxLengthTagText) }}</span>
+									<span matListItemLine *ngIf="postVersion" >Version: {{ substr2(postVersion, maxLengthTagText) }}</span>
 				        </mat-list-item>
 				      </mat-list>
 						</mat-menu>
@@ -208,52 +208,40 @@
 			<!-- /story-container -->
 		</div>
 	</mat-card-content>
-	<mat-card-actions>
-		<div 
-	  	*ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0)) && showActions"
-	  	class="fadeIn story-actions">
-	  	<div class="action-btn-wrapper">
-        <button 
-        	mat-button 
-        	class="blue-hover"
-        	(click)="reply($event)"
-        	aria-label="Reply">
-	        <mat-icon class="material-icons-outlined">reply</mat-icon>
-        	<div>{{ 'GENERAL.STORY.REPLY' | translate }}</div>
-	      </button>
-      </div>
-	  	<div class="action-btn-wrapper">
-	  		<button
-	  			mat-button
-	  			class="green-hover"
-	  			(click)="repost($event)"
-	  			aria-label="Repost">
-	        <mat-icon class="material-icons-outlined">repeat</mat-icon>
-	        <div>{{ 'GENERAL.STORY.REPOST' | translate }}</div>
-	      </button>
-	  	</div>
-      <div class="action-btn-wrapper">
-      	<button
-      		mat-button
-      		class="pink-hover"
-      		aria-label="Like"
-      		(click)="like($event)">
-	        <mat-icon class="material-icons-outlined">favorite</mat-icon>
-        	<div>{{ 'GENERAL.STORY.LIKE' | translate }}</div>
-	      </button>
-	  	</div>
-      <div class="action-btn-wrapper">
-      	<button
-      		mat-button
-      		class="orange-hover"
-      		aria-label="Share Story"
-      		(click)="share($event)">
-	        <mat-icon class="material-icons-outlined">share</mat-icon>
-        	<div>{{ 'GENERAL.STORY.SHARE' | translate }}</div>
-	      </button>
-	  	</div>
-	  </div>
-	  
+	<mat-card-actions *ngIf="!loadingContent && !(post && (!post.blockId || post.blockHeight == 0)) && showActions"
+	  	class="fadeIn">
+    <button 
+    	mat-button 
+    	class="blue-hover action-btn-wrapper"
+    	(click)="reply($event)"
+    	aria-label="Reply">
+      <mat-icon class="material-icons-outlined">reply</mat-icon>
+    	<span>{{ 'GENERAL.STORY.REPLY' | translate }}</span>
+    </button>
+		<button
+			mat-button
+			class="green-hover action-btn-wrapper"
+			(click)="repost($event)"
+			aria-label="Repost">
+      <mat-icon class="material-icons-outlined">repeat</mat-icon>
+      <span>{{ 'GENERAL.STORY.REPOST' | translate }}</span>
+    </button>
+  	<button
+  		mat-button
+  		class="pink-hover action-btn-wrapper"
+  		aria-label="Like"
+  		(click)="like($event)">
+      <mat-icon class="material-icons-outlined">favorite</mat-icon>
+    	<span>{{ 'GENERAL.STORY.LIKE' | translate }}</span>
+    </button>
+  	<button
+  		mat-button
+  		class="orange-hover action-btn-wrapper"
+  		aria-label="Share Story"
+  		(click)="share($event)">
+      <mat-icon class="material-icons-outlined">share</mat-icon>
+    	<span>{{ 'GENERAL.STORY.SHARE' | translate }}</span>
+    </button>
 	</mat-card-actions>
 </mat-card>
 <mat-divider></mat-divider>
