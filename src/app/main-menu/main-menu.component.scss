@@ -16,6 +16,25 @@
 	letter-spacing: 2px;
 }
 
-.mat-line {
-	margin-left: 10px;
+.mat-mdc-list-item-title {
+	margin-left: 0px;
+}
+
+.menu-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.small-text {
+	font-size: 12px !important;
+}
+
+.mdc-list-item.mdc-list-item--with-one-line {
+	height: 56px;
+}
+
+.bottom-menu-list {
+	padding-bottom: 0px;
 }
