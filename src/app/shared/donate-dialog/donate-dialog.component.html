@@ -18,15 +18,15 @@
       <strong>Choose amount: </strong>
     </p>
     <div class="">
+      <!-- TODO: The 'tickInterval' property no longer exists -->
       <mat-slider
         class="donation-slider"
         [(ngModel)]="amount"
-        tickInterval="1"
         step="0.00001"
         min="0"
         [disabled]="loadingBalance"
         [max]="maxAmount"
-        aria-label="AR"></mat-slider>
+        aria-label="AR"><input matSliderThumb /></mat-slider>
     </div>
     <div>
       {{ amount }} AR

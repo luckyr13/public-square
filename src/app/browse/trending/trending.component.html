@@ -32,6 +32,7 @@
 	</div>
 	<mat-spinner *ngIf="loadingMoreResults" color="accent" diameter="32"></mat-spinner>
 	<mat-card 
+		appearance="outlined" 
 		#moreResultsCard 
 		[style.visibility]="!loadingResults && !loadingMoreResults && moreResultsAvailable ? 'visible' : 'hidden'"
 		class="more-results-card mat-elevation-z0"

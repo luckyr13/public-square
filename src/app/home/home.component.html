@@ -40,6 +40,7 @@
 				{{ 'GENERAL.LABELS.NO_RESULTS' | translate }}
 			</div>
 			<mat-card 
+				appearance="outlined" 
 				#moreResultsCard 
 				[style.visibility]="!loadingPosts && moreResultsAvailable ? 'visible' : 'hidden'"
 				class="more-results-card mat-elevation-z0"

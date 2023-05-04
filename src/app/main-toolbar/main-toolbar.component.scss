@@ -44,7 +44,7 @@ mat-toolbar {
 	font-weight: bold;
 }
 
-.mat-button span {
+.mat-mdc-button span {
 	margin-left: 8px;
 	font-size: 12px;
 	font-weight: bold;
@@ -88,7 +88,7 @@ mat-toolbar {
 	margin-top: -6px;
 	font-size: 10px;
 }
-.mat-radio-button {
+.mat-mdc-radio-button {
 	width: 100%;
 }
 .theme-info {
@@ -102,7 +102,8 @@ mat-toolbar {
 	font-size: 10px !important;
 }
 
-.theme-menu-container .mat-list-item.mat-2-line,
+/* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
+.theme-menu-container .mat-mdc-list-item.mat-2-line,
 .theme-menu-container .mat-list-option.mat-2-line {
 	height: 42px !important;
 }

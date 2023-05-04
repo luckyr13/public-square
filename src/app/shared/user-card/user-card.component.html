@@ -1,4 +1,5 @@
 <mat-card 
+	appearance="outlined" 
 	class="user-card mat-elevation-z0"
 	[routerLink]="disableNavigateToProfile ? [] : ['/', address]">
 	<mat-progress-bar mode="buffer" color="accent" *ngIf="loadingProfile"></mat-progress-bar>

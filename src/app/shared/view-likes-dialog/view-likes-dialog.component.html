@@ -13,7 +13,7 @@
 		<div class="no-results" *ngIf="!likesList.length && !loadingLikes">
 			No results.
 		</div>
-		<mat-card class="more-results-card mat-elevation-z0" matRipple *ngIf="!loadingLikes && moreResultsAvailable" (click)="moreResults()" >
+		<mat-card appearance="outlined" class="more-results-card mat-elevation-z0" matRipple *ngIf="!loadingLikes && moreResultsAvailable" (click)="moreResults()" >
 		  <mat-card-content class="more-results text-center">
 				Show more
 		  </mat-card-content>

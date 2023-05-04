@@ -10,12 +10,13 @@
 	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card-header {
 	width: 100%;
 	margin-bottom: 20px;
 }
 
-.mat-card-content {
+.mat-mdc-card-content {
 }
 
 .card-content {
@@ -91,7 +92,7 @@ mat-card-header {
   text-overflow: ellipsis;
 }
 
-.mat-card-actions {
+.mat-mdc-card-actions {
 	margin-top: 22px;
 }
 
@@ -197,7 +198,7 @@ h2 {
   flex-wrap: wrap;
 }
 
-.story-actions .mat-button {
+.story-actions .mat-mdc-button {
 	width: 100%;
 	-webkit-transition: color 0.5s ease-out;
   -moz-transition: color 0.5s ease-out;
@@ -233,7 +234,7 @@ h2 {
 	line-height: 32px;
 }
 
-.pending .mat-spinner {
+.pending .mat-mdc-progress-spinner {
 	margin-left: 20px;
 }
 

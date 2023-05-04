@@ -7,7 +7,7 @@
 	<div class="no-results" *ngIf="!posts.length && !loadingPosts">
 		There are no pending Stories!
 	</div>
-	<mat-card class="more-results-card mat-elevation-z0" matRipple *ngIf="!loadingPosts && moreResultsAvailable" (click)="moreResults()" >
+	<mat-card appearance="outlined" class="more-results-card mat-elevation-z0" matRipple *ngIf="!loadingPosts && moreResultsAvailable" (click)="moreResults()" >
 	  <mat-card-content class="more-results text-center">
 			Show older posts
 	  </mat-card-content>

@@ -5,7 +5,7 @@
 	min-width: 200px;
 }
 
-.content .mat-spinner {
+.content .mat-mdc-progress-spinner {
 	margin: 0 auto;
 }
 
@@ -32,11 +32,11 @@
 	margin-bottom: 6px;
 }
 
-.mat-dialog-container {
+.mat-mdc-dialog-container {
 	padding: 0px;
 }
 
-.mat-dialog-content {
+.mat-mdc-dialog-content {
 	border-top: 1px solid;
 }
 
@@ -57,14 +57,14 @@
 	margin-bottom: 12px;
 }
 
-.btn-upload.mat-fab .mat-icon {
+.btn-upload.mat-mdc-fab .mat-icon {
 	font-size: 52px !important;
 	width: 52px !important;
 	height: 52px !important;
 	line-height: 52px;
 }
 
-.btn-upload.mat-fab {
+.btn-upload.mat-mdc-fab {
 	width: 98px;
 	height: 98px;
 }
@@ -101,14 +101,14 @@
 		margin-bottom: 12px;
 	}
 
-	.btn-upload.mat-fab .mat-icon {
+	.btn-upload.mat-mdc-fab .mat-icon {
 		font-size: 72px !important;
 		width: 72px !important;
 		height: 72px !important;
 		line-height: 72px;
 	}
 
-	.btn-upload.mat-fab {
+	.btn-upload.mat-mdc-fab {
 		width: 118px;
 		height: 118px;
 	}

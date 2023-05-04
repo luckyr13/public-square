@@ -18,29 +18,29 @@ h2 .header-icon {
 .info-container p {
 	padding: 20px;
 }
-.info-container .mat-list {
+.info-container .mat-mdc-list {
 	padding: 20px;
 }
 
-.info-container .mat-button {
+.info-container .mat-mdc-button {
 	font-size: 14px !important;
 }
 
-.mat-list-item {
+.mat-mdc-list-item {
 	font-size: 14px;
 }
 
-.mat-list-item span {
+.mat-mdc-list-item span {
 	margin-left: 6px;
 	margin-right: 6px;
 }
 
-.mat-button {
+.mat-mdc-button {
 	margin-left: 12px;
 	margin-bottom: 12px;
 }
 
-.mat-button.active {
+.mat-mdc-button.active {
 	font-weight: bold;
 	text-decoration: underline;
 }

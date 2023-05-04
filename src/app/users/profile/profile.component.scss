@@ -90,8 +90,8 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
   text-align: center;
   padding-top: 4px;
 }
-.profile-actions .mat-stroked-button,
-.profile-actions .mat-flat-button,
+.profile-actions .mat-mdc-outlined-button,
+.profile-actions .mat-mdc-unelevated-button,
 .extra-actions .mat-stroked-button,
 .extra-actions .mat-flat-button {
   margin-left: 10px;
@@ -159,7 +159,10 @@ background: linear-gradient(to right, #0f3443, #34e89e); /* W3C, IE 10+/ Edge, F
   opacity: 1;
 }
 
-.mat-tab-label, .mat-tab-link {
+/*
+TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version.
+*/
+.mat-tab-label, .mat-mdc-tab-link {
   letter-spacing: 1px;
 }
 .banner-img-btn {

@@ -3,12 +3,13 @@
 	margin: 0 auto;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card-header {
 	width: 100%;
 	margin-bottom: 20px;
 }
 
-.mat-card-content {
+.mat-mdc-card-content {
 	min-height: 50px;
 }
 
@@ -55,7 +56,7 @@ mat-card-header {
 	height: 100;
 }
 
-.mat-card-actions {
+.mat-mdc-card-actions {
 	padding-top: 0px;
 }
 
@@ -87,7 +88,7 @@ mat-card-header {
 	margin-top: 6px;
 }
 
-.substories .mat-list-base .mat-list-item {
+.substories .mat-mdc-list-base .mat-mdc-list-item {
 	font-size: 12px !important;
 }
 

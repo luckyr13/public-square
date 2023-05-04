@@ -23,7 +23,7 @@
 			class="mat-card-container fadeIn"
 			(click)="close({ id: file.id, type: data.type })"
 			*ngFor="let file of files">
-			<mat-card>
+			<mat-card appearance="outlined">
 				<div class="card-img-container">
 					<img [src]="getFileUrl(file.id)" alt="Img">
 				</div>
@@ -37,6 +37,7 @@
 				You have no files yet!
 			</div>
 			<mat-card 
+				appearance="outlined" 
 				#moreResultsCard 
 				[style.visibility]="!loadingMore && !loadingFiles && moreResultsAvailable ? 'visible' : 'hidden'"
 				class="more-results-card mat-elevation-z0"
