@@ -18,10 +18,10 @@
     <mat-menu #themeMenu="matMenu">
       <mat-list class="theme-menu-container">
         <mat-list-item>
-          <span matLine class="theme-menu-title">
+          <span matListItemLine class="theme-menu-title">
             Current theme
           </span>
-          <span matLine class="theme-menu-subtitle" *ngIf="theme && getTheme(theme.value)">
+          <span matListItemLine class="theme-menu-subtitle" *ngIf="theme && getTheme(theme.value)">
             {{ getTheme(theme.value).label }}
           </span>
         </mat-list-item>
@@ -46,7 +46,7 @@
           color="accent"
           class="search-container theme-text-color">
           <mat-label>Search</mat-label>
-          <input  formControlName="searchQry" matInput autocomplete="off" placeholder="">
+          <input formControlName="searchQry" matInput autocomplete="off" placeholder="">
         </mat-form-field>
       </form>
       <div class="browse-link-c">

@@ -1,23 +1,23 @@
 <h3>{{ 'DIALOGS.SHARE.TITLE' | translate }}</h3>
 <mat-nav-list>
   <mat-list-item (click)="shareInSocialMedia('facebook')">
-    <img matListAvatar src="./assets/images/social-media/facebookR.png">
-    <span mat-line>Facebook</span>
-    <span mat-line>{{ 'DIALOGS.SHARE.FACEBOOK' | translate }}</span>
+    <img matListItemAvatar src="./assets/images/social-media/facebookR.png">
+    <span matListItemTitle>Facebook</span>
+    <span matListItemLine>{{ 'DIALOGS.SHARE.FACEBOOK' | translate }}</span>
   </mat-list-item>
 	<mat-list-item (click)="shareInSocialMedia('twitter')">
-		<img matListAvatar src="./assets/images/social-media/twitterR.png">
-    <span mat-line>Twitter</span>
-    <span mat-line>{{ 'DIALOGS.SHARE.TWITTER' | translate }}</span>
+		<img matListItemAvatar src="./assets/images/social-media/twitterR.png">
+    <span matListItemTitle>Twitter</span>
+    <span matListItemLine>{{ 'DIALOGS.SHARE.TWITTER' | translate }}</span>
   </mat-list-item>
   <mat-list-item (click)="shareInSocialMedia('whatsapp')">
-		<img matListAvatar class="not-rounded" src="./assets/images/social-media/whatsappR.png">
-    <span mat-line>WhatsApp</span>
-    <span mat-line>{{ 'DIALOGS.SHARE.WHATSAPP' | translate }}</span>
+		<img matListItemAvatar class="not-rounded" src="./assets/images/social-media/whatsappR.png">
+    <span matListItemTitle>WhatsApp</span>
+    <span matListItemLine>{{ 'DIALOGS.SHARE.WHATSAPP' | translate }}</span>
   </mat-list-item>
   <mat-list-item (click)="shareInSocialMedia('copyLink')">
-  	<mat-icon matListIcon>link</mat-icon>
-    <span mat-line>Copy link</span>
-    <span mat-line>{{ 'DIALOGS.SHARE.COPY' | translate }}</span>
+  	<mat-icon matListItemIcon>link</mat-icon>
+    <span matListItemTitle>Copy link</span>
+    <span matListItemLine>{{ 'DIALOGS.SHARE.COPY' | translate }}</span>
   </mat-list-item>
 </mat-nav-list>
