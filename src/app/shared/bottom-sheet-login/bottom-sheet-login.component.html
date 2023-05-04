@@ -1,23 +1,27 @@
-<mat-progress-bar *ngIf="loadingLogin" color="accent" mode="indeterminate"></mat-progress-bar>
 <mat-nav-list>
+  <mat-progress-bar *ngIf="loadingLogin" color="accent" mode="indeterminate"></mat-progress-bar>
   <mat-checkbox class="option" (change)="setStayLoggedIn($event)">Stay Logged In</mat-checkbox>
   <mat-list-item (click)="login('arconnect')">
-    <img matListAvatar src="./assets/images/login-methods/arconnect.jpg">
-    <span mat-line>ArConnect</span>
+    <img matListItemAvatar src="./assets/images/login-methods/arconnect.jpg">
+    <span matListItemTitle>ArConnect</span>
   </mat-list-item>
   <mat-list-item (click)="login('arweavewebwallet')">
-    <img matListAvatar src="./assets/images/login-methods/arweaveViewSmall.svg">
-    <span mat-line>Arweave.app</span>
+    <img matListItemAvatar src="./assets/images/login-methods/arweaveViewSmall.svg">
+    <span matListItemTitle>Arweave.app</span>
   </mat-list-item>
+  <!--
   <mat-list-item (click)="uploadFileListener(fileUploader)" >
     <mat-icon matListIcon>upload</mat-icon>
     <span mat-line>Load your key file</span>
     <span mat-line>*The key is kept encrypted within your browser</span>
   </mat-list-item>
+  -->
 </mat-nav-list>
+<!--
 <div style="visibility: hidden">
   <input type="file" 
     #fileUploader 
     accept=".json,application/json" 
     (change)="login('pkFile', $event)">
 </div>
+-->
