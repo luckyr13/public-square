@@ -38,6 +38,8 @@ export class ArweaveAccountService {
   getProfile(walletAddr: string): Observable<UserProfile|null> {
     return from(this._account.get(walletAddr)).pipe(
       map((account: ArAccount) => {
+        console.log(account, 'res')
+        const metaweaveDefaultProfileImg = 'OrG-ZG2WN3wdcwvpjz1ihPe4MI24QBJUpsJGIdL85wA';
         const profile = account && account.profile ? account.profile : null;
         const address = account && account.addr ? account.addr : '';
         const handleName = profile && profile.handleName ? profile.handleName : '';
@@ -49,7 +51,7 @@ export class ArweaveAccountService {
         const bannerURL = profile && profile.bannerURL ? profile.bannerURL : '';
         const links = profile && profile.links ? profile.links : {};
         let avatarURL = profile && profile.avatarURL ? profile.avatarURL : '';
-        if (avatarURL === 'https://arweave.net/OrG-ZG2WN3wdcwvpjz1ihPe4MI24QBJUpsJGIdL85wA') {
+        if (avatarURL.includes(metaweaveDefaultProfileImg)) {
           avatarURL = this.defaultProfileImage;
         }
         const wallets = profile && profile.wallets ? profile.wallets : {};
