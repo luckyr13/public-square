@@ -39,9 +39,10 @@ export class UserAuthService {
       const method = storage.getItem('METHOD');
     
       // Private key method
-      if (method === 'pkFile') {
-        throw new Error('LaunchPasswordModal');
+      //if (method === 'pkFile') {
+        // throw new Error('LaunchPasswordModal');
         /*
+        // DEPRECATED
         const arkey = storage.getItem('ARKEY');
         this._arKey = JSON.parse(arkey!);
         this._arweave.arweave.wallets.jwkToAddress(this._arKey).then((address) => {
@@ -52,7 +53,8 @@ export class UserAuthService {
           subscriber.error(reason);
         });
         */
-      } else if (method === 'arconnect' ||
+      //}
+      if (method === 'arconnect' ||
           method === 'finnie')  {
         window.addEventListener('arweaveWalletLoaded', (e) => {
           this.login(method, null, stayLoggedIn).subscribe({
@@ -114,7 +116,9 @@ export class UserAuthService {
         this.setAccount(address, undefined, stayLoggedIn, method);
       });
       this._arweave.arweaveWebWallet.on('disconnect', () => {
-        //this.logout()
+        this.removeAccount();
+        this._account.next('');
+        window.location.reload();
       });
     }
   }
@@ -147,6 +151,7 @@ export class UserAuthService {
     let method: Observable<string|AddressKey>;
 
     switch (walletOption) {
+      /*
       case 'pkFile':
         if (uploadInputEvent) {
           method = this._arweave.uploadKeyFile(uploadInputEvent).pipe(
@@ -160,6 +165,7 @@ export class UserAuthService {
           throw Error('InputError');
         }
       break;
+      */
       case 'arconnect':
         method = this._arweave.getAccount(walletOption).pipe(
             tap( (_account: string) => {
@@ -194,13 +200,26 @@ export class UserAuthService {
     return method;
   }
 
-  public logout() {
+  async logout() {
     if ((this._method === 'finnie' || 
-        this._method === 'arconnect' || 
-        this._method === 'arweavewebwallet') &&
+        this._method === 'arconnect') &&
         (window && window.arweaveWallet)) {
-      window.arweaveWallet.disconnect();
+      try {
+        await window.arweaveWallet.disconnect();
+        console.log(this._method, 'Wallet disconnected');
+      } catch (error) {
+        console.error('wallet', error);
+      }
+    } else if (this._method === 'arweavewebwallet') {
+      try {
+        await this._arweave.arweaveWebWallet.disconnect();
+        console.log(this._method, 'ArweaveWallet disconnected');
+      } catch (error) {
+        console.error('wallet', error);
+      }
     }
+    this.removeAccount();
+    this._account.next('');
     this.removeAccount();
   }
 

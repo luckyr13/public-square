@@ -6,11 +6,11 @@ import { AddressKey } from '../../core/interfaces/address-key';
 import {MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { 
-  PasswordDialogComponent 
-} from '../../shared/password-dialog/password-dialog.component';
-import { SubtleCryptoService } from '../../core/utils/subtle-crypto.service';
-import * as b64 from 'base64-js';
+//import { 
+//  PasswordDialogComponent 
+//} from '../../shared/password-dialog/password-dialog.component';
+//import { SubtleCryptoService } from '../../core/utils/subtle-crypto.service';
+//import * as b64 from 'base64-js';
 import { UserSettingsService } from '../../core/services/user-settings.service';
 import { Direction } from '@angular/cdk/bidi';
 import { JWKInterface } from 'arweave/web/lib/wallet';
@@ -24,7 +24,7 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
   loginSubscription: Subscription = Subscription.EMPTY;
   stayLoggedIn: boolean = false;
   loadingLogin = false;
-  encryptSubscription = Subscription.EMPTY;
+  // encryptSubscription = Subscription.EMPTY;
 
   constructor(
     private _auth: UserAuthService,
@@ -32,7 +32,7 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
     private _bottomSheetRef: MatBottomSheetRef<BottomSheetLoginComponent>,
     private _router: Router,
     private _dialog: MatDialog,
-    private _crypto: SubtleCryptoService, 
+    // private _crypto: SubtleCryptoService, 
     private _userSettings: UserSettingsService
   ) {}
 
@@ -45,7 +45,7 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
   */
   ngOnDestroy(): void {
     this.loginSubscription.unsubscribe();
-    this.encryptSubscription.unsubscribe();
+    // this.encryptSubscription.unsubscribe();
   }
 
   /*
@@ -73,6 +73,7 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
     this.loginSubscription = this._auth.login(walletOption, fileInputEvent, this.stayLoggedIn).subscribe({
       next: (address: string|AddressKey) => {
         // If pk
+        /*
         if (walletOption === 'pkFile') {
           const tmpAddress = address as AddressKey;
           const target = <HTMLInputElement>(fileInputEvent!.target!);
@@ -80,10 +81,11 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
           this.setPasswordDialog(tmpAddress);
             
         } else {
+        */
           this.loadingLogin = false;
           this._bottomSheetRef.dismiss(address);
           this._utils.message('Welcome!', 'success');
-        }
+        //}
         
       },
       error: (error) => {
@@ -95,6 +97,7 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  /*
   setPasswordDialog(tmpAddress: AddressKey) {
     const defLang = this._userSettings.getDefaultLang();
     const defLangObj = this._userSettings.getLangObject(defLang);
@@ -144,6 +147,6 @@ export class BottomSheetLoginComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  */
 
 }

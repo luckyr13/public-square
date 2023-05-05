@@ -27,6 +27,7 @@
     "@codemirror/view": "^6.4.2",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "arconnect": "^0.4.2",
     "ardb": "^1.1.10",
     "arweave": "^1.11.4",
     "arweave-account": "^1.3.4",
