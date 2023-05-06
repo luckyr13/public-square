@@ -23,7 +23,7 @@
         matListItemIcon
         [class]="{ 'material-icons-outlined': !rlaPost.isActive }" 
         [color]="rlaPost.isActive ? 'accent' : ''">post_add</mat-icon>
-      <div matListItemTitle>Create Post</div>
+      <div matListItemTitle>{{ 'MAIN_MENU.CREATE_POST' | translate }}</div>
     </a>
     <a mat-list-item
       matRipple
@@ -35,7 +35,7 @@
         matListItemIcon
         [class]="{ 'material-icons-outlined': !rlaSearch.isActive || activeDialogFlag }" 
         [color]="rlaSearch.isActive && !activeDialogFlag ? 'accent' : ''">tag</mat-icon>
-      <div matListItemTitle>Browse</div>
+      <div matListItemTitle>{{ 'MAIN_MENU.BROWSE' | translate }}</div>
     </a>
     <a mat-list-item
       matRipple

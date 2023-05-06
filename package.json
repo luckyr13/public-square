@@ -27,6 +27,7 @@
     "@codemirror/view": "^6.11.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@types/marked": "^4.3.0",
     "arconnect": "^0.4.2",
     "ardb": "^1.1.10",
     "arweave": "^1.13.7",
@@ -38,6 +39,7 @@
     "linkify-plugin-mention": "^4.1.1",
     "linkify-string": "^4.1.1",
     "linkifyjs": "^4.1.1",
+    "marked": "^5.0.0",
     "ngx-skeleton-loader": "^7.0.0",
     "rxjs": "^7.8.1",
     "tslib": "^2.4.1",
@@ -60,14 +62,9 @@
     "karma-jasmine-html-reporter": "^2.0.0",
     "typescript": "^4.8.4"
   },
-  "browser": {
-    "fs": false,
-    "crypto": false,
-    "stream": false,
-    "path": false,
-    "v8": false,
-    "undici": false,
-    "@three-em/node": false,
-    "@three-em/js": false
+  "overrides": {
+    "arweave-account": {
+      "arweave": "1.13.4"
+    }
   }
 }

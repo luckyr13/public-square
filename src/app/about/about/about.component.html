@@ -1,11 +1,10 @@
-@@ -0,0 +1,38 @@
 <div>
   <p>
     <mat-toolbar class="secondary-toolbar" color="primary">
       <button mat-icon-button>
         <mat-icon>info</mat-icon>
       </button>
-      <span>About</span>
+      <span>{{ 'MAIN_MENU.POLICIES' | translate }}</span>
     </mat-toolbar>
   </p>
   <nav 
@@ -21,7 +20,7 @@
       [active]="rlPrivacyPolicy.isActive"> 
       <mat-icon
         [class]="{ 'material-icons-outlined': !rlPrivacyPolicy.isActive }">policy</mat-icon>
-      <div class="action-btn-label">Privacy Policy</div>
+      <div class="action-btn-label">{{ 'MAIN_MENU.PRIVACY_POLICY' | translate }}</div>
     </a>
     <a
       class="action-btn-wrapper"
@@ -32,7 +31,7 @@
       [active]="rlCookiePolicy.isActive">
       <mat-icon
         [class]="{ 'material-icons-outlined': !rlCookiePolicy.isActive }">cookies</mat-icon>
-      <div class="action-btn-label">Cookie Policy</div>
+      <div class="action-btn-label">{{ 'MAIN_MENU.COOKIE_POLICY' | translate }}</div>
     </a>
   </nav>
   <mat-tab-nav-panel #tabPanel><router-outlet></router-outlet></mat-tab-nav-panel>

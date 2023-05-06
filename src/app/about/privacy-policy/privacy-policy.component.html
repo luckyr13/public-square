@@ -1,1 +1,10 @@
-<p>privacy-policy works!</p>
+<mat-progress-bar 
+	color="accent"
+	mode="indeterminate"
+	*ngIf="loading"
+	class="fadeIn"></mat-progress-bar>
+<div class="mt-main"></div>
+<h1 class="page-title col-12 text-center">
+	{{ 'MAIN_MENU.PRIVACY_POLICY' | translate }}
+</h1>
+<div class="col-12 embedded-content" [innerHTML]="content"></div>

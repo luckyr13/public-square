@@ -7,6 +7,7 @@ import 'linkify-plugin-mention';
 import DOMPurify from 'dompurify';
 import { Observable, from } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { marked } from 'marked';
 
 @Injectable({
   providedIn: 'root'
@@ -199,6 +200,22 @@ export class UtilsService {
       hashtag.substr(1, hashtag.length) :
       hashtag;
     return hasht;
+  }
+
+  /*
+  *  @dev Sanitize HTML
+  */
+  markdownToHTML(_markdown: string) {
+    var html = marked.parse(_markdown);
+    var clean = DOMPurify.sanitize(html);
+    return clean;
+  }
+
+  /*
+  *  @dev Remove HTML
+  */
+  removeHTMLfromStr(_html: string) {
+    return DOMPurify.sanitize(_html, {ALLOWED_TAGS: []});
   }
 
 }
