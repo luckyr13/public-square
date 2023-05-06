@@ -1,7 +1,7 @@
 # Public Square deployed versions
 
 ## 0.3.1
-Backup (2023-05-05): https://arweave.net/zcw-iGjR-aUhnpzZXyVI_oJZAZPv3U4bEIBsAWrHeI0
+Backup (2023-05-05): https://arweave.net/Mp9PknoZ8jSDmBa5h3agrxXjjGu2IioHPrhxVakYDa8
 - Upgraded from Angular 14 to Angular 15.
 - About (policies) module added.
 - Privacy and Cookie policies added.
