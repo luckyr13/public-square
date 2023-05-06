@@ -8,7 +8,7 @@ declare const document: any;
 })
 export class AppSettingsService {
   appName = 'Public Square';
-  appVersion = '0.3.0';
+  appVersion = '0.3.1';
 
   // Dev protocol
   // protocolVersion = '0.0-dev';

@@ -1,5 +1,14 @@
 # Public Square deployed versions
 
+## 0.3.1
+Backup (2023-05-05): 
+- Upgraded from Angular 14 to Angular 15.
+- About (policies) module added.
+- Privacy and Cookie policies added.
+- Cookie consent dialog added.
+- Login methods fixed and improved.
+- Arweave Account (ArProfile) links updated.
+
 ## 0.3.0
 Backup (2023-03-13): https://arweave.net/OOGb925m3Lv5jLUCxIDwyDN7jZfpDr6yZISaw4Mpcgg
 - Replace YouTube player for a link
