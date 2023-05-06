@@ -18,9 +18,11 @@ import {
   PasswordDialogComponent 
 } from './shared/password-dialog/password-dialog.component';
 import { ArweaveService } from './core/services/arweave.service';
-import { SubtleCryptoService } from './core/utils/subtle-crypto.service';
+//import { SubtleCryptoService } from './core/utils/subtle-crypto.service';
 import { JWKInterface } from 'arweave/web/lib/wallet';
 import * as b64 from 'base64-js';
+import { DialogCookiesMsgComponent } from './shared/dialog-cookies-msg/dialog-cookies-msg.component';
+import { Direction } from '@angular/cdk/bidi';
 
 @Component({
   selector: 'app-root',
@@ -43,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public dialog: MatDialog,
     private _translate: TranslateService,
     private _arweave: ArweaveService,
-    private _crypto: SubtleCryptoService
+    // private _crypto: SubtleCryptoService
   ) {
     this.platformLoading$ = this._appSettings.loadingPlatform$;
   }

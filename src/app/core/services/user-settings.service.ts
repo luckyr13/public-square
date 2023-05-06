@@ -24,6 +24,7 @@ export class UserSettingsService {
   public currentThemeStream = this._currentThemeSource.asObservable();
   public themes: Record<string, ThemeObject>;
   public languages: Record<string, LanguageObj>;
+  private _cookiesAccepted = false;
 
   constructor(
     private _translate: TranslateService,
@@ -35,6 +36,8 @@ export class UserSettingsService {
     const tmpSettings = this._storage.getItem('settings');
     let dtheme = '';
     let dlang = '';
+    const dcookiesAccepted = JSON.parse(this._storage.getItem('cookiesAccepted'));
+
     try {
       settings = JSON.parse(tmpSettings); 
     } catch (error) {
@@ -53,6 +56,10 @@ export class UserSettingsService {
     } else {
       _translate.setDefaultLang('en');
       this.setDefaultLang('EN');
+    }
+
+    if (dcookiesAccepted) {
+      this.setCookiesAccepted(dcookiesAccepted);
     }
   }
 
@@ -74,6 +81,10 @@ export class UserSettingsService {
 
   get langCodesList(): string[] {
     return Object.keys(this.languages);
+  }
+
+  getCookiesAccepted(): boolean {
+    return this._cookiesAccepted;
   }
 
   setDefaultTheme(_theme: string) {
@@ -128,6 +139,13 @@ export class UserSettingsService {
 
   getLangObject(langCode: string): LanguageObj|null {
     return this._langService.getLangObject(langCode);
+  }
+  
+  setCookiesAccepted(_cookiesAccepted: boolean) {
+    if (_cookiesAccepted) {
+      this._cookiesAccepted = _cookiesAccepted;
+      window.localStorage.setItem('cookiesAccepted', this._cookiesAccepted);
+    }
   }
   
 }

@@ -77,5 +77,10 @@
 			"CONFIRM": "Resume session",
 			"DISMISS": "Dismiss"
 		}
-  }
+  },
+	"COOKIES_CONSENT": {
+		"MSG": "This website uses cookies and similar technologies to enhance your user experience.",
+		"ACCEPT": "Accept",
+		"LEARN_MORE": "Learn more"
+	}
 }
