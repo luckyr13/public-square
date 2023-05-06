@@ -4,7 +4,16 @@
 		"SEARCH": "Search",
 		"PROFILE": "Profile",
 		"FRIENDS": "Friends",
-		"SETTINGS": "Settings"
+		"SETTINGS": "Settings",
+		"CREATE_POST": "Create Post",
+		"BROWSE": "Browse",
+		"POLICIES": "Policies",
+		"PRIVACY_POLICY": "Privacy policy",
+		"COOKIE_POLICY": "Cookie policy",
+		"COMMUNITY_GUIDELINES": "Community guidelines",
+		"TERMS_OF_SERVICE": "Terms of service",
+		"CREATE_STORY": "Create post",
+		"ABOUT": "About"
 	},
 	"GENERAL": {
 		"BUTTONS": {

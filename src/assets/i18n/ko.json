@@ -4,7 +4,16 @@
 		"SEARCH": "검색",
 		"PROFILE": "Profile",
 		"FRIENDS": "Friends",
-		"SETTINGS": "설정"
+		"SETTINGS": "설정",
+		"CREATE_POST": "Create Post",
+		"BROWSE": "BROWSE",
+		"POLICIES": "Policies",
+		"PRIVACY_POLICY": "Privacy policy",
+		"COOKIE_POLICY": "Cookie policy",
+		"COMMUNITY_GUIDELINES": "Community guidelines",
+		"TERMS_OF_SERVICE": "Terms of service",
+		"CREATE_STORY": "Create post",
+		"ABOUT": "About"
 	},
 	"GENERAL": {
 		"BUTTONS": {
