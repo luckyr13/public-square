@@ -80,6 +80,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.consoleWelcomeMessage();
 
+    window.setTimeout(() => {
+      if (!this._userSettings.getCookiesAccepted()) {
+        this.displayCookiesMessage();
+      }
+    }, 1200);
+
   }
 
 
@@ -184,5 +190,31 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   */
+  
+  displayCookiesMessage() {
+    const defLangCode = this._userSettings.getDefaultLang();
+    const defLang = this._userSettings.getLangObject(defLangCode);
+    let direction: Direction = defLang!.writing_system === 'LTR' ? 
+      'ltr' : 'rtl';
+
+    let dialogRef = this.dialog.open(DialogCookiesMsgComponent, {
+      hasBackdrop: false,
+      position: { bottom: '0px' },
+      direction: direction,
+      autoFocus: false,
+      disableClose: true,
+      closeOnNavigation: false
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'accept') {
+
+      } else if (result === 'learn-more') {
+
+      }
+    });
+
+  }
   
 }
