@@ -23,20 +23,21 @@
 		  <div class="message border-color-theme" #postMessage></div>
 		</div>
 		<div class="substories clear-both" *ngIf="substories && substories.length">
-			<mat-list dense>
+			<mat-list>
 				<mat-list-item
 					class="fadeIn substory-text"
 					*ngFor="let substory of getSubstoriesFiltered('text')">
-					<img matListAvatar [src]="profileImage">
-			    <p matLine *ngIf="substory.content">
+					<img matListItemAvatar [src]="profileImage">
+			    <p matListItemLine *ngIf="substory.content">
 			      <span>{{substory.content}}</span>
 			    </p>
 			    <button
+			    	matListItemMeta
 			    	mat-icon-button
 			    	color="warn"
 			    	(click)="deleteSubstory(substory.arrId)"
 			    	aria-label="Delete substory">
-		        <mat-icon>clear</mat-icon>
+		        <mat-icon color="warn">clear</mat-icon>
 		      </button>
 			  </mat-list-item>
 			</mat-list>
