@@ -455,14 +455,18 @@ body {
 
 
 /* GLOBAL STYLES FOR MATERIAL COMPONENTS */
-.mat-mdc-snack-bar-container.error, .mat-snack-bar-container.error .mat-mdc-button{
-  background-color: #f44336;
-  color: #FFF;
+.mat-mdc-snack-bar-container.error {
+  --mdc-snackbar-container-color: #f44336;
+  --mdc-snackbar-supporting-text-color: #FFF;
 }
 
-.mat-mdc-snack-bar-container.success, .mat-snack-bar-container.success .mat-mdc-button{
-  background-color: #3BC661;
-  color: #FFF;
+.mat-mdc-snack-bar-container.warning {
+  --mdc-snackbar-container-color: #eed202;
+  --mdc-snackbar-supporting-text-color: rgba(0,0,0,.87);
+}
+.mat-mdc-snack-bar-container.success {
+  --mdc-snackbar-container-color: #69f0ae;
+  --mdc-snackbar-supporting-text-color: rgba(0,0,0,.87);
 }
 
 /*
