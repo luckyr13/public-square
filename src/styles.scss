@@ -174,7 +174,10 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .mat-drawer-container{
     background-color: #0f0f0f;
   }
-  .mat-mdc-dialog-container, .mat-dialog-container .mat-mdc-card, .mat-bottom-sheet-container {
+  .mat-mdc-dialog-container,
+  .mat-mdc-dialog-container .mat-mdc-card,
+  .mat-bottom-sheet-container,
+  .mat-mdc-dialog-surface.mdc-dialog__surface {
     background-color: #3F3F3F;
   }
   .mat-drawer, .mat-mdc-menu-panel {
@@ -243,7 +246,10 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .mat-drawer-container {
     background-color: #0f0f0f;
   }
-  .mat-mdc-dialog-container, .mat-dialog-container .mat-mdc-card, .mat-bottom-sheet-container {
+  .mat-mdc-dialog-container,
+  .mat-mdc-dialog-container .mat-mdc-card,
+  .mat-bottom-sheet-container,
+  .mat-mdc-dialog-surface.mdc-dialog__surface {
     background-color: #3F3F3F;
   }
   .mat-drawer, .mat-mdc-menu-panel {
@@ -279,7 +285,10 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .mat-drawer-container {
     background-color: #0f0f0f;
   }
-  .mat-mdc-dialog-container, .mat-dialog-container .mat-mdc-card, .mat-bottom-sheet-container {
+  .mat-mdc-dialog-container,
+  .mat-mdc-dialog-container .mat-mdc-card,
+  .mat-bottom-sheet-container,
+  .mat-mdc-dialog-surface.mdc-dialog__surface {
     background-color: #3F3F3F;
   }
   .mat-drawer, .mat-mdc-menu-panel {
@@ -349,7 +358,11 @@ $dark-blue-gray-theme: mat.define-dark-theme((
   .mat-drawer-container {
     background-color: rgb(27, 39, 51);
 
-  }.mat-mdc-dialog-container, .mat-dialog-container .mat-mdc-card, .mat-bottom-sheet-container {
+  }
+  .mat-mdc-dialog-container,
+  .mat-mdc-dialog-container .mat-mdc-card,
+  .mat-bottom-sheet-container,
+  .mat-mdc-dialog-surface.mdc-dialog__surface {
     background-color: rgb(27, 39, 51);
   }
   .mat-drawer, .mat-mdc-menu-panel, .mat-toolbar, .mat-mdc-unelevated-button.mat-primary {
