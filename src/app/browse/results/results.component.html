@@ -6,9 +6,9 @@
 	  	*ngFor="let profile of profiles"
 	  	[routerLink]="['/', profile.address]">
 	  	<img
-				matListAvatar 
+				matListItemAvatar 
 				[src]="profile.avatarURL || defaultProfileImage">
-	  	<span matLine *ngIf="profile.name" class="ellipsis nowrap profile-name">
+	  	<span matListItemLine *ngIf="profile.name" class="ellipsis nowrap profile-name">
 	  		{{ profile.name }} ({{ profile.username }})
 	  	</span>
 			<app-arweave-address matLine [address]="profile.address"></app-arweave-address>
